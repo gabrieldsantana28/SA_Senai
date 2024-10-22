@@ -1,0 +1,149 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Poppins, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+}
+
+.hdr {
+    background-color: black;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.hdr a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.logo-header {
+    height: 80px;
+}
+
+.botao--voltar {
+    font-size: 2.1em;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+#Titulo-Principal {
+    text-align: center;
+    padding-top: 0;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+}
+
+#container-elementos {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 12px;
+    border-bottom: 1.5px solid black;
+}
+
+.elementos {
+    flex: 1;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 0 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+#lista-elementos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1000px;
+    margin: 6px auto;
+    position: relative;
+}
+
+.elementos-lista {
+    flex: 1;
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 0 6px;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-size: 0.9em;
+    position: relative;
+}
+
+.icons {
+    display: flex;
+    gap: 6px;
+    position: absolute;
+    right: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.icons i {
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.icons i.fa-trash {
+    color: red;
+}
+
+.elementos--itens {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 6px;
+    background-color: #f4f4f4;
+    border: 1.5px solid black;
+    border-radius: 30px;
+}
+
+.elementos--itens input {
+    border: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+.elementos--itens i {
+    margin-right: 6px;
+    font-size: 1.1em;
+}
+
+input:focus-visible {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    #container-elementos, #lista-elementos {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .elementos, .elementos-lista {
+        margin: 6px 0;
+    }
+
+    .elementos--itens input {
+        font-size: 12px;
+    }
+
+    .icons {
+        position: static;
+        transform: none;
+        margin-top: 6px;
+        justify-content: center;
+    }
+}

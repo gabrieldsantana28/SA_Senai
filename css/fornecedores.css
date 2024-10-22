@@ -1,0 +1,235 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+html, body {
+    min-width: 320px; 
+}
+
+.hdr {
+    background-color: black;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.hdr a {
+    color: white;
+    text-decoration: none;
+    margin: 5px;
+    padding: 5px;
+}
+
+.hdr a:hover {
+    background-color: rgb(49, 49, 49); 
+}
+
+.logo-header {
+    height: 80px;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+body {
+    background-color: #f4f4f4;
+    font-size: 14px;
+}
+
+.botao--voltar {
+    font-size: 2.1em;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+#header-container {
+    margin-top: -2px;
+}
+
+#seta {
+    height: 50px;
+    width: 50px;
+}
+
+#container-main {
+    background-color: rgb(212, 212, 212);
+    height: auto;
+    width: 100%;
+    max-width: 750px;
+    margin: 40px auto;
+    border-radius: 40px;
+    border: 1px solid black;
+    box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.144);
+    padding-inline: 0.9rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#Titulo-Principal {
+    text-align: center;
+    padding-top: 25px;
+    font-size: 1em;
+}
+
+#container-elementos {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    margin-inline: auto;
+}
+
+.elementos--itens {
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    background-color: #b4b4b4;
+    border-radius: 30px;
+    border: 1.5px solid black;
+    height: 40px;
+    max-width: 100%;
+}
+
+.elementos--itens input {
+    background-color: rgb(180, 180, 180);
+    border: none;
+    font-size: 16px;
+    height: 38px;
+    width: 100%;
+}
+
+.elementos--itens i {
+    margin-top: 1px;
+    font-size: 1.3em;
+}
+
+.icon-btn {
+    background-color: #b4b4b4;
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 6px;
+}
+
+.icon-btn a {
+    font-size: 1.2em;
+    color: rgb(56, 56, 56);
+    text-decoration: none;
+}
+
+.icon-btn:hover {
+    background-color: #9e9e9e;
+}
+
+.fornecedor--item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #dddddd;
+    border-radius: 30px;
+    padding: 5px 8px;
+    margin-bottom: 16px;
+    border: 1px solid black;
+    max-width: 100%;
+}
+
+.elementos--itens--dois {
+    font-size: 16px;
+    flex: 1;
+    padding-left: 10px;
+}
+
+.fornecedor--item i.fa-pen-to-square {
+    margin-left: 10px;
+}
+
+.fornecedor--item i {
+    font-size: 1.2em;
+    cursor: pointer;
+    margin: 3px;
+}
+
+input:focus-visible {
+    outline: none;
+}
+
+.button {
+    margin-top: 30px;
+    height: 40px;
+    margin: -5px auto;
+    align-items: center;
+    text-align: center;
+}
+
+.button button {
+    background-color: white;
+    border-width: 1px;
+    padding: 3px 80px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+button:hover {
+    opacity: 1;
+    transition-duration: 0.6s;
+}
+
+@media (max-width: 1400px) {
+    #container-main {
+        background-color: rgb(212, 212, 212);
+        box-shadow: none;
+        height: auto;
+        width: 100%;
+    }
+    #container-elementos {
+        text-align: center;
+        margin-inline: auto;
+        padding-inline: 0.9rem;
+    }
+}
+
+@media (max-width: 1352px) {
+    .button {
+        display: block;
+        text-align: center;
+        margin-inline: auto;
+        padding-inline: 0.9rem;
+    }
+    #header-container {
+        display: none;
+    }
+    #container-main {
+        text-align: center;
+        align-items: center;
+    }
+    #container-elementos {
+        text-align: center;
+        margin-inline: auto;
+        padding-inline: 0.9rem;
+    }
+}
+
+@media (max-width: 485px) {
+    .elementos--itens {
+        min-width: 160px;
+    }
+    .button button {
+        padding: 3px 60px;
+    }
+
+    img {
+        width: 100%;
+    }
+}

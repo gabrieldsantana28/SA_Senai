@@ -1,0 +1,107 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hdr {
+    background-color: black;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.hdr a {
+    color: white;
+    text-decoration: none;
+    margin: 5px;
+    padding: 5px;
+}
+
+.hdr a:hover {
+    background-color: rgb(49, 49, 49); 
+}
+
+.logo-header {
+    height: 80px; 
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+body {
+    background-color: #f4f4f4;
+    font-size: 14px; 
+}
+
+.botao--logout {
+    font-size: 1.8em;
+    margin-left: 10px;
+    cursor:pointer;
+    width: 2%;
+}
+
+#header-container {
+    margin-top: -2px;
+}
+
+#container-main {
+    background-color: white;
+    height: 400px; 
+    width: 900px; 
+    margin: auto;
+    border-radius: 50px;
+    box-shadow: 1px 1px 22px 0px rgba(0, 0, 0, 0.315);
+    margin-top: 20px; 
+    padding-top: 20px; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+
+
+#Titulo-Principal {
+    text-align: center;
+    padding-top: 20px;
+    font-family: 'Poppins';
+    font-size: 1.2em;
+}
+
+.button-menu {
+    width: 250px; 
+    height: 150px; 
+    font-weight: bold;
+    font-size: 24px; 
+    border: none;
+    border-radius: 30px;
+    background-color: rgb(230, 230, 230);
+    margin-top: 30px; 
+    margin-left: 20px; 
+}
+
+.button-menu > a {
+    text-decoration: none;
+    color: black;
+}
+
+.last-button > a {
+    text-decoration: none;
+    color: black;
+}
+
+.button-menu:hover {
+    border: 1px solid black;
+    background-color: rgb(216, 216, 216);
+}
+
+.last-button:hover {
+    border: 1px solid black;
+    background-color: rgb(216, 216, 216);
+}
+
+.first-four-buttons {
+    width: 100%;
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center;
+}

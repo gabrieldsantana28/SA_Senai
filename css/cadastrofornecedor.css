@@ -1,0 +1,167 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+html, body {
+    min-width: 320px; 
+}
+
+.hdr {
+    background-color: black;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.hdr a {
+    color: white;
+    text-decoration: none;
+    margin: 8px; 
+    padding: 4px; 
+}
+
+.hdr a:hover {
+    background-color: rgb(49, 49, 49); 
+}
+
+.logo-header {
+    height: 70px;
+    margin-left: 25px;
+    margin-top: 12px;
+}
+
+body {
+    background-color: #f4f4f4;
+    font-size: 13px; 
+    margin: 0;
+    padding: 0;
+}
+
+.botao--voltar {
+    font-size: 2.1em;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+.botao--voltar i {
+    color: black;
+    text-decoration: none; 
+}
+
+#container-main {
+    background-color: white;
+    max-width: 85vw; 
+    width: 1200px; 
+    margin: 50px auto; 
+    border-radius: 15px; 
+    box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.3); 
+    padding: 1rem; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#Titulo-Principal {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 1.3em; 
+}
+
+#container-elementos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1.1rem; 
+}
+
+.elementos--itens {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    flex: 1 1 calc(33% - 1.5rem); 
+    max-width: 400px; 
+    background-color: #f4f4f4;
+    border: 1.8px solid black; 
+    border-radius: 35px; 
+    height: 45px;
+    padding: 6px 10px; 
+}
+
+.elementos--itens input {
+    background-color: transparent;
+    border: none;
+    font-size: 18px; 
+    width: 100%;
+    height: 43px; 
+}
+
+.elementos--itens i {
+    font-size: 1.5em; 
+}
+
+input:focus-visible {
+    outline: none;
+}
+
+.button {
+    margin-top: 35px; 
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.button button {
+    background-color: white;
+    border-width: 1px;
+    padding: 4px 90px; 
+    font-size: 1.3em; 
+    font-weight: bold;
+    border-radius: 18px; 
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+button:hover {
+    opacity: 1;
+    transition-duration: 0.6s;
+}
+
+@media (min-width: 1400px) {
+    #container-main {
+        width: 100%;
+        max-width: 100%;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 1352px) {
+    .button {
+        display: block;
+        margin-inline: auto;
+    }
+    
+    #container-elementos {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 485px) {
+    .elementos--itens {
+        min-width: 170px;
+        flex: 1 1 100%;
+    }
+
+    .button button {
+        padding: 4px 65px; 
+    }
+
+    img {
+        width: 100%;
+    }
+}
