@@ -20,7 +20,7 @@
         $preco = $_POST['preco'];
         $quantidade = $_POST['quantidade'];
 
-        $sql = "INSERT INTO produto (nome, descricao, tamanho, cor, preco, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO produto (nome_produto, descricao_produto, tamanho, cor, preco, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         $stmt->bind_param("sssddi", $nome, $descricao, $tamanho, $cor, $preco, $quantidade);
