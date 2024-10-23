@@ -108,8 +108,6 @@ function confirmarExclusao() {
 }
 </script>
 
-
-
     <script>
         function trocarPagina(url) {
             window.location.href = url;
