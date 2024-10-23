@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obter todas as vendas
-$sql_vendas = "SELECT id, produto_venda, quantidade, tipo_pagamento, data_venda, hora_venda FROM venda";
+$sql_vendas = "SELECT id_venda, produto_venda, quantidade, tipo_pagamento, data_venda, hora_venda FROM venda";
 $result_vendas = $conn->query($sql_vendas);
 ?>
 
@@ -73,7 +73,7 @@ $result_vendas = $conn->query($sql_vendas);
     // Deletar item (se o botão de excluir for clicado)
     if (isset($_POST['delete_id'])) {
         $id = $_POST['delete_id'];
-        $sql_delete = "DELETE FROM venda WHERE id = $id";
+        $sql_delete = "DELETE FROM venda WHERE id_venda = $id";
         $conn->query($sql_delete);
         header("Location: vendas.php"); // Redireciona para a página principal
         exit;
@@ -84,22 +84,22 @@ $result_vendas = $conn->query($sql_vendas);
         // Loop pelos resultados
         while ($linha = $result_vendas->fetch_assoc()) {
             echo '<section id="lista-elementos">';
-            echo '<div class="elementos-lista">' . $linha["id"] . '</div>';
+            echo '<div class="elementos-lista">' . $linha["id_venda"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["produto_venda"] . '</div>';
-            echo '<div class="elementos-lista">' . $linha["id"] . '</div>';
+            echo '<div class="elementos-lista">' . $linha["id_venda"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["tipo_pagamento"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["data_venda"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["hora_venda"] . '</div>';
             echo '<div class="icons">';
             // Formulário para excluir com confirmação
             echo '<form method="POST" style="display:inline-block;" onsubmit="return confirmarExclusao();">';
-            echo '<input type="hidden" name="delete_id" value="' . $linha["id"] . '">';
+            echo '<input type="hidden" name="delete_id" value="' . $linha["id_venda"] . '">';
             echo '<button type="submit" style="background:none; border:none;">';
             echo '<i class="fa-solid fa-trash" style="color: red;"></i>';
             echo '</button>';
             echo '</form>';
             // Link para editar
-            echo '<a href="editar.php?id=' . $linha["id"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
+            echo '<a href="editar.php?id=' . $linha["id_venda"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
             echo '</div>';
             echo '</section>';
         }
