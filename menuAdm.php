@@ -18,8 +18,10 @@
     </header>
 
     <div class="botao--logout">
-        <i class="fa-solid fa-right-from-bracket"></i>
-    </div>    
+        <form method="POST" action="php/logout.php">
+            <button type="submit"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </form>
+    </div>
 
     <main id="container-main">
         <section class="first-four-buttons">

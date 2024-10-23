@@ -29,9 +29,9 @@ if ($result->num_rows > 0) {
     $_SESSION['nome'] = $nome;
     
     if ($nivel == 1) { 
-        header("Location: /SA_Senai/menuAdm.php"); 
+        header("Location: /GitHub/SA_Senai/menuAdm.php"); 
     } elseif ($nivel == 2) {
-        header("Location: /SA_Senai/menuFuncionario.php");  
+        header("Location: /GitHub/SA_Senai/menuFuncionario.php");  
     }
 } else {
     $_SESSION['login_error'] = "Usuário ou senha incorretos"; // Mensagem de erro

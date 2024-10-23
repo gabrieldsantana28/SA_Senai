@@ -12,8 +12,9 @@
 .hdr a {
     color: white;
     text-decoration: none;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
+    font-size: 14px;
 }
 
 .hdr a:hover {
