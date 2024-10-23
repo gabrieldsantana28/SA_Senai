@@ -46,6 +46,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
     <title>Cadastro de Fornecedores</title>
+    <script>
+        function mascara(telefone){ 
+            if(telefone.value.length == 0)
+                telefone.value = '(' + telefone.value; //quando começamos a digitar, o script irá inserir um parênteses no começo do campo.
+            if(telefone.value.length == 3)
+                telefone.value = telefone.value + ') '; //quando o campo já tiver 3 caracteres (um parênteses e 2 números) o script irá inserir mais um parênteses, fechando assim o código de área.
+            if(telefone.value.length == 10)
+                telefone.value = telefone.value + '-'; //quando o campo já tiver 8 caracteres, o script irá inserir um tracinho, para melhor visualização do telefone.
+        }   
+</script>
 </head>
 <body>
     <header>
@@ -59,10 +69,10 @@
         </div>
     </header>
     <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('fornecedores.html')" aria-label="Voltar"></i>
+        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('fornecedores.php')" aria-label="Voltar"></i>
     </div>   
     <main id="container-main">
-        <section id="Titulo-Principal"><h1>Cadastro de Fornecedores</h1></section>
+        <section id="Titulo-Principal"><h1>Cadastro de Fornecedorees</h1></section>
 
         <?php if (!empty($message)): ?>
             <div class="message"><?php echo $message; ?></div>
@@ -80,7 +90,7 @@
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-solid fa-phone" aria-label="Ícone de Telefone"></i>
-                    <input type="text" id="Telefone" name="telefone" placeholder="Telefone..." required>
+                    <input type="text" id="telefone" name="telefone" placeholder="Telefone..."  required maxlength="15" onkeypress="mascara(this)">
                 </div>
                 <div class="elementos--itens">
                     <i class="fas fa-map-marker-alt" aria-label="Ícone de Endereço"></i>
@@ -92,10 +102,6 @@
             </section>
         </form>
     </main>
-    <script>
-        function trocarPagina(url) {
-            window.location.href = url;
-        }
-    </script>
+    
 </body>
 </html>

@@ -48,6 +48,24 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
     </style>
+    <script>
+            function mascara(o, f) {
+                v_obj = o
+                v_fun = f
+                setTimeout("execmascara()", 1)
+            }
+
+            function execmascara() {
+                v_obj.value = v_fun(v_obj.value)
+            }
+
+            function mreais(v) {
+                v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+                v = v.replace(/(\d{2})$/, ",$1") //Coloca a virgula
+                v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2") //Coloca o primeiro ponto
+                return v
+            }
+        </script>
 </head>
 <body>
     <header>
@@ -91,12 +109,12 @@
                     <input type="text" id="CorProduto" name="cor" placeholder="Cor do Produto..." required>
                 </div>
                 <div class="elementos--itens">
-                    <i class="fa-solid fa-hand-holding-dollar"></i>
-                    <input type="number" id="PrecoProduto" name="preco" placeholder="Preço do Produto..." step="0.01" required>
+                    <i class="fa-solid fa-hand-holding-dollar"></i>R$
+                    <input type="text" id="PrecoProduto" onkeypress="mascara(this,mreais)" name="preco" placeholder="Preço do Produto..." step = 0.01 min='1' max ='800'>
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-solid fa-arrow-up-short-wide"></i>
-                    <input type="number" id="QuantProduto" name="quantidade" placeholder="Quantidade do Produto..." required>
+                    <input type="number" id="QuantProduto" name="quantidade" placeholder="Quantidade do Produto..." max="9999" maxlength="5" required>
                 </div>
                 <div class="button">
                     <button type="submit">Confirmar</button>
