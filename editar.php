@@ -119,7 +119,7 @@ body {
 
 .hdr {
     background-color: black;
-    height: 110px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;

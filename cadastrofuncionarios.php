@@ -87,7 +87,7 @@
                     <input type="password" id="Senha" name="senha" placeholder="Senha (Mín. 6 Caracteres)..." maxlength="6" required>
                 </div>
                 <div class="elementos--itens">
-                    <i class="fa-solid fa-box-open" aria-label="Ícone de Nível"></i>
+                    <i class="fa-solid fa-user-tie" aria-label="Ícone de Nível"></i>
                     <select id="Nivel" name="nivel" required>
                         <option value="">Selecione o Nível...</option>
                         <option value="1">1 - Admin</option>
