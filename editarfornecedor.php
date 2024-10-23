@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Busca os dados do fornecedor para editar
-    $sql = "SELECT * FROM fornecedor WHERE id = $id";
+    $sql = "SELECT * FROM fornecedor WHERE id_fornecedor = $id";
     $result = $conexao->query($sql);
 
     if ($result->num_rows > 0) {
@@ -31,10 +31,10 @@ if (isset($_POST['update'])) {
     $telefone = $_POST['telefone'];
     $endereco = $_POST['endereco'];
 
-    $sql_update = "UPDATE fornecedor SET nome='$nome', materialFornecido='$material', telefone='$telefone', endereco='$endereco' WHERE id=$id";
+    $sql_update = "UPDATE fornecedor SET nome_fornecedor='$nome', materialFornecido='$material', telefone_fornecedor='$telefone', endereco_fornecedor='$endereco' WHERE id_fornecedor=$id";
     $conexao->query($sql_update);
 
-    header("Location: fornecedoresphp"); // Redireciona para a página de listagem
+    header("Location: fornecedores.php"); // Redireciona para a página de listagem
     exit;
 }
 
@@ -157,10 +157,10 @@ $conexao->close();
         <section id="Titulo-Principal"><h1>Editar Fornecedor</h1></section>
 
         <form method="POST" class="formulario-editar">
-            <input type="hidden" name="id" value="<?php echo $fornecedor['id']; ?>">
+            <input type="hidden" name="id" value="<?php echo $fornecedor['id_fornecedor']; ?>">
             <div class="form-group">
                 <label>Nome do Fornecedor:</label>
-                <input type="text" name="nome" value="<?php echo $fornecedor['nome']; ?>" required>
+                <input type="text" name="nome" value="<?php echo $fornecedor['nome_fornecedor']; ?>" required>
             </div>
             <div class="form-group">
                 <label>Material Fornecido:</label>
@@ -168,11 +168,11 @@ $conexao->close();
             </div>
             <div class="form-group">
                 <label>Telefone:</label>
-                <input type="text" name="telefone" value="<?php echo $fornecedor['telefone']; ?>" required>
+                <input type="text" name="telefone" value="<?php echo $fornecedor['telefone_fornecedor']; ?>" required>
             </div>
             <div class="form-group">
                 <label>Endereço:</label>
-                <input type="text" name="endereco" value="<?php echo $fornecedor['endereco']; ?>" required>
+                <input type="text" name="endereco" value="<?php echo $fornecedor['endereco_fornecedor']; ?>" required>
             </div>
             <button type="submit" name="update" class="botao-salvar">Atualizar</button>
         </form>

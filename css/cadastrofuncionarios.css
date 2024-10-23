@@ -105,6 +105,23 @@ body {
     font-size: 1.5em; 
 }
 
+.elementos--itens select {
+    background-color: transparent; /* Fundo transparente */
+    border: none; /* Remove a borda */
+    width: 100%; /* Ocupa toda a largura do container */
+    height: 38px; /* Altura para ficar alinhado com os outros inputs */
+    font-size: 14px; /* Tamanho da fonte */
+    appearance: none; /* Remove a estilização padrão do select */
+    padding: 0 10px; /* Adiciona espaçamento interno */
+    border-radius: 20px; /* Arredonda os cantos para ficar igual aos outros inputs */
+    cursor: pointer; /* Muda o cursor para pointer */
+    transition: background-color 0.3s; /* Transição suave para a mudança de fundo */
+}
+
+.elementos--itens select:hover {
+    background-color: rgba(200, 200, 200, 0.5); /* Muda o fundo ao passar o mouse */
+}
+
 input:focus-visible {
     outline: none;
 }

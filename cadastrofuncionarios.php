@@ -1,3 +1,41 @@
+<?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "nossasa";
+
+    // Conexão com o banco de dados
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
+
+    $message = "";
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nome = $_POST['nome'];
+        $usuario = $_POST['usuario'];
+        $email = $_POST['email'];
+        $senha = $_POST['senha'];
+        $nivel = $_POST['nivel']; 
+
+        $sql = "INSERT INTO usuario (nome, usuario, email, senha, nivel) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $nivel); 
+
+        if ($stmt->execute()) {
+            $message = "Funcionário cadastrado com sucesso!";
+        } else {
+            $message = "Erro ao cadastrar funcionário: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
+
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,10 +44,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=7">
     <link rel="stylesheet" href="css/cadastrofuncionarios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <title>Cadastro de Produtos</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-    </style>
+    <title>Cadastro de Funcionários</title>
 </head>
 <body>
     <header>
@@ -29,8 +64,11 @@
     <main id="container-main">
         <section id="Titulo-Principal"><h1>Cadastro de Funcionários</h1></section>
         
-        
-        <form action="php/insertFuncionario.php" method="POST">
+        <?php if ($message): ?>
+            <p><?php echo $message; ?></p>
+        <?php endif; ?>
+
+        <form method="POST">
             <section id="container-elementos">
                 <div class="elementos--itens">
                     <i class="fas fa-user-tag"></i>
@@ -46,7 +84,15 @@
                 </div>
                 <div class="elementos--itens">
                     <i class='fa-solid fa-lock'></i>
-                   <input type="password" id="Senha" name="senha" placeholder="Senha(Mín. 6 Caracteres)..." maxlength="6" required>
+                    <input type="password" id="Senha" name="senha" placeholder="Senha (Mín. 6 Caracteres)..." maxlength="6" required>
+                </div>
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-box-open" aria-label="Ícone de Nível"></i>
+                    <select id="Nivel" name="nivel" required>
+                        <option value="">Selecione o Nível...</option>
+                        <option value="1">1 - Admin</option>
+                        <option value="2">2 - Funcionário</option>
+                    </select>
                 </div>
                 <div class="button">
                     <button type="submit">Cadastrar</button>

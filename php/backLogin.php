@@ -29,13 +29,13 @@ if ($result->num_rows > 0) {
     $_SESSION['nome'] = $nome;
     
     if ($nivel == 1) { 
-        header("Location: /Desenvolvimento_SA/menuAdm.html"); 
+        header("Location: /SA_Senai/menuAdm.php"); 
     } elseif ($nivel == 2) {
-        header("Location: /Desenvolvimento_SA/menuFuncionario.html");  
+        header("Location: /SA_Senai/menuFuncionario.php");  
     }
 } else {
     $_SESSION['login_error'] = "Usuário ou senha incorretos"; // Mensagem de erro
-    header("Location: /Desenvolvimento_SA/login.php"); // Redireciona para a página de login
+    header("Location: /login.php"); // Redireciona para a página de login
 }
 $conn->close(); 
 ?>
