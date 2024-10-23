@@ -102,6 +102,11 @@
             </section>
         </form>
     </main>
+    <script>
+        function trocarPagina(url) {
+            window.location.href = url;
+        }
+    </script>
     
 </body>
 </html>
