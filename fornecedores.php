@@ -18,7 +18,7 @@
     // Lógica para exclusão
     if (isset($_GET['delete_id'])) {
         $delete_id = $_GET['delete_id'];
-        $sql_delete = "DELETE FROM fornecedor WHERE id = ?";
+        $sql_delete = "DELETE FROM fornecedor WHERE id_fornecedor = ?";
         $stmt = $conn->prepare($sql_delete);
         $stmt->bind_param("i", $delete_id);
         $stmt->execute();
@@ -73,12 +73,12 @@
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div style="margin: auto;" class="fornecedor--item">
                         <div class="elementos--itens--dois">
-                            <?php echo $row['nome']; ?> (<?php echo $row['materialFornecido']; ?>)
+                            <?php echo $row['nome_fornecedor']; ?> (<?php echo $row['materialFornecido']; ?>)
                         </div>
-                        <a href="?delete_id=<?php echo $row['id']; ?>" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?');">
+                        <a href="?delete_id=<?php echo $row['id_fornecedor']; ?>" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?');">
                             <i class="fa-solid fa-trash" style="color: red;"></i>
                         </a>
-                        <a href="editarfornecedor.php?id=<?php echo $row['id']; ?>">
+                        <a href="editarfornecedor.php?id=<?php echo $row['id_fornecedor']; ?>">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         <br>

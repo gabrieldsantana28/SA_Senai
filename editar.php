@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Busca os dados do produto para editar
-    $sql = "SELECT * FROM produto WHERE id = $id";
+    $sql = "SELECT * FROM produto WHERE id_produto = $id";
     $result = $conexao->query($sql);
 
     if ($result->num_rows > 0) {
@@ -34,7 +34,7 @@ if (isset($_POST['update'])) {
     $preco = $_POST['preco'];
     $descricao = $_POST['descricao'];
 
-    $sql_update = "UPDATE produto SET nome='$nome', quantidade='$quantidade', preco='$preco', descricao='$descricao' WHERE id=$id";
+    $sql_update = "UPDATE produto SET nome_produto='$nome', quantidade='$quantidade', preco='$preco', descricao_produto='$descricao' WHERE id_produto=$id";
     $conexao->query($sql_update);
 
     header("Location: estoque.php"); // Redireciona para a página principal
@@ -77,10 +77,10 @@ $conexao->close();
 
     <section class="formulario-editar">
         <form method="POST">
-            <input type="hidden" name="id" value="<?php echo $produto['id']; ?>">
+            <input type="hidden" name="id" value="<?php echo $produto['id_produto']; ?>">
             <div class="form-group">
                 <label for="nome_produto">Nome do Produto</label>
-                <input type="text" id="nome_produto" name="nome" value="<?php echo $produto['nome']; ?>" required>
+                <input type="text" id="nome_produto" name="nome" value="<?php echo $produto['nome_produto']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="quantidade_produto">Quantidade</label>
@@ -92,7 +92,7 @@ $conexao->close();
             </div>
             <div class="form-group">
                 <label for="descricao_produto">Descrição</label>
-                <textarea id="descricao_produto" name="descricao" rows="4" required><?php echo $produto['descricao']; ?></textarea>
+                <textarea id="descricao_produto" name="descricao" rows="4" required><?php echo $produto['descricao_produto']; ?></textarea>
             </div>
             <button type="submit" name="update" class="botao-salvar">Salvar Alterações</button>
         </form>
