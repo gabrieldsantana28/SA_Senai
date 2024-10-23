@@ -88,11 +88,11 @@
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-solid fa-boxes-stacked" aria-label="Ícone de Material"></i>
-                    <input type="text" id="Quantidade" name="quantidade" placeholder="Quantidade..." required>
+                    <input type="number" id="Quantidade" name="quantidade" placeholder="Quantidade..." required>
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-regular fa-calendar-days" aria-label="Ícone de Data"></i>
-                    <input type="text" id="Data" name="data" placeholder="Data da Venda..." required>
+                    <input type="text" id="data" name="data" placeholder="Data da Venda..." maxlength="10">
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-regular fa-clock" aria-label="Ícone de Horário"></i>
@@ -121,6 +121,130 @@
         function trocarPagina(url) {
             window.location.href = url;
         }
+        </script>
+  <script>
+  // Função para aplicar máscara de data no formato DD/MM/AAAA
+  function mascaraData(val) {
+    var pass = val.value;
+    var expr = /[0123456789]/;
+
+    for (i = 0; i < pass.length; i++) {
+      var lchar = val.value.charAt(i);
+      var nchar = val.value.charAt(i + 1);
+
+      if (i == 0) {
+        if ((lchar.search(expr) != 0) || (lchar > 3)) {
+          val.value = "";
+        }
+
+      } else if (i == 1) {
+        if (lchar.search(expr) != 0) {
+          var tst1 = val.value.substring(0, (i));
+          val.value = tst1;
+          continue;
+        }
+
+        if ((nchar != '/') && (nchar != '')) {
+          var tst1 = val.value.substring(0, (i) + 1);
+          if (nchar.search(expr) != 0)
+            var tst2 = val.value.substring(i + 2, pass.length);
+          else
+            var tst2 = val.value.substring(i + 1, pass.length);
+
+          val.value = tst1 + '/' + tst2;
+        }
+
+      } else if (i == 4) {
+        if (lchar.search(expr) != 0) {
+          var tst1 = val.value.substring(0, (i));
+          val.value = tst1;
+          continue;
+        }
+
+        if ((nchar != '/') && (nchar != '')) {
+          var tst1 = val.value.substring(0, (i) + 1);
+          if (nchar.search(expr) != 0)
+            var tst2 = val.value.substring(i + 2, pass.length);
+          else
+            var tst2 = val.value.substring(i + 1, pass.length);
+
+          val.value = tst1 + '/' + tst2;
+        }
+      }
+
+      if (i >= 6) {
+        if (lchar.search(expr) != 0) {
+          var tst1 = val.value.substring(0, (i));
+          val.value = tst1;
+        }
+      }
+    }
+
+    if (pass.length > 10)
+      val.value = val.value.substring(0, 10);
+
+    return true;
+  }
+
+  // Função de validação de data, incluindo restrição de ano
+  function validarData(data) {
+    var partesData = data.split('/');
+    var dia = parseInt(partesData[0], 10);
+    var mes = parseInt(partesData[1], 10);
+    var ano = parseInt(partesData[2], 10);
+
+    // Verifica se a data é válida
+    var dataValida = new Date(ano, mes - 1, dia);
+
+    if (dataValida.getFullYear() != ano || (dataValida.getMonth() + 1) != mes || dataValida.getDate() != dia) {
+      return false;  // Data inválida
+    }
+
+    // Verifica se o ano é maior ou igual a 2000
+    if (ano < 2000) {
+      return false;  // Ano inválido
+    }
+
+    return true;  // Data válida e ano >= 2000
+  }
+
+  // Adiciona evento no formulário para validar a data antes do envio
+  window.onload = function() {
+    var form = document.querySelector('form'); // Seleciona o formulário de forma genérica
+    var inputData = document.getElementById("data"); // O ID do input de data
+
+    form.addEventListener("submit", function(event) {
+      var data = inputData.value;
+
+      if (!validarData(data)) {
+        alert("Data inválida. Por favor, insira uma data válida e com ano a partir de 2000.");
+        event.preventDefault();  // Impede o envio do formulário
+      }
+    });
+
+    // Adiciona o evento de máscara diretamente ao input de data
+    inputData.addEventListener("input", function() {
+      mascaraData(this);
+    });
+  };
+</script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0"></script>
+
+<script>
+    // Aplicando a máscara de horário com Cleave.js
+    document.addEventListener('DOMContentLoaded', function() {
+        new Cleave('#Horario', {
+            time: true,
+            timePattern: ['h', 'm'],  // Define o formato de horas e minutos
+            delimiter: ':',           // Define o delimitador como dois pontos
+            timeFormat: '24'           // Formato de 24 horas
+        });
+    });
     </script>
 </body>
 </html>
