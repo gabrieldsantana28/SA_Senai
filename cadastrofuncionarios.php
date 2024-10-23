@@ -15,11 +15,11 @@
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.html">Menu</a>
-            <a href="estoque.html">Gerenciamento de Estoque</a>
-            <a href="fornecedores.html">Consultar Fornecedores</a>
-            <a href="vendas.html">Consultar Vendas</a>
-            <a href="cadastrofuncionarios.html">Cadastro de Funcionários</a>
+            <a href="menuAdm.php">Menu</a>
+            <a href="estoque.php">Gerenciamento de Estoque</a>
+            <a href="fornecedores.php">Consultar Fornecedores</a>
+            <a href="vendas.php">Consultar Vendas</a>
+            <a href="cadastrofuncionarios.php">Cadastro de Funcionários</a>
         </div>
     </header>
     <div class="botao--voltar">
