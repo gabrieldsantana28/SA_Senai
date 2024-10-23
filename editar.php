@@ -61,11 +61,11 @@ $conexao->close();
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.html">Menu ADM</a>
-            <a href="menuFuncionario.html">Menu Funcionário</a>
-            <a href="fornecedores.html">Gerenciamento de Fornecedores</a>
+            <a href="menuAdm.php">Menu ADM</a>
+            <a href="menuFuncionario.php">Menu Funcionário</a>
+            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
             <a href="cadastroprodutos.php">Cadastro de Produtos</a>
-            <a href="funcionarios.html">Gerenciamento de Funcionários</a>
+            <a href="funcionarios.php">Gerenciamento de Funcionários</a>
         </div>
     </header>
 

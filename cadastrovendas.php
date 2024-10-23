@@ -63,15 +63,15 @@
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.html">Menu</a>
-            <a href="estoque.html">Gerenciamento de Estoque</a>
-            <a href="fornecedores.html">Consultar Fornecedores</a>
+            <a href="menuAdm.php">Menu</a>
+            <a href="estoque.php">Gerenciamento de Estoque</a>
+            <a href="fornecedores.php">Consultar Fornecedores</a>
             <a href="cadastroprodutos.php">Cadastro de Produtos</a>
-            <a href="funcionarios.html">Gerenciamento de Funcionários</a>
+            <a href="funcionarios.php">Gerenciamento de Funcionários</a>
         </div>
     </header>
     <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('vendas.html')" aria-label="Voltar"></i>
+        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('vendas.php')" aria-label="Voltar"></i>
     </div>   
     <main id="container-main">
         <section id="Titulo-Principal"><h1>Cadastro de Vendas</h1></section>

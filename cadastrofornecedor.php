@@ -72,7 +72,7 @@
         <i class="fa-solid fa-arrow-left" onclick="trocarPagina('fornecedores.php')" aria-label="Voltar"></i>
     </div>   
     <main id="container-main">
-        <section id="Titulo-Principal"><h1>Cadastro de Fornecedorees</h1></section>
+        <section id="Titulo-Principal"><h1>Cadastro de Fornecedores</h1></section>
 
         <?php if (!empty($message)): ?>
             <div class="message"><?php echo $message; ?></div>
