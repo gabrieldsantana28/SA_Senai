@@ -9,7 +9,6 @@
     if ($conn->connect_error) {
         die("Conexão falhou: " . $conn->connect_error);
     }
-
     $message = "";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {

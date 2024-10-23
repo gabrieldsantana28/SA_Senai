@@ -22,6 +22,7 @@ html, body {
     text-decoration: none;
     margin: 5px;
     padding: 5px;
+    font-size: 14px;
 }
 
 .hdr a:hover {
