@@ -9,7 +9,6 @@ if ($conexao->connect_errno) {
 }
 
 $conexao->set_charset("utf8");
-
 // Verifica se o ID foi passado
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

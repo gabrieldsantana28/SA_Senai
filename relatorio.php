@@ -1,3 +1,36 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nossasa";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+// Consultar os dados dos produtos
+$sql = "SELECT nome_produto, quantidade FROM produto";
+$result = $conn->query($sql);
+
+$produtos = [];
+$quantidades = [];
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $produtos[] = $row['nome_produto'];
+        $quantidades[] = $row['quantidade'];
+    }
+    // Para depuração
+    // var_dump($produtos, $quantidades);
+} else {
+    echo "0 resultados";
+}
+$conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,10 +39,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=7">
     <link rel="stylesheet" href="css/relatorio.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Desenvolvimento de Sistemas</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-        </style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100..900&display=swap');
+    </style>
+</head>
 <body>
     <header>
         <div class="hdr">
@@ -23,28 +58,61 @@
     </header>
     <div class="botao--voltar">
         <i class="fa-solid fa-arrow-left" onclick="trocarPagina('menuAdm.php')"></i>
-    </div> 
+    </div>
 
     <main id="container-main">
         <section class="first-five-buttons">
-            GRÁFICO
+            <canvas id="relatorioEstoque" width="400" height="200"></canvas>
         </section>
         <section class="first-four-buttons">
             <button class="button-menu"><a href="#">Baixar relatório semanal</a>
                 <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
             </button>
-            <button class="button-menu"><a href="#">Baixar relatório mensal
+            <button class="button-menu"><a href="#">Baixar relatório mensal</a>
                 <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
             </button>
-            <button class="button-menu"><a href="#">Baixar relatório de estoque
+            <button class="button-menu"><a href="#">Baixar relatório de estoque</a>
                 <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
             </button>
         </section>
     </main>
+
     <script>
         function trocarPagina(url) {
             window.location.href = url;
         }
+
+        // Obter os dados do PHP
+        const produtos = <?php echo json_encode($produtos); ?>;
+        const quantidades = <?php echo json_encode($quantidades); ?>;
+
+        // Logs para depuração
+        console.log('Produtos:', produtos);
+        console.log('Quantidades:', quantidades);
+
+        // Configuração do gráfico
+        const ctx = document.getElementById('relatorioEstoque').getContext('2d');
+        const relatorioEstoque = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: produtos,
+                datasets: [{
+                    label: 'Quantidade de Produtos',
+                    data: quantidades,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
+

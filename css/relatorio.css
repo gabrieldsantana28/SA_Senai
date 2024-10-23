@@ -112,6 +112,7 @@ body {
     background-color: rgba(0, 255, 255, 0);
     flex-direction: column; 
     margin-bottom: 130px;
+    margin-left: 25px;
 }
 
 .first-five-buttons {
