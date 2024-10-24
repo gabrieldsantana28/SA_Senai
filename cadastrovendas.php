@@ -38,12 +38,18 @@
         $stmt_venda->bind_param("sssss", $tipoPagamento, $quantidade, $data, $horario, $nome_produto);
 
         if ($stmt_venda->execute()) {
-            $message = "Venda cadastrada com sucesso!";
-        } else {
-            $message = "Erro ao cadastrar venda: " . $stmt_venda->error;
-        }
-
-        $stmt_venda->close();
+          // Verifica o número de linhas afetadas para garantir que a inserção foi feita
+          if ($stmt_venda->affected_rows > 0) {
+              $message = "Venda cadastrada com sucesso!";
+          } else {
+              $message = "Erro ao cadastrar venda: Nenhuma linha foi afetada.";
+          }
+      } else {
+          // Exibe o erro detalhado caso o execute() falhe
+          $message = "Erro ao cadastrar venda: " . $stmt_venda->error;
+      }
+      
+      $stmt_venda->close();
     }
 
     $conn->close();
@@ -197,16 +203,17 @@
     var dataValida = new Date(ano, mes - 1, dia);
 
     if (dataValida.getFullYear() != ano || (dataValida.getMonth() + 1) != mes || dataValida.getDate() != dia) {
-      return false;  // Data inválida
+        return false;  // Data inválida
     }
 
-    // Verifica se o ano é maior ou igual a 2000
-    if (ano < 2000) {
-      return false;  // Ano inválido
+    // Verifica se o ano está entre 2000 e 2024
+    if (ano < 2000 || ano > 2024) {
+        return false;  // Ano inválido
     }
 
-    return true;  // Data válida e ano >= 2000
-  }
+    return true;  // Data válida e ano entre 2000 e 2024
+}
+
 
   // Adiciona evento no formulário para validar a data antes do envio
   window.onload = function() {
@@ -217,7 +224,7 @@
       var data = inputData.value;
 
       if (!validarData(data)) {
-        alert("Data inválida. Por favor, insira uma data válida e com ano a partir de 2000.");
+        alert("Data inválida. Por favor, insira uma data válida.");
         event.preventDefault();  // Impede o envio do formulário
       }
     });
