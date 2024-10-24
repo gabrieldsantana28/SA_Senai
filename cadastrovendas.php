@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -47,6 +49,9 @@
       $stmt_venda->close();
     }
 
+    // RECUPERA NÍVEL DA CONTA 
+    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -64,11 +69,13 @@
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.php">Menu</a>
+            <a href="#" onclick="voltarMenu()">Menu</a>
             <a href="estoque.php">Gerenciamento de Estoque</a>
-            <a href="fornecedores.php">Consultar Fornecedores</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
+            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
+            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="vendas.php">Controle de Vendas</a>
+            <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
     <div class="botao--voltar">
@@ -119,59 +126,67 @@
         </form>
     </main>
     <script>
-        function trocarPagina(url) {
+      function trocarPagina(url) {
             window.location.href = url;
-        }
-        </script>
-  <script>
-  // FUNÇÃO MÁSCARA DATA 
-  function mascaraData(val) {
-    var pass = val.value;
-    var expr = /[0123456789]/;
-
-    for (i = 0; i < pass.length; i++) {
-      var lchar = val.value.charAt(i);
-      var nchar = val.value.charAt(i + 1);
-
-      if (i == 0) {
-        if ((lchar.search(expr) != 0) || (lchar > 3)) {
-          val.value = "";
-        }
-
-      } else if (i == 1) {
-        if (lchar.search(expr) != 0) {
-          var tst1 = val.value.substring(0, (i));
-          val.value = tst1;
-          continue;
-        }
-
-        if ((nchar != '/') && (nchar != '')) {
-          var tst1 = val.value.substring(0, (i) + 1);
-          if (nchar.search(expr) != 0)
-            var tst2 = val.value.substring(i + 2, pass.length);
-          else
-            var tst2 = val.value.substring(i + 1, pass.length);
-
-          val.value = tst1 + '/' + tst2;
-        }
-
-      } else if (i == 4) {
-        if (lchar.search(expr) != 0) {
-          var tst1 = val.value.substring(0, (i));
-          val.value = tst1;
-          continue;
-        }
-
-        if ((nchar != '/') && (nchar != '')) {
-          var tst1 = val.value.substring(0, (i) + 1);
-          if (nchar.search(expr) != 0)
-            var tst2 = val.value.substring(i + 2, pass.length);
-          else
-            var tst2 = val.value.substring(i + 1, pass.length);
-
-          val.value = tst1 + '/' + tst2;
-        }
       }
+
+      function voltarMenu() {
+          <?php if ($nivel == 1): ?>
+              window.location.href = 'menuAdm.php';
+          <?php elseif ($nivel == 2): ?>
+              window.location.href = 'menuFuncionario.php';
+          <?php else: ?>
+              alert('Nível de conta não identificado. Faça login novamente.');
+              window.location.href = 'login.php'; 
+          <?php endif; ?>
+      }
+
+      // FUNÇÃO MÁSCARA DATA 
+      function mascaraData(val) {
+          var pass = val.value;
+          var expr = /[0123456789]/;
+
+          for (i = 0; i < pass.length; i++) {
+          var lchar = val.value.charAt(i);
+          var nchar = val.value.charAt(i + 1);
+
+          if (i == 0) {
+              if ((lchar.search(expr) != 0) || (lchar > 3)) {
+                  val.value = "";
+                }
+          } else if (i == 1) {
+                if (lchar.search(expr) != 0) {
+                  var tst1 = val.value.substring(0, (i));
+                    val.value = tst1;
+                    continue;
+                }
+
+        if ((nchar != '/') && (nchar != '')) {
+          var tst1 = val.value.substring(0, (i) + 1);
+          if (nchar.search(expr) != 0)
+            var tst2 = val.value.substring(i + 2, pass.length);
+          else
+            var tst2 = val.value.substring(i + 1, pass.length);
+
+          val.value = tst1 + '/' + tst2;
+        }
+
+        } else if (i == 4) {
+            if (lchar.search(expr) != 0) {
+                var tst1 = val.value.substring(0, (i));
+                val.value = tst1;
+               continue;
+            }
+
+            if ((nchar != '/') && (nchar != '')) {
+                var tst1 = val.value.substring(0, (i) + 1);
+                if (nchar.search(expr) != 0)
+                    var tst2 = val.value.substring(i + 2, pass.length);
+                else
+                    var tst2 = val.value.substring(i + 1, pass.length);
+                    val.value = tst1 + '/' + tst2;
+            }
+        }
 
       if (i >= 6) {
         if (lchar.search(expr) != 0) {
@@ -187,7 +202,7 @@
     return true;
   }
 
-  // FUNÇÃO DATA INVÁLIDA  
+  // FUNÇÃO VALIDAÇÃO DE DATA 
   function validarData(data) {
     var partesData = data.split('/');
     var dia = parseInt(partesData[0], 10);

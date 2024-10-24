@@ -30,7 +30,6 @@
         <section id="Descricao-login"><h3>Acesse sua conta</h3></section>
         <section id="Descricao-login"><p>Insira seu usuário e senha para continuar</p></section>
 
-        <!-- Exibe a mensagem de erro se houver -->
         <?php
             session_start();
             if (isset($_SESSION['login_error'])) {

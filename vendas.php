@@ -1,19 +1,24 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "nossasa";
+    session_start();
 
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "nossasa";
 
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
+    // Criar conexão
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-$sql_vendas = "SELECT id_venda, produto_venda, quantidade, tipo_pagamento, data_venda, hora_venda FROM venda";
-$result_vendas = $conn->query($sql_vendas);
+    // Verificar conexão
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
+
+    $sql_vendas = "SELECT id_venda, produto_venda, quantidade, tipo_pagamento, data_venda, hora_venda FROM venda";
+    $result_vendas = $conn->query($sql_vendas);
+
+    // RECUPERA NÍVEL DA CONTA 
+    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
 ?>
 
 <!DOCTYPE html>
@@ -30,11 +35,12 @@ $result_vendas = $conn->query($sql_vendas);
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.php">Menu</a>
+            <a href="#" onclick="voltarMenu()">Menu</a>
+            <a href="funcionarios.php">Gerenciamento de Funcionários</a>
+            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
             <a href="estoque.php">Gerenciamento de Estoque</a>
-            <a href="fornecedores.php">Consultar Fornecedores</a>
-            <a href="cadastrofuncionarios.php">Cadastro de Funcionários</a>
             <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
 
@@ -116,6 +122,16 @@ function confirmarExclusao() {
     <script>
         function trocarPagina(url) {
             window.location.href = url;
+        }
+        function voltarMenu() {
+            <?php if ($nivel == 1): ?>
+                window.location.href = 'menuAdm.php';
+            <?php elseif ($nivel == 2): ?>
+                window.location.href = 'menuFuncionario.php';
+            <?php else: ?>
+                alert('Nível de conta não identificado. Faça login novamente.');
+                window.location.href = 'login.php'; 
+            <?php endif; ?>
         }
     </script>
 </body>
