@@ -71,9 +71,16 @@ if (isset($_GET['excluir'])) {
     $stmt->close();
 }
 
-// Busca todos os funcionários
-$sql = "SELECT id_usuario, nome, usuario, email, senha, nivel FROM usuario";
-$result = $conn->query($sql);
+// Captura o valor da pesquisa, se houver
+$pesquisa = isset($_POST['PesquisarFuncionario']) ? $_POST['PesquisarFuncionario'] : '';
+
+// Modifica a consulta SQL para incluir a pesquisa
+$sql = "SELECT id_usuario, nome, usuario, email, senha, nivel FROM usuario WHERE usuario LIKE ? OR nome LIKE ?";
+$stmt = $conn->prepare($sql);
+$likePesquisa = "%" . $pesquisa . "%";
+$stmt->bind_param("ss", $likePesquisa, $likePesquisa);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +139,6 @@ $result = $conn->query($sql);
         button:hover {
             background-color: black; /* Cor ao passar o mouse */
         }
-
     </style>
 </head>
 <body>
@@ -155,13 +161,15 @@ $result = $conn->query($sql);
     <main id="container-main">
         <section>
             <br>
-            <div style="margin: auto;" class="elementos--itens">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="PesquisarFuncionario" name="PesquisarFuncionario" placeholder="Pesquisar Funcionário...">
-                <button class="icon-btn" id="redirectBtn">
-                    <a class="fa-solid fa-plus" href="cadastrofuncionarios.php"></a>
-                </button>
-            </div>
+            <form method="POST" action="">
+                <div style="margin: auto;" class="elementos--itens">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="PesquisarFuncionario" name="PesquisarFuncionario" placeholder="Pesquisar Funcionário...">
+                    <button class="icon-btn" id="redirectBtn">
+                        <a class="fa-solid fa-plus" href="cadastrofuncionarios.php"></a>
+                    </button>
+                </div>
+            </form>
             <br>
         </section>
 
@@ -209,6 +217,4 @@ $result = $conn->query($sql);
 </body>
 </html>
 
-<?php
-$conn->close();
-?>
+<?php $conn->close(); ?>

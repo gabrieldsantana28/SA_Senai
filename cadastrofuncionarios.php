@@ -84,7 +84,7 @@
                 </div>
                 <div class="elementos--itens">
                     <i class='fa-solid fa-lock'></i>
-                    <input type="password" id="Senha" name="senha" placeholder="Senha (Mín. 6 Caracteres)..." maxlength="6" required>
+                    <input type="password" id="Senha" name="senha" placeholder="Senha (Mín. 6 Caracteres)..." minlength="6" required>
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-solid fa-user-tie" aria-label="Ícone de Nível"></i>
