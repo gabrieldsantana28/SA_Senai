@@ -49,19 +49,19 @@
     </style>
     <script>
             function mascara(o, f) {
-                v_obj = o
-                v_fun = f
-                setTimeout("execmascara()", 1)
+                v_obj = o // ARMANENA INPUT
+                v_fun = f // ARMAZENA MÁSCARA
+                setTimeout("execmascara()", 1) // DELAY MÁSCARA
             }
 
             function execmascara() {
-                v_obj.value = v_fun(v_obj.value)
+                v_obj.value = v_fun(v_obj.value) // ATUALIZA VALOR INPUT COM MÁSCARA
             }
 
             function mreais(v) {
-                v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
-                v = v.replace(/(\d{2})$/, ",$1") //Coloca a virgula
-                v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2") //Coloca o primeiro ponto
+                v = v.replace(/\D/g, "") // REMOVE OQ NÃO É DÍGITO
+                v = v.replace(/(\d{2})$/, ",$1") // PÕE VIRGULA
+                v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2") // PÕE PRIMEIRO PONTO 
                 return v
             }
         </script>

@@ -1,5 +1,4 @@
 <?php
-    // Conexão com o banco de dados
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -11,11 +10,10 @@
         die("Conexão falhou: " . $conn->connect_error);
     }
 
-    // Consulta para listar todos os fornecedores
     $sql = "SELECT * FROM fornecedor";
     $result = $conn->query($sql);
 
-    // Lógica para exclusão
+    // EXCLUIR FORNECEDOR
     if (isset($_GET['delete_id'])) {
         $delete_id = $_GET['delete_id'];
         $sql_delete = "DELETE FROM fornecedor WHERE id_fornecedor = ?";
@@ -23,7 +21,7 @@
         $stmt->bind_param("i", $delete_id);
         $stmt->execute();
         $stmt->close();
-        header("Location: fornecedores.php"); // Redireciona para a página de listagem
+        header("Location: fornecedores.php");
         exit;
     }
 ?>
@@ -56,7 +54,7 @@
         <i class="fa-solid fa-arrow-left" onclick="trocarPagina('menuAdm.php')"></i>
     </div>
     
-    <section id="Titulo-Principal"><h1>Consulta de Fornecedores</h1></section>
+    <section id="Titulo-Principal"><h1>Gerenciamento de Fornecedores</h1></section>
 
     <main id="container-main">
         <section>

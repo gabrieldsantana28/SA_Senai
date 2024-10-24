@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 $dbname = "nossasa";
 
-// Conexão com o banco de dados
+// CONEXÃO
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
@@ -13,13 +13,7 @@ if ($conn->connect_error) {
 
 $message = "";
 
-// Lógica para adicionar um novo funcionário
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['id_usuario'])) {
-    $nome = $_POST['nome'];
-    $usuario = $_POST['usuario'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    $nivel = $_POST['nivel']; 
 
     $sql = "INSERT INTO usuario (nome, usuario, email, senha, nivel) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -55,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
     $stmt->close();
 }
 
-// Lógica para excluir um funcionário
+// EXCLUIR
 if (isset($_GET['excluir'])) {
     $id_usuario = $_GET['excluir'];
     $sql = "DELETE FROM usuario WHERE id_usuario=?";
@@ -71,10 +65,9 @@ if (isset($_GET['excluir'])) {
     $stmt->close();
 }
 
-// Captura o valor da pesquisa, se houver
 $pesquisa = isset($_POST['PesquisarFuncionario']) ? $_POST['PesquisarFuncionario'] : '';
 
-// Modifica a consulta SQL para incluir a pesquisa
+// PESQUISA POR USUÁRIO OU NOME
 $sql = "SELECT id_usuario, nome, usuario, email, senha, nivel FROM usuario WHERE usuario LIKE ? OR nome LIKE ?";
 $stmt = $conn->prepare($sql);
 $likePesquisa = "%" . $pesquisa . "%";
@@ -119,7 +112,7 @@ $result = $stmt->get_result();
         }
 
         .inputs{
-            width: 200px; /* Ajuste a largura aqui */
+            width: 200px; 
             padding: 8px;
             margin: 5px 0;
             border: 1px solid #ccc;
@@ -130,14 +123,14 @@ $result = $stmt->get_result();
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
-            background-color: grey; /* Cor padrão do botão */
+            background-color: grey; 
             color: #fff;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: black; /* Cor ao passar o mouse */
+            background-color: black; 
         }
     </style>
 </head>
@@ -210,7 +203,7 @@ $result = $stmt->get_result();
 
         function confirmarExclusao(id) {
             if (confirm('Tem certeza que deseja excluir este funcionário?')) {
-                window.location.href = '?excluir=' + id; // Redireciona para excluir
+                window.location.href = '?excluir=' + id; 
             }
         }
     </script>

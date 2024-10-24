@@ -12,7 +12,6 @@
 
     $message = "";
 
-    // Consulta para obter os produtos cadastrados
     $sql_produtos = "SELECT id_produto, nome_produto FROM produto";
     $result_produtos = $conn->query($sql_produtos);
 
@@ -23,7 +22,6 @@
         $horario = $_POST['horario'];
         $produto_id = $_POST['produto'];
 
-        // Consulta o nome do produto com base no ID selecionado
         $sql_nome_produto = "SELECT nome_produto FROM produto WHERE id_produto = ?";
         $stmt_produto = $conn->prepare($sql_nome_produto);
         $stmt_produto->bind_param("i", $produto_id);
@@ -32,20 +30,17 @@
         $stmt_produto->fetch();
         $stmt_produto->close();
 
-        // Atualiza a tabela de vendas, gravando o nome do produto
         $sql_venda = "INSERT INTO venda (tipo_pagamento, quantidade, data_venda, hora_venda, produto_venda) VALUES (?, ?, ?, ?, ?)";
         $stmt_venda = $conn->prepare($sql_venda);
         $stmt_venda->bind_param("sssss", $tipoPagamento, $quantidade, $data, $horario, $nome_produto);
 
         if ($stmt_venda->execute()) {
-          // Verifica o número de linhas afetadas para garantir que a inserção foi feita
           if ($stmt_venda->affected_rows > 0) {
               $message = "Venda cadastrada com sucesso!";
           } else {
               $message = "Erro ao cadastrar venda: Nenhuma linha foi afetada.";
           }
       } else {
-          // Exibe o erro detalhado caso o execute() falhe
           $message = "Erro ao cadastrar venda: " . $stmt_venda->error;
       }
       
@@ -129,7 +124,7 @@
         }
         </script>
   <script>
-  // Função para aplicar máscara de data no formato DD/MM/AAAA
+  // FUNÇÃO MÁSCARA DATA 
   function mascaraData(val) {
     var pass = val.value;
     var expr = /[0123456789]/;
@@ -192,44 +187,42 @@
     return true;
   }
 
-  // Função de validação de data, incluindo restrição de ano
+  // FUNÇÃO DATA INVÁLIDA  
   function validarData(data) {
     var partesData = data.split('/');
     var dia = parseInt(partesData[0], 10);
     var mes = parseInt(partesData[1], 10);
     var ano = parseInt(partesData[2], 10);
 
-    // Verifica se a data é válida
     var dataValida = new Date(ano, mes - 1, dia);
 
+    // DATA INVÁLIDA
     if (dataValida.getFullYear() != ano || (dataValida.getMonth() + 1) != mes || dataValida.getDate() != dia) {
-        return false;  // Data inválida
+        return false;
     }
 
-    // Verifica se o ano está entre 2000 e 2024
+    // ANO INVÁLIDO
     if (ano < 2000 || ano > 2024) {
-        return false;  // Ano inválido
+        return false; 
     }
 
-    return true;  // Data válida e ano entre 2000 e 2024
+    return true; 
 }
 
 
-  // Adiciona evento no formulário para validar a data antes do envio
   window.onload = function() {
-    var form = document.querySelector('form'); // Seleciona o formulário de forma genérica
-    var inputData = document.getElementById("data"); // O ID do input de data
+    var form = document.querySelector('form'); 
+    var inputData = document.getElementById("data"); 
 
     form.addEventListener("submit", function(event) {
       var data = inputData.value;
 
       if (!validarData(data)) {
         alert("Data inválida. Por favor, insira uma data válida.");
-        event.preventDefault();  // Impede o envio do formulário
+        event.preventDefault();  
       }
     });
 
-    // Adiciona o evento de máscara diretamente ao input de data
     inputData.addEventListener("input", function() {
       mascaraData(this);
     });
@@ -243,13 +236,13 @@
 <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0"></script>
 
 <script>
-    // Aplicando a máscara de horário com Cleave.js
+    // APLICA MÁSCARA DE HORÁRIO - CLEAVE.JS
     document.addEventListener('DOMContentLoaded', function() {
         new Cleave('#Horario', {
             time: true,
-            timePattern: ['h', 'm'],  // Define o formato de horas e minutos
-            delimiter: ':',           // Define o delimitador como dois pontos
-            timeFormat: '24'           // Formato de 24 horas
+            timePattern: ['h', 'm'], 
+            delimiter: ':',           
+            timeFormat: '24'        
         });
     });
     </script>

@@ -45,34 +45,27 @@
     </section>
 
 <?php
-    // Conexão com o banco de dados
     $conexao = new mysqli("localhost", "root", "", "nossasa");
 
-    // Verifica se houve erro de conexão
     if ($conexao->connect_errno) {
         echo "Ocorreu um erro de conexão com o banco de dados";
         exit;
     }
 
-    // Define o charset da conexão
     $conexao->set_charset("utf8");
 
-    // Deletar item (se o botão de excluir for clicado)
     if (isset($_POST['delete_id'])) {
         $id = $_POST['delete_id'];
         $sql_delete = "DELETE FROM produto WHERE id_produto = $id";
         $conexao->query($sql_delete);
-        header("Location: estoque.php"); // Redireciona para a página principal
+        header("Location: estoque.php");
         exit;
     }
 
-    // Consulta SQL para exibir produtos
     $sql = "SELECT id_produto, nome_produto, quantidade, preco, descricao_produto FROM produto;";
     $result = $conexao->query($sql);
 
-    // Verifica se há resultados
     if ($result->num_rows > 0) {
-        // Loop pelos resultados
         while ($linha = $result->fetch_assoc()) {
             echo '<section id="lista-elementos">';
             echo '<div class="elementos-lista">' . $linha["id_produto"] . '</div>';
@@ -81,14 +74,15 @@
             echo '<div class="elementos-lista">' . "R$ " . number_format($linha["preco"], 2, ',', '.') . '</div>';
             echo '<div class="elementos-lista">' . $linha["descricao_produto"] . '</div>';
             echo '<div class="icons">';
-            // Formulário para excluir com confirmação
+
+            // EXCLUIR
             echo '<form method="POST" style="display:inline-block;" onsubmit="return confirmarExclusao();">';
             echo '<input type="hidden" name="delete_id" value="' . $linha["id_produto"] . '">';
             echo '<button type="submit" style="background:none; border:none;">';
             echo '<i class="fa-solid fa-trash" style="color: red;"></i>';
             echo '</button>';
             echo '</form>';
-            // Link para editar
+            // EDITAR
             echo '<a href="editar.php?id=' . $linha["id_produto"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
             echo '</div>';
             echo '</section>';
@@ -97,11 +91,9 @@
         echo "Sem resultados";
     }
 
-    // Fecha a conexão
     $conexao->close();
 ?>
 
-<!-- Script de confirmação de exclusão -->
 <script>
 function confirmarExclusao() {
     return confirm("Você realmente deseja apagar este item?");

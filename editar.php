@@ -36,7 +36,7 @@ if (isset($_POST['update'])) {
     $sql_update = "UPDATE produto SET nome_produto='$nome', quantidade='$quantidade', preco='$preco', descricao_produto='$descricao' WHERE id_produto=$id";
     $conexao->query($sql_update);
 
-    header("Location: estoque.php"); // Redireciona para a página principal
+    header("Location: estoque.php"); 
     exit;
 }
 
