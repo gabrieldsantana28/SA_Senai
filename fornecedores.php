@@ -39,6 +39,13 @@
     <title>Consulta de Fornecedores</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+        .edit-form {
+            display: none;
+            margin-top: 10px;
+        }
+        .fornecedor--item {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -73,16 +80,21 @@
             <?php if ($result->num_rows > 0): ?>
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div style="margin: auto;" class="fornecedor--item">
-                        <div class="elementos--itens--dois">
-                            <?php echo $row['nome_fornecedor']; ?> (<?php echo $row['materialFornecido']; ?>)
-                        </div>
+                        <span onclick="toggleEditForm(<?php echo $row['id_fornecedor']; ?>)">&#x3E;</span>
+                        <span class="elementos--itens--dois"><?php echo $row['nome_fornecedor']; ?> (<?php echo $row['materialFornecido']; ?>)</span>
                         <a href="?delete_id=<?php echo $row['id_fornecedor']; ?>" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?');">
                             <i class="fa-solid fa-trash" style="color: red;"></i>
                         </a>
-                        <a href="editarfornecedor.php?id=<?php echo $row['id_fornecedor']; ?>">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <br>
+                        <div class="edit-form" id="edit-form-<?php echo $row['id_fornecedor']; ?>">
+                            <form method="POST" action="atualizarfornecedor.php">
+                                <input type="hidden" name="id_fornecedor" value="<?php echo $row['id_fornecedor']; ?>">
+                                <label for="nome_fornecedor">Nome:</label>
+                                <input type="text" name="nome_fornecedor" value="<?php echo $row['nome_fornecedor']; ?>"><br>
+                                <label for="materialFornecido">Material Fornecido:</label>
+                                <input type="text" name="materialFornecido" value="<?php echo $row['materialFornecido']; ?>"><br>
+                                <button type="submit">Salvar</button>
+                            </form>
+                        </div>
                     </div>
                     <br>
                 <?php endwhile; ?>
@@ -93,6 +105,15 @@
     </main>
 
     <script>
+        function toggleEditForm(id) {
+            const form = document.getElementById('edit-form-' + id);
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+        // Para redirecionamento
         function trocarPagina(url) {
             window.location.href = url;
         }

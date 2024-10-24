@@ -40,8 +40,8 @@ body {
 
 #container-main {
     background-color: white;
-    max-width: 85vw; 
-    width: 1200px; 
+    max-width: 60vw; /* Altere para o tamanho desejado */
+    width: 800px; /* Altere para o tamanho desejado */
     margin: 50px auto; 
     border-radius: 15px; 
     box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.3); 

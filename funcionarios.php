@@ -38,13 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['id_usuario'])) {
 // Lógica para editar um funcionário
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
     $id_usuario = $_POST['id_usuario'];
+    $nome = $_POST['nome'];
     $usuario = $_POST['usuario'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    $sql = "UPDATE usuario SET usuario=?, email=?, senha=? WHERE id_usuario=?";
+    $sql = "UPDATE usuario SET nome=?, usuario=?, email=?, senha=? WHERE id_usuario=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssi", $usuario, $email, $senha, $id_usuario);
+    $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $id_usuario);
 
     if ($stmt->execute()) {
         $message = "Funcionário atualizado com sucesso!";
@@ -185,6 +186,7 @@ $result = $stmt->get_result();
                     <div class="detalhes" id="detalhes-<?php echo $row['id_usuario']; ?>">
                         <form method="POST">
                             <input type="hidden" name="id_usuario" value="<?php echo $row['id_usuario']; ?>">
+                            <p><strong>Nome:</strong> <input class="inputs" type="text" name="nome" value="<?php echo htmlspecialchars($row['nome']); ?>"></p>
                             <p><strong>Usuário:</strong> <input class="inputs" type="text" name="usuario" value="<?php echo htmlspecialchars($row['usuario']); ?>"></p>
                             <p><strong>Email:</strong> <input class="inputs" type="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>"></p>
                             <p><strong>Senha:</strong> <input class="inputs" type="password" name="senha" value="<?php echo htmlspecialchars($row['senha']); ?>"></p>
@@ -210,11 +212,9 @@ $result = $stmt->get_result();
 
         function confirmarExclusao(id) {
             if (confirm('Tem certeza que deseja excluir este funcionário?')) {
-                window.location.href = '?excluir=' + id; // Redireciona para excluir
+                window.location.href = '?excluir=' + id;
             }
         }
     </script>
 </body>
 </html>
-
-<?php $conn->close(); ?>
