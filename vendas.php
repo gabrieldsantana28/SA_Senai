@@ -107,7 +107,7 @@ $result_vendas = $conn->query($sql_vendas);
         echo "Sem resultados";
     }
 
-           ?> 
+?> 
 <!-- Script de confirmação de exclusão -->
 <script>
 function confirmarExclusao() {
