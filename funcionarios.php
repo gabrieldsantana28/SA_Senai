@@ -1,18 +1,18 @@
 <?php
-    session_start();
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "nossasa";
+session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nossasa";
 
-    // CONEXÃO
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// CONEXÃO
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Conexão falhou: " . $conn->connect_error);
-    }
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
 
-    $message = "";
+$message = "";
 
 // Lógica para editar um funcionário
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
@@ -25,70 +25,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
     $sql = "UPDATE usuario SET nome=?, usuario=?, email=?, senha=? WHERE id_usuario=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $id_usuario);
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['id_usuario'])) {
 
-        $sql = "INSERT INTO usuario (nome, usuario, email, senha, nivel) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $nivel); 
-
-        if ($stmt->execute()) {
-            $message = "Funcionário cadastrado com sucesso!";
-        } else {
-            $message = "Erro ao cadastrar funcionário: " . $stmt->error;
-        }
-
-        $stmt->close();
+    if ($stmt->execute()) {
+        $message = "Funcionário atualizado com sucesso!";
+    } else {
+        $message = "Erro ao atualizar funcionário: " . $stmt->error;
     }
 
-    // Lógica para editar um funcionário
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
-        $id_usuario = $_POST['id_usuario'];
-        $usuario = $_POST['usuario'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
+    $stmt->close();
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Lógica para cadastrar um novo funcionário
+    $nome = $_POST['nome'];
+    $usuario = $_POST['usuario'];
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+    $nivel = $_POST['nivel'] ?? 0; // Defina o nível se necessário
 
-        $sql = "UPDATE usuario SET usuario=?, email=?, senha=? WHERE id_usuario=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $usuario, $email, $senha, $id_usuario);
-
-        if ($stmt->execute()) {
-            $message = "Funcionário atualizado com sucesso!";
-        } else {
-            $message = "Erro ao atualizar funcionário: " . $stmt->error;
-        }
-
-        $stmt->close();
-    }
-
-    // EXCLUIR
-    if (isset($_GET['excluir'])) {
-        $id_usuario = $_GET['excluir'];
-        $sql = "DELETE FROM usuario WHERE id_usuario=?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id_usuario);
-        
-        if ($stmt->execute()) {
-            $message = "Funcionário excluído com sucesso!";
-        } else {
-            $message = "Erro ao excluir funcionário: " . $stmt->error;
-        }
-
-        $stmt->close();
-    }
-
-    // RECUPERA NÍVEL DA CONTA 
-    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
-
-    $pesquisa = isset($_POST['PesquisarFuncionario']) ? $_POST['PesquisarFuncionario'] : '';
-
-    // PESQUISA POR USUÁRIO OU NOME
-    $sql = "SELECT id_usuario, nome, usuario, email, senha, nivel FROM usuario WHERE usuario LIKE ? OR nome LIKE ?";
+    $sql = "INSERT INTO usuario (nome, usuario, email, senha, nivel) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $likePesquisa = "%" . $pesquisa . "%";
-    $stmt->bind_param("ss", $likePesquisa, $likePesquisa);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $nivel);
+
+    if ($stmt->execute()) {
+        $message = "Funcionário cadastrado com sucesso!";
+    } else {
+        $message = "Erro ao cadastrar funcionário: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
+// Lógica para excluir um funcionário
+if (isset($_GET['excluir'])) {
+    $id_usuario = $_GET['excluir'];
+    $sql = "DELETE FROM usuario WHERE id_usuario=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_usuario);
+
+    if ($stmt->execute()) {
+        $message = "Funcionário excluído com sucesso!";
+    } else {
+        $message = "Erro ao excluir funcionário: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
+// Recupera nível da conta
+$nivel = $_SESSION['nivel'] ?? 0; // Defina nível da conta como 0 caso não esteja logado
+
+$pesquisa = $_POST['PesquisarFuncionario'] ?? '';
+
+// Pesquisa por usuário ou nome
+$sql = "SELECT id_usuario, nome, usuario, email, senha, nivel FROM usuario WHERE usuario LIKE ? OR nome LIKE ?";
+$stmt = $conn->prepare($sql);
+$likePesquisa = "%" . $pesquisa . "%";
+$stmt->bind_param("ss", $likePesquisa, $likePesquisa);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -204,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
                     <br>
                 <?php endwhile; ?>
             <?php else: ?>
-                <p>Nenhum funcionário cadastrado.</p>
+                <p style="text-align: center">Nenhum funcionário cadastrado.</p>
             <?php endif; ?>
         </section>
     </main>
@@ -223,17 +216,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
                 window.location.href = '?excluir=' + id;
             }
         }
-        function voltarMenu() {
-            <?php if ($nivel == 1): ?>
-                window.location.href = 'menuAdm.php';
-            <?php elseif ($nivel == 2): ?>
-                window.location.href = 'menuFuncionario.php';
-            <?php else: ?>
-                alert('Nível de conta não identificado. Faça login novamente.');
-                window.location.href = 'login.php'; 
-            <?php endif; 
-        }
-        ?>
     </script>
 </body>
 </html>

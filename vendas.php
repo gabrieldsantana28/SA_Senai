@@ -19,6 +19,14 @@
 
     // RECUPERA NÍVEL DA CONTA 
     $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
+
+    $pesquisa = $_GET['PesquisarVenda'] ?? ''; // Obtém o termo de pesquisa do input
+    $sql_vendas = "SELECT id_venda, produto_venda, quantidade, tipo_pagamento, data_venda, hora_venda FROM venda WHERE produto_venda LIKE ? OR tipo_pagamento LIKE ?";
+    $stmt = $conn->prepare($sql_vendas);
+    $likePesquisa = "%" . $pesquisa . "%";
+    $stmt->bind_param("ss", $likePesquisa, $likePesquisa);
+    $stmt->execute();
+    $result_vendas = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +38,11 @@
     <link rel="stylesheet" href="css/vendas.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <title>Gerenciamento de Vendas</title>
+    <style>
+        .teste:hover{
+            outline: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -55,13 +68,16 @@
     <section style="margin-bottom: 20px;">
         <div class="elementos--itens">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="PesquisarVenda" name="PesquisarVenda" placeholder="Pesquisar Venda...">
+            <form method="GET" action="">
+            <input type="text" id="PesquisarVenda" class="teste" name="PesquisarVenda" placeholder="Pesquisar Venda..." value="<?php echo htmlspecialchars($pesquisa); ?>" onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
+            </form>
             <button class="icon-btn" id="redirectBtn">
                 <a href="cadastrovendas.php">
                     <i class="fa-solid fa-plus"></i>
                 </a>
             </button>
         </div>
+
     </section>
 
     <section id="container-elementos">
@@ -105,12 +121,13 @@
             echo '</form>';
             
             // EDITAR
-            echo '<a href="editar.php?id=' . $linha["id_venda"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
+            echo '<a href="editarvendas.php?id=' . $linha["id_venda"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
             echo '</div>';
             echo '</section>';
         }
     } else {
-        echo "Sem resultados";
+        echo '<br>';
+        echo '<div style="text-align:center">Nenhum fornecedor encontrado.</div>';
     }
 
 ?> 
