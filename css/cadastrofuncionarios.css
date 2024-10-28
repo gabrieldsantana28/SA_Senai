@@ -40,8 +40,8 @@ body {
 
 #container-main {
     background-color: white;
-    max-width: 60vw; /* Altere para o tamanho desejado */
-    width: 800px; /* Altere para o tamanho desejado */
+    max-width: 90%; /* Use um valor percentual para maior flexibilidade */
+    width: 100%; /* Mantenha como 100% para que o contêiner se ajuste à tela */
     margin: 50px auto; 
     border-radius: 15px; 
     box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.3); 
@@ -54,7 +54,7 @@ body {
 #Titulo-Principal {
     text-align: center;
     padding-top: 30px;
-    font-size: 1.3em; 
+    font-size: 1.5em; /* Aumente um pouco o tamanho da fonte */
 }
 
 #container-elementos {
@@ -70,7 +70,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px; 
-    flex: 1 1 calc(50% - 1.5rem); /* Alterado para 50% */
+    flex: 1 1 calc(100% - 1.5rem); /* Permite que ocupe até 100% da largura disponível */
     max-width: 400px; 
     background-color: #f4f4f4;
     border: 1.8px solid black; 
@@ -138,7 +138,6 @@ button:hover {
 
 @media (min-width: 1400px) {
     #container-main {
-        width: 100%;
         max-width: 100%;
         box-shadow: none;
     }
