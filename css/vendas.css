@@ -52,7 +52,12 @@ body {
     height: 45px; /* Ajustando a altura para ficar igual ao input */
     max-width: 400px;
     margin: 0 auto 30px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adicionando sombra */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s; /* Transição suave */
+}
+
+.elementos--itens:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Efeito de hover */
 }
 
 .elementos--itens input {
@@ -61,7 +66,7 @@ body {
     font-size: 16px;
     height: 100%; /* Ajusta a altura do input para ocupar todo o espaço */
     width: 300px;
-    padding-left: 10px; /* Adicionando espaçamento interno */
+    padding-left: 10px;
 }
 
 .elementos--itens input:focus {
@@ -74,10 +79,10 @@ body {
 }
 
 .icon-btn {
-    background-color: #484b4e; /* Azul moderno */
+    background-color: #484b4e;
     border: none;
     border-radius: 50%;
-    padding: 10px; /* Ajustando o padding */
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,21 +92,21 @@ body {
 }
 
 .icon-btn i {
-    font-size: 1.2em; /* Diminuindo um pouco o ícone */
-    color: white; /* Mudando a cor do ícone para branco */
+    font-size: 1.2em;
+    color: white;
 }
 
 .icon-btn:hover {
     background-color: #000000; /* Azul escuro ao passar o mouse */
-    transform: scale(1.1); /* Levemente aumenta o tamanho ao passar o mouse */
+    transform: scale(1.1);
 }
 
 #container-elementos {
-    height: 60px;
     width: 80%;
     margin: auto;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte */
 }
 
 .elementos {
@@ -112,16 +117,21 @@ body {
     text-align: center;
     padding-top: 10px;
     font-size: 1em;
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.elementos:hover {
+    background-color: #333; /* Efeito de hover */
 }
 
 #lista-elementos {
-    height: 60px;
     width: 80%;
     margin: auto;
     display: flex;
     justify-content: space-evenly;
     margin-top: 8px;
-    position: relative; /* Permite o posicionamento dos ícones */
+    position: relative;
+    flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte */
 }
 
 .elementos-lista {
@@ -133,13 +143,18 @@ body {
     font-size: 1em;
     border: 1px solid black;
     position: relative;
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.elementos-lista:hover {
+    background-color: #f0f0f0; /* Efeito de hover */
 }
 
 .icons {
     display: flex;
     gap: 10px;
     position: absolute;
-    right: -60px; /* Movendo os ícones para fora da caixa */
+    right: -60px;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -156,20 +171,20 @@ body {
 @media (max-width: 768px) {
     #container-elementos,
     #lista-elementos {
-        flex-direction: column;
+        flex-direction: column; /* Muda para coluna em telas menores */
         align-items: stretch;
     }
 
     .elementos,
     .elementos-lista {
-        width: 100%;
-        margin: 10px 0;
+        width: 100%; /* Ocupa 100% do espaço em telas menores */
+        margin: 10px 0; /* Margem para separar os itens */
     }
 
     .icons {
-        position: static;
-        transform: none;
-        margin-top: 10px;
-        justify-content: center;
+        position: static; /* Alinha os ícones corretamente */
+        transform: none; /* Remove a transformação */
+        margin-top: 10px; /* Espaço acima dos ícones */
+        justify-content: center; /* Centraliza os ícones */
     }
 }

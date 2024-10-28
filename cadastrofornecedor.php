@@ -1,45 +1,43 @@
 <?php
-    session_start();
+session_start();
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "nossasa";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nossasa";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Conexão falhou: " . $conn->connect_error);
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+$message = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['nome'];
+    $material = $_POST['material'];
+    $telefone = $_POST['telefone'];
+    $endereco = $_POST['endereco'];
+
+    $sql = "INSERT INTO fornecedor (nome_fornecedor, materialFornecido, telefone_fornecedor, endereco_fornecedor) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param("ssss", $nome, $material, $telefone, $endereco);
+
+    if ($stmt->execute()) {
+        $message = "Fornecedor cadastrado com sucesso!";
+    } else {
+        $message = "Erro ao cadastrar fornecedor: " . $stmt->error;
     }
 
-    $message = "";
+    $stmt->close();
+}
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // var_dump($_POST); 
+// RECUPERA NÍVEL DA CONTA 
+$nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
 
-        $nome = $_POST['nome'];
-        $material = $_POST['material'];
-        $telefone = $_POST['telefone'];
-        $endereco = $_POST['endereco'];
-
-        $sql = "INSERT INTO fornecedor (nome_fornecedor, materialFornecido, telefone_fornecedor, endereco_fornecedor) VALUES (?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param("ssss", $nome, $material, $telefone, $endereco);
-
-        if ($stmt->execute()) {
-            $message = "Fornecedor cadastrado com sucesso!";
-        } else {
-            $message = "Erro ao cadastrar fornecedor: " . $stmt->error;
-        }
-
-        $stmt->close();
-    }
-
-    // RECUPERA NÍVEL DA CONTA 
-    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
-
-    $conn->close();
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -60,13 +58,12 @@
             if(telefone.value.length == 10)
                 telefone.value = telefone.value + '-'; //quando o campo já tiver 8 caracteres, o script irá inserir um tracinho, para melhor visualização do telefone.
         }   
-</script>
+    </script>
 </head>
 <body>
     <header>
         <div class="hdr">
-            <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="#" onclick="voltarMenu()">Menu</a>
+            <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
             <a href="estoque.php">Gerenciamento de Estoque</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
             <a href="fornecedores.php">Gerenciamento de Fornecedores</a>

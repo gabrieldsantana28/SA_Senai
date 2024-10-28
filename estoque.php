@@ -1,21 +1,41 @@
 <?php 
-    session_start();
+session_start();
 
-    // VERIFICAÇÃO CONEXÃO COM O BANCO DE DADOS
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "nossasa";
+// VERIFICAÇÃO CONEXÃO COM O BANCO DE DADOS
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nossasa";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Conexão falhou: " . $conn->connect_error);
-    }
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
 
-    // RECUPERA NÍVEL DA CONTA 
-    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
-?>    
+// RECUPERA NÍVEL DA CONTA 
+$nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
+
+$pesquisa = $_GET['PesquisarProduto'] ?? ''; // Obtém o termo de pesquisa
+
+// Preparar a consulta de busca
+$sql = "SELECT id_produto, nome_produto, quantidade, preco, descricao_produto FROM produto WHERE nome_produto LIKE ?";
+$stmt = $conn->prepare($sql);
+$likePesquisa = "%" . $conn->real_escape_string($pesquisa) . "%";
+$stmt->bind_param("s", $likePesquisa);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if (isset($_POST['delete_id'])) {
+    $id = $_POST['delete_id'];
+    $sql_delete = "DELETE FROM produto WHERE id_produto = ?";
+    $stmt_delete = $conn->prepare($sql_delete);
+    $stmt_delete->bind_param("i", $id);
+    $stmt_delete->execute();
+    header("Location: estoque.php"); // Redireciona após exclusão
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -25,9 +45,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=7">
     <link rel="stylesheet" href="css/estoque.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <title>Gerenciamento de estoque</title>
+    <title>Gerenciamento de Estoque</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
     </style>
 </head>
 <body>
@@ -52,7 +72,9 @@
     <section style="margin-bottom: 30px;">
         <div style="margin: auto;" class="elementos--itens">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="PesquisarProduto" name="PesquisarProduto" placeholder="Pesquisar Produto...">
+            <form method="GET" action="">
+                <input type="text" id="PesquisarProduto" name="PesquisarProduto" placeholder="Pesquisar Produto..." value="<?php echo htmlspecialchars($pesquisa); ?>">
+            </form>
         </div>
     </section>
 
@@ -64,27 +86,7 @@
         <div class="elementos">DESCRIÇÃO DO PRODUTO</div>
     </section>
 
-<?php
-    $conexao = new mysqli("localhost", "root", "", "nossasa");
-
-    if ($conexao->connect_errno) {
-        echo "Ocorreu um erro de conexão com o banco de dados";
-        exit;
-    }
-
-    $conexao->set_charset("utf8");
-
-    if (isset($_POST['delete_id'])) {
-        $id = $_POST['delete_id'];
-        $sql_delete = "DELETE FROM produto WHERE id_produto = $id";
-        $conexao->query($sql_delete);
-        header("Location: estoque.php");
-        exit;
-    }
-
-    $sql = "SELECT id_produto, nome_produto, quantidade, preco, descricao_produto FROM produto;";
-    $result = $conexao->query($sql);
-
+    <?php
     if ($result->num_rows > 0) {
         while ($linha = $result->fetch_assoc()) {
             echo '<section id="lista-elementos">';
@@ -108,17 +110,18 @@
             echo '</section>';
         }
     } else {
-        echo "Sem resultados";
+        echo '<div style="text-align:center">Nenhum produto encontrado.</div>';
     }
 
-    $conexao->close();
-?>
+    $stmt->close();
+    $conn->close();
+    ?>
 
-<script>
-function confirmarExclusao() {
-    return confirm("Você realmente deseja apagar este item?");
-}
-</script>
+    <script>
+    function confirmarExclusao() {
+        return confirm("Você realmente deseja apagar este item?");
+    }
+    </script>
 
     <script>
         function trocarPagina(url) {

@@ -33,13 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
     }
 
     $stmt->close();
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Lógica para cadastrar um novo funcionário
-    $nome = $_POST['nome'];
-    $usuario = $_POST['usuario'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    $nivel = $_POST['nivel'] ?? 0; // Defina o nível se necessário
 
     $sql = "INSERT INTO usuario (nome, usuario, email, senha, nivel) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);

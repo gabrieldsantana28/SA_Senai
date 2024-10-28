@@ -54,8 +54,7 @@
 <body>
     <header>
         <div class="hdr">
-            <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="#" onclick="voltarMenu()">Menu</a>
+            <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
             <a href="estoque.php">Gerenciamento de Estoque</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
             <a href="fornecedores.php">Gerenciamento de Fornecedores</a>

@@ -71,8 +71,7 @@
 <body>
     <header>
         <div class="hdr">
-            <img class="logo-header" src="images/comp.png" alt="LOGO">
-            <a href="#" onclick="voltarMenu()">Menu</a>
+        <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
             <a href="estoque.php">Gerenciamento de Estoque</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
             <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
@@ -126,6 +125,11 @@
         </form>
     </main>
     <script>
+
+function trocarPagina(url) {
+            window.location.href = url;
+        }
+        
         function voltarMenu() {
           <?php if ($nivel == 1): ?>
               window.location.href = 'menuAdm.php';
@@ -135,7 +139,7 @@
               alert('Nível de conta não identificado. Faça login novamente.');
               window.location.href = 'login.php'; 
           <?php endif; ?>
-        }
+        } 
     </script>
 </body>
 </html>
