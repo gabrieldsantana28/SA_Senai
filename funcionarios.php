@@ -231,8 +231,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
             <?php else: ?>
                 alert('Nível de conta não identificado. Faça login novamente.');
                 window.location.href = 'login.php'; 
-            <?php endif; ?>
+            <?php endif; 
         }
+        ?>
     </script>
 </body>
 </html>
