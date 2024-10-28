@@ -225,4 +225,6 @@
 </body>
 </html>
 
-<?php $conn->close(); ?>
+<?php 
+    $conn->close(); 
+?>
