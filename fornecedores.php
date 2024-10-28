@@ -1,5 +1,7 @@
 <?php
-    // Conexão com o banco de dados
+    session_start();
+
+    // Verificar conexão com o banco de dados
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -11,11 +13,7 @@
         die("Conexão falhou: " . $conn->connect_error);
     }
 
-    // Consulta para listar todos os fornecedores
-    $sql = "SELECT * FROM fornecedor";
-    $result = $conn->query($sql);
-
-    // Lógica para exclusão
+    // EXCLUIR FORNECEDOR
     if (isset($_GET['delete_id'])) {
         $delete_id = $_GET['delete_id'];
         $sql_delete = "DELETE FROM fornecedor WHERE id_fornecedor = ?";
@@ -23,9 +21,12 @@
         $stmt->bind_param("i", $delete_id);
         $stmt->execute();
         $stmt->close();
-        header("Location: fornecedores.php"); // Redireciona para a página de listagem
+        header("Location: fornecedores.php");
         exit;
     }
+
+    // RECUPERA NÍVEL DA CONTA 
+    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
 ?>
 
 <!DOCTYPE html>
@@ -33,10 +34,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="css/fornecedores.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <title>Consulta de Fornecedores</title>
+    <title>Gerenciamento de Fornecedores</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
         .edit-form {
@@ -52,18 +53,20 @@
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.php">Menu ADM</a>
-            <a href="menuFuncionario.php">Menu Funcionário</a>
+            <a href="#" onclick="voltarMenu()">Menu</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
             <a href="estoque.php">Gerenciamento de Estoque</a>
+            <a href="vendas.php">Controle de Vendas</a>
+            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
+
     <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('menuAdm.php')"></i>
+        <i class="fa-solid fa-arrow-left" onclick="voltarMenu()"></i>
     </div>
-    
-    <section id="Titulo-Principal"><h1>Consulta de Fornecedores</h1></section>
+
+    <section id="Titulo-Principal"><h1>Gerenciamento de Fornecedores</h1></section>
 
     <main id="container-main">
         <section>
@@ -77,7 +80,12 @@
         </section>
 
         <section>
-            <?php if ($result->num_rows > 0): ?>
+            <?php
+            // Exibir fornecedores cadastrados
+            $sql = "SELECT * FROM fornecedor";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0): ?>
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div style="margin: auto;" class="fornecedor--item">
                         <span onclick="toggleEditForm(<?php echo $row['id_fornecedor']; ?>)">&#x3E;</span>
@@ -116,6 +124,15 @@
         // Para redirecionamento
         function trocarPagina(url) {
             window.location.href = url;
+        function voltarMenu() {
+            <?php if ($nivel == 1): ?>
+                window.location.href = 'menuAdm.php';
+            <?php elseif ($nivel == 2): ?>
+                window.location.href = 'menuFuncionario.php';
+            <?php else: ?>
+                alert('Nível de conta não identificado. Faça login novamente.');
+                window.location.href = 'login.php'; 
+            <?php endif; ?>
         }
     </script>
 </body>

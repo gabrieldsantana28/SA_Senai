@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -49,19 +51,19 @@
     </style>
     <script>
             function mascara(o, f) {
-                v_obj = o
-                v_fun = f
-                setTimeout("execmascara()", 1)
+                v_obj = o // ARMANENA INPUT
+                v_fun = f // ARMAZENA MÁSCARA
+                setTimeout("execmascara()", 1) // DELAY MÁSCARA
             }
 
             function execmascara() {
-                v_obj.value = v_fun(v_obj.value)
+                v_obj.value = v_fun(v_obj.value) // ATUALIZA VALOR INPUT COM MÁSCARA
             }
 
             function mreais(v) {
-                v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
-                v = v.replace(/(\d{2})$/, ",$1") //Coloca a virgula
-                v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2") //Coloca o primeiro ponto
+                v = v.replace(/\D/g, "") // REMOVE OQ NÃO É DÍGITO
+                v = v.replace(/(\d{2})$/, ",$1") // PÕE VIRGULA
+                v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2") // PÕE PRIMEIRO PONTO 
                 return v
             }
         </script>
@@ -70,11 +72,13 @@
     <header>
         <div class="hdr">
             <img class="logo-header" src="images/comp.png" alt="LOGO">
-            <a href="menuAdm.php">Menu ADM</a>
-            <a href="menuFuncionario.php">Menu Funcionário</a>
-            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
-            <a href="funcionarios.php">Gerenciamento de Funcionários</a>
+            <a href="#" onclick="voltarMenu()">Menu</a>
             <a href="estoque.php">Gerenciamento de Estoque</a>
+            <a href="funcionarios.php">Gerenciamento de Funcionários</a>
+            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
+            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="vendas.php">Controle de Vendas</a>
+            <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
     <div class="botao--voltar">
@@ -122,8 +126,15 @@
         </form>
     </main>
     <script>
-        function trocarPagina(url) {
-            window.location.href = url;
+        function voltarMenu() {
+          <?php if ($nivel == 1): ?>
+              window.location.href = 'menuAdm.php';
+          <?php elseif ($nivel == 2): ?>
+              window.location.href = 'menuFuncionario.php';
+          <?php else: ?>
+              alert('Nível de conta não identificado. Faça login novamente.');
+              window.location.href = 'login.php'; 
+          <?php endif; ?>
         }
     </script>
 </body>

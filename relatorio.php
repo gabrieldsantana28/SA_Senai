@@ -1,33 +1,37 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "nossasa";
+    session_start();
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "nossasa";
 
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Consultar os dados dos produtos
-$sql = "SELECT nome_produto, quantidade FROM produto";
-$result = $conn->query($sql);
-
-$produtos = [];
-$quantidades = [];
-
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $produtos[] = $row['nome_produto'];
-        $quantidades[] = $row['quantidade'];
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
     }
-    // Para depuração
-    // var_dump($produtos, $quantidades);
-} else {
-    echo "0 resultados";
-}
-$conn->close();
+
+    $sql = "SELECT nome_produto, quantidade FROM produto";
+    $result = $conn->query($sql);
+
+    $produtos = [];
+    $quantidades = [];
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $produtos[] = $row['nome_produto'];
+            $quantidades[] = $row['quantidade'];
+        }
+        // var_dump($produtos, $quantidades);
+    } else {
+        echo "0 resultados";
+    }
+
+    // RECUPERA NÍVEL DA CONTA 
+    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
+
+    $conn->close();
 ?>
 
 
@@ -49,11 +53,12 @@ $conn->close();
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.php">Menu ADM</a>
-            <a href="menuFuncionario.php">Menu Funcionário</a>
+            <a href="#" onclick="voltarMenu()">Menu</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="funcionarios.php">Gerenciamento de Fornecedores</a>
             <a href="estoque.php">Gerenciamento de Estoque</a>
+            <a href="vendas.php">Controle de Vendas</a>
+            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
         </div>
     </header>
     <div class="botao--voltar">
@@ -112,6 +117,17 @@ $conn->close();
                 }
             }
         });
+
+        function voltarMenu() {
+            <?php if ($nivel == 1): ?>
+                window.location.href = 'menuAdm.php';
+            <?php elseif ($nivel == 2): ?>
+                window.location.href = 'menuFuncionario.php';
+            <?php else: ?>
+                alert('Nível de conta não identificado. Faça login novamente.');
+                window.location.href = 'login.php'; 
+            <?php endif; ?>
+        }
     </script>
 </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -12,7 +14,6 @@
 
     $message = "";
 
-    // Consulta para obter os produtos cadastrados
     $sql_produtos = "SELECT id_produto, nome_produto FROM produto";
     $result_produtos = $conn->query($sql_produtos);
 
@@ -23,7 +24,6 @@
         $horario = $_POST['horario'];
         $produto_id = $_POST['produto'];
 
-        // Consulta o nome do produto com base no ID selecionado
         $sql_nome_produto = "SELECT nome_produto FROM produto WHERE id_produto = ?";
         $stmt_produto = $conn->prepare($sql_nome_produto);
         $stmt_produto->bind_param("i", $produto_id);
@@ -32,25 +32,25 @@
         $stmt_produto->fetch();
         $stmt_produto->close();
 
-        // Atualiza a tabela de vendas, gravando o nome do produto
         $sql_venda = "INSERT INTO venda (tipo_pagamento, quantidade, data_venda, hora_venda, produto_venda) VALUES (?, ?, ?, ?, ?)";
         $stmt_venda = $conn->prepare($sql_venda);
         $stmt_venda->bind_param("sssss", $tipoPagamento, $quantidade, $data, $horario, $nome_produto);
 
         if ($stmt_venda->execute()) {
-          // Verifica o número de linhas afetadas para garantir que a inserção foi feita
           if ($stmt_venda->affected_rows > 0) {
               $message = "Venda cadastrada com sucesso!";
           } else {
               $message = "Erro ao cadastrar venda: Nenhuma linha foi afetada.";
           }
       } else {
-          // Exibe o erro detalhado caso o execute() falhe
           $message = "Erro ao cadastrar venda: " . $stmt_venda->error;
       }
       
       $stmt_venda->close();
     }
+
+    // RECUPERA NÍVEL DA CONTA 
+    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
 
     $conn->close();
 ?>
@@ -69,11 +69,13 @@
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.php">Menu</a>
+            <a href="#" onclick="voltarMenu()">Menu</a>
             <a href="estoque.php">Gerenciamento de Estoque</a>
-            <a href="fornecedores.php">Consultar Fornecedores</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
+            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
+            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="vendas.php">Controle de Vendas</a>
+            <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
     <div class="botao--voltar">
@@ -124,59 +126,67 @@
         </form>
     </main>
     <script>
-        function trocarPagina(url) {
+      function trocarPagina(url) {
             window.location.href = url;
-        }
-        </script>
-  <script>
-  // Função para aplicar máscara de data no formato DD/MM/AAAA
-  function mascaraData(val) {
-    var pass = val.value;
-    var expr = /[0123456789]/;
-
-    for (i = 0; i < pass.length; i++) {
-      var lchar = val.value.charAt(i);
-      var nchar = val.value.charAt(i + 1);
-
-      if (i == 0) {
-        if ((lchar.search(expr) != 0) || (lchar > 3)) {
-          val.value = "";
-        }
-
-      } else if (i == 1) {
-        if (lchar.search(expr) != 0) {
-          var tst1 = val.value.substring(0, (i));
-          val.value = tst1;
-          continue;
-        }
-
-        if ((nchar != '/') && (nchar != '')) {
-          var tst1 = val.value.substring(0, (i) + 1);
-          if (nchar.search(expr) != 0)
-            var tst2 = val.value.substring(i + 2, pass.length);
-          else
-            var tst2 = val.value.substring(i + 1, pass.length);
-
-          val.value = tst1 + '/' + tst2;
-        }
-
-      } else if (i == 4) {
-        if (lchar.search(expr) != 0) {
-          var tst1 = val.value.substring(0, (i));
-          val.value = tst1;
-          continue;
-        }
-
-        if ((nchar != '/') && (nchar != '')) {
-          var tst1 = val.value.substring(0, (i) + 1);
-          if (nchar.search(expr) != 0)
-            var tst2 = val.value.substring(i + 2, pass.length);
-          else
-            var tst2 = val.value.substring(i + 1, pass.length);
-
-          val.value = tst1 + '/' + tst2;
-        }
       }
+
+      function voltarMenu() {
+          <?php if ($nivel == 1): ?>
+              window.location.href = 'menuAdm.php';
+          <?php elseif ($nivel == 2): ?>
+              window.location.href = 'menuFuncionario.php';
+          <?php else: ?>
+              alert('Nível de conta não identificado. Faça login novamente.');
+              window.location.href = 'login.php'; 
+          <?php endif; ?>
+      }
+
+      // FUNÇÃO MÁSCARA DATA 
+      function mascaraData(val) {
+          var pass = val.value;
+          var expr = /[0123456789]/;
+
+          for (i = 0; i < pass.length; i++) {
+          var lchar = val.value.charAt(i);
+          var nchar = val.value.charAt(i + 1);
+
+          if (i == 0) {
+              if ((lchar.search(expr) != 0) || (lchar > 3)) {
+                  val.value = "";
+                }
+          } else if (i == 1) {
+                if (lchar.search(expr) != 0) {
+                  var tst1 = val.value.substring(0, (i));
+                    val.value = tst1;
+                    continue;
+                }
+
+        if ((nchar != '/') && (nchar != '')) {
+          var tst1 = val.value.substring(0, (i) + 1);
+          if (nchar.search(expr) != 0)
+            var tst2 = val.value.substring(i + 2, pass.length);
+          else
+            var tst2 = val.value.substring(i + 1, pass.length);
+
+          val.value = tst1 + '/' + tst2;
+        }
+
+        } else if (i == 4) {
+            if (lchar.search(expr) != 0) {
+                var tst1 = val.value.substring(0, (i));
+                val.value = tst1;
+               continue;
+            }
+
+            if ((nchar != '/') && (nchar != '')) {
+                var tst1 = val.value.substring(0, (i) + 1);
+                if (nchar.search(expr) != 0)
+                    var tst2 = val.value.substring(i + 2, pass.length);
+                else
+                    var tst2 = val.value.substring(i + 1, pass.length);
+                    val.value = tst1 + '/' + tst2;
+            }
+        }
 
       if (i >= 6) {
         if (lchar.search(expr) != 0) {
@@ -192,44 +202,42 @@
     return true;
   }
 
-  // Função de validação de data, incluindo restrição de ano
+  // FUNÇÃO VALIDAÇÃO DE DATA 
   function validarData(data) {
     var partesData = data.split('/');
     var dia = parseInt(partesData[0], 10);
     var mes = parseInt(partesData[1], 10);
     var ano = parseInt(partesData[2], 10);
 
-    // Verifica se a data é válida
     var dataValida = new Date(ano, mes - 1, dia);
 
+    // DATA INVÁLIDA
     if (dataValida.getFullYear() != ano || (dataValida.getMonth() + 1) != mes || dataValida.getDate() != dia) {
-        return false;  // Data inválida
+        return false;
     }
 
-    // Verifica se o ano está entre 2000 e 2024
+    // ANO INVÁLIDO
     if (ano < 2000 || ano > 2024) {
-        return false;  // Ano inválido
+        return false; 
     }
 
-    return true;  // Data válida e ano entre 2000 e 2024
+    return true; 
 }
 
 
-  // Adiciona evento no formulário para validar a data antes do envio
   window.onload = function() {
-    var form = document.querySelector('form'); // Seleciona o formulário de forma genérica
-    var inputData = document.getElementById("data"); // O ID do input de data
+    var form = document.querySelector('form'); 
+    var inputData = document.getElementById("data"); 
 
     form.addEventListener("submit", function(event) {
       var data = inputData.value;
 
       if (!validarData(data)) {
         alert("Data inválida. Por favor, insira uma data válida.");
-        event.preventDefault();  // Impede o envio do formulário
+        event.preventDefault();  
       }
     });
 
-    // Adiciona o evento de máscara diretamente ao input de data
     inputData.addEventListener("input", function() {
       mascaraData(this);
     });
@@ -243,13 +251,13 @@
 <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0"></script>
 
 <script>
-    // Aplicando a máscara de horário com Cleave.js
+    // APLICA MÁSCARA DE HORÁRIO - CLEAVE.JS
     document.addEventListener('DOMContentLoaded', function() {
         new Cleave('#Horario', {
             time: true,
-            timePattern: ['h', 'm'],  // Define o formato de horas e minutos
-            delimiter: ':',           // Define o delimitador como dois pontos
-            timeFormat: '24'           // Formato de 24 horas
+            timePattern: ['h', 'm'], 
+            delimiter: ':',           
+            timeFormat: '24'        
         });
     });
     </script>

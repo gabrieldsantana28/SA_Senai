@@ -1,3 +1,22 @@
+<?php 
+    session_start();
+
+    // VERIFICAÇÃO CONEXÃO COM O BANCO DE DADOS
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "nossasa";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
+
+    // RECUPERA NÍVEL DA CONTA 
+    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
+?>    
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,11 +34,12 @@
     <header>
         <div class="hdr">
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="menuAdm.php">Menu ADM</a>
-            <a href="menuFuncionario.php">Menu Funcionário</a>
-            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="#" onclick="voltarMenu()">Menu</a>
             <a href="funcionarios.php">Gerenciamento de Funcionários</a>
+            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
+            <a href="vendas.php">Controle de Vendas</a>
+            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+            <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
     
@@ -45,34 +65,27 @@
     </section>
 
 <?php
-    // Conexão com o banco de dados
     $conexao = new mysqli("localhost", "root", "", "nossasa");
 
-    // Verifica se houve erro de conexão
     if ($conexao->connect_errno) {
         echo "Ocorreu um erro de conexão com o banco de dados";
         exit;
     }
 
-    // Define o charset da conexão
     $conexao->set_charset("utf8");
 
-    // Deletar item (se o botão de excluir for clicado)
     if (isset($_POST['delete_id'])) {
         $id = $_POST['delete_id'];
         $sql_delete = "DELETE FROM produto WHERE id_produto = $id";
         $conexao->query($sql_delete);
-        header("Location: estoque.php"); // Redireciona para a página principal
+        header("Location: estoque.php");
         exit;
     }
 
-    // Consulta SQL para exibir produtos
     $sql = "SELECT id_produto, nome_produto, quantidade, preco, descricao_produto FROM produto;";
     $result = $conexao->query($sql);
 
-    // Verifica se há resultados
     if ($result->num_rows > 0) {
-        // Loop pelos resultados
         while ($linha = $result->fetch_assoc()) {
             echo '<section id="lista-elementos">';
             echo '<div class="elementos-lista">' . $linha["id_produto"] . '</div>';
@@ -81,14 +94,15 @@
             echo '<div class="elementos-lista">' . "R$ " . number_format($linha["preco"], 2, ',', '.') . '</div>';
             echo '<div class="elementos-lista">' . $linha["descricao_produto"] . '</div>';
             echo '<div class="icons">';
-            // Formulário para excluir com confirmação
+
+            // EXCLUIR
             echo '<form method="POST" style="display:inline-block;" onsubmit="return confirmarExclusao();">';
             echo '<input type="hidden" name="delete_id" value="' . $linha["id_produto"] . '">';
             echo '<button type="submit" style="background:none; border:none;">';
             echo '<i class="fa-solid fa-trash" style="color: red;"></i>';
             echo '</button>';
             echo '</form>';
-            // Link para editar
+            // EDITAR
             echo '<a href="editar.php?id=' . $linha["id_produto"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
             echo '</div>';
             echo '</section>';
@@ -97,11 +111,9 @@
         echo "Sem resultados";
     }
 
-    // Fecha a conexão
     $conexao->close();
 ?>
 
-<!-- Script de confirmação de exclusão -->
 <script>
 function confirmarExclusao() {
     return confirm("Você realmente deseja apagar este item?");
@@ -111,6 +123,16 @@ function confirmarExclusao() {
     <script>
         function trocarPagina(url) {
             window.location.href = url;
+        }
+        function voltarMenu() {
+            <?php if ($nivel == 1): ?>
+                window.location.href = 'menuAdm.php';
+            <?php elseif ($nivel == 2): ?>
+                window.location.href = 'menuFuncionario.php';
+            <?php else: ?>
+                alert('Nível de conta não identificado. Faça login novamente.');
+                window.location.href = 'login.php'; 
+            <?php endif; ?>
         }
     </script>
 </body>
