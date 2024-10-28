@@ -94,11 +94,11 @@ $conn->close();
             </div>
             <div class="form-group">
                 <label for="quantidade">Quantidade</label>
-                <input type="number" id="quantidade" name="quantidade" value="<?php echo $venda['quantidade']; ?>" required>
+                <input type="number" id="quantidade" name="quantidade" value="<?php echo $venda['quantidade_venda']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="tipo_pagamento">Tipo de Pagamento</label>
-                <input type="text" id="tipo_pagamento" name="tipo_pagamento" value="<?php echo $venda['tipo_pagamento']; ?>" required>
+                <input type="text" id="tipo_pagamento" name="tipo_pagamento" value="<?php echo $venda['tipo_pagamento_venda']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="data_venda">Data</label>
