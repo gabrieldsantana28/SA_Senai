@@ -39,20 +39,20 @@
         ?>
 
         <form method="POST" action="php/backLogin.php">
+            
             <section id="container-elementos">
-                <div class="elementos--itens">
-                    <i class="fas fa-id-badge"></i>
-                    <input type="text" id="NomeUsuario" name="usuario" placeholder="Insira seu nome de usuário" required>
-                </div>
-                <div class="elementos--itens">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="SenhaUsuario" name="senha" placeholder="Insira sua senha" required>
-                </div>
-                <br>
-                <div class="button">
+    <div class="elementos--itens">
+        <i class="fas fa-id-badge"></i>
+        <input type="text" id="NomeUsuario" name="usuario" placeholder="Insira seu nome de usuário" required>
+    </div> 
+    <div class="elementos--itens"> 
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="SenhaUsuario" name="senha" placeholder="Insira sua senha" required>
+    </div>
+    <div class="button">
                     <button type="submit">Entrar</button>
                 </div>
-            </section>
+</section>
         </form>
     </main>
 </body>
