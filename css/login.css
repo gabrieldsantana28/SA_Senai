@@ -68,37 +68,41 @@ body {
     font-size: 1.2em;
 }
 
-#container-elementos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
 .elementos--itens {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 5px;
     flex: 1 1 calc(50% - 1rem);
     max-width: 350px;
     background-color: #f4f4f4;
     border: 1.5px solid black;
     border-radius: 20px;
-    height: 40px;
-    padding: 5px 10px;
+    min-height: 50px; /* Garantir altura mínima */
+    padding: 5px; /* Ajuste para o padding */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
 }
 
 .elementos--itens input {
     background-color: transparent;
     border: none;
     font-size: 14px;
-    width: 100%;
-    height: 38px;
+    width: 500px;
+    padding: 10px; /* Padding para o input */
+    height: 100%; /* Garante que o input preencha a altura do contêiner */
+    box-sizing: border-box; /* Inclui padding no cálculo da largura */
 }
 
 .elementos--itens i {
     font-size: 1.2em;
+    line-height: 1; /* Alinha o ícone verticalmente */
+}
+
+#container-elementos {
+    display: flex;
+    flex-direction: column; /* Colocar os inputs em coluna para melhor alinhamento */
+    gap: 1rem; /* Espaçamento uniforme entre os inputs */
+    justify-content: center; /* Centraliza os itens */
+    margin-top: 1rem;
 }
 
 input:focus-visible {
