@@ -11,7 +11,6 @@ $username = "root";
 $password = "";
 $dbname = "nossasa";
 
-// Conecta ao banco de dados
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
@@ -22,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
     $usuario = $_POST['usuario'];
     $senha = $_POST['senha'];
 
-    // Consulta segura usando prepared statements para evitar SQL injection
     $sql = "SELECT * FROM usuario WHERE usuario = ? AND senha = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $usuario, $senha); // 'ss' indica que ambos os parâmetros são strings
@@ -34,11 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
         $nome = $row['nome'];
         $nivel = $row['nivel'];
 
-        // Armazena o nome e o nível do usuário na sessão
         $_SESSION['nome'] = $nome;
         $_SESSION['nivel'] = $nivel;
 
-        // Redireciona com base no nível do usuário
         if ($nivel == 1) {
             header("Location: /GitHub/SA_Senai/menuAdm.php");
         } elseif ($nivel == 2) {
@@ -46,9 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
         }
         exit();
     } else {
-        // Usuário ou senha incorretos
         $_SESSION['login_error'] = "Usuário ou senha incorretos";
-        header("Location: /login.php");
+        header("Location: /GitHub/SA_Senai/login.php");
         exit();
     }
 

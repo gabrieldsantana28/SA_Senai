@@ -72,11 +72,11 @@
     <header>
         <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
-            <a href="estoque.php">Gerenciamento de Estoque</a>
-            <a href="funcionarios.php">Gerenciamento de Funcionários</a>
-            <a href="fornecedores.php">Gerenciamento de Fornecedores</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
-            <a href="vendas.php">Controle de Vendas</a>
+            <a href="estoque.php">Estoque</a>
+            <a href="funcionarios.php">Funcionários</a>
+            <a href="fornecedores.php">Fornecedores</a>
+            <a href="compras.php">Compras</a>
+            <a href="vendas.php">Vendas</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
     </header>

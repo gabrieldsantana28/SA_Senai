@@ -120,12 +120,12 @@ $result = $stmt->get_result();
 <body>
     <header>
         <div class="hdr">
-            <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="#" onclick="voltarMenu()">Menu</a>
-            <a href="funcionarios.php">Gerenciamento de Funcionários</a>
-            <a href="estoque.php">Gerenciamento de Estoque</a>
-            <a href="vendas.php">Controle de Vendas</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
+        <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
+            <a href="estoque.php">Estoque</a>
+            <a href="funcionarios.php">Funcionários</a>
+            <a href="compras.php">Compras</a>
+            <a href="cadastroprodutos.php">CadasProdutos</a>
+            <a href="vendas.php">Vendas</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
@@ -195,15 +195,15 @@ $result = $stmt->get_result();
         }
         
         function voltarMenu() {
-            <?php if ($nivel == 1): ?>
-                window.location.href = 'menuAdm.php';
-            <?php elseif ($nivel == 2): ?>
-                window.location.href = 'menuFuncionario.php';
-            <?php else: ?>
-                alert('Nível de conta não identificado. Faça login novamente.');
-                window.location.href = 'login.php'; 
-            <?php endif; ?>
-        }
+          <?php if ($nivel == 1): ?>
+              window.location.href = 'menuAdm.php';
+          <?php elseif ($nivel == 2): ?>
+              window.location.href = 'menuFuncionario.php';
+          <?php else: ?>
+              alert('Nível de conta não identificado. Faça login novamente.');
+              window.location.href = 'login.php'; 
+          <?php endif; ?>
+        } 
     </script>
 </body>
 </html>

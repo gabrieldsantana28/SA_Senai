@@ -34,13 +34,12 @@
 <body>
     <header>
         <div class="hdr">
-            <img class="logo-header" src="./images/comp.png" alt="LOGO">
-            <a href="#" onclick="voltarMenu()">Menu</a>
+        <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
+            <a href="estoque.php">Estoque</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="fornecedores.php">Fornecedores</a>
-            <a href="estoque.php">Estoque</a>
+            <a href="cadastroprodutos.php">CadasProdutos</a>
             <a href="vendas.php">Vendas</a>
-            <a href="cadastroprodutos.php">Cadastro de Produtos</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
