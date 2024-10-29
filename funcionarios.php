@@ -33,18 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
     }
 
     $stmt->close();
-
-    $sql = "INSERT INTO usuario (nome, usuario, email, senha, nivel) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $nivel);
-
-    if ($stmt->execute()) {
-        $message = "Funcionário cadastrado com sucesso!";
-    } else {
-        $message = "Erro ao cadastrar funcionário: " . $stmt->error;
-    }
-
-    $stmt->close();
 }
 
 // Lógica para excluir um funcionário

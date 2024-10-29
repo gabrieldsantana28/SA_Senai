@@ -66,7 +66,7 @@
     </section>
 
     <section id="container-elementos">
-        <div class="elementos">N° VENDA</div>
+        <div class="elementos">N° COMPRA</div>
         <div class="elementos">PRODUTO</div>
         <div class="elementos">FORNECEDOR</div>
         <div class="elementos">PREÇO</div>
