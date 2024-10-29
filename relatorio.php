@@ -44,10 +44,8 @@
     <link rel="stylesheet" href="css/relatorio.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
     <title>Desenvolvimento de Sistemas</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100..900&display=swap');
-    </style>
 </head>
 <body>
     <header>

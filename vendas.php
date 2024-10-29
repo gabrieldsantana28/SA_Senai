@@ -51,10 +51,9 @@ $result_vendas = $stmt->get_result();
     <meta http-equiv="X-UA-Compatible" content="IE=7">
     <link rel="stylesheet" href="css/vendas.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
     <title>Gerenciamento de Vendas</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-    </style>
+    
 </head>
 <body>
 <header>
