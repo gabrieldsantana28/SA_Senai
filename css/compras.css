@@ -49,24 +49,24 @@ body {
     background-color: #f4f4f4;
     border: 2px solid black;
     border-radius: 20px;
-    height: 45px; /* Ajustando a altura para ficar igual ao input */
+    height: 45px;
     max-width: 400px;
     margin: 0 auto 30px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adicionando sombra */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
 .elementos--itens input {
     background-color: transparent;
     border: none;
     font-size: 16px;
-    height: 100%; /* Ajusta a altura do input para ocupar todo o espaço */
+    height: 100%;
     width: 300px;
-    padding-left: 10px; /* Adicionando espaçamento interno */
+    padding-left: 10px; 
 }
 
 .elementos--itens input:focus {
     outline: none;
-    border-bottom: 2px solid #007bff; /* Destaque quando em foco */
+    border-bottom: 2px solid #007bff; 
 }
 
 .elementos--itens i {
@@ -74,26 +74,26 @@ body {
 }
 
 .icon-btn {
-    background-color: #484b4e; /* Azul moderno */
+    background-color: #484b4e;
     border: none;
     border-radius: 50%;
-    padding: 10px; /* Ajustando o padding */
+    padding: 10px; 
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s; /* Transição suave */
+    transition: background-color 0.3s, transform 0.3s;
     margin-left: 30px;
 }
 
 .icon-btn i {
-    font-size: 1.2em; /* Diminuindo um pouco o ícone */
-    color: white; /* Mudando a cor do ícone para branco */
+    font-size: 1.2em; 
+    color: white; 
 }
 
 .icon-btn:hover {
-    background-color: #000000; /* Azul escuro ao passar o mouse */
-    transform: scale(1.1); /* Levemente aumenta o tamanho ao passar o mouse */
+    background-color: #000000; 
+    transform: scale(1.1); 
 }
 
 #container-elementos {
