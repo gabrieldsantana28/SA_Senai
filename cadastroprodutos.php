@@ -123,8 +123,7 @@
         </form>
     </main>
     <script>
-
-function trocarPagina(url) {
+        function trocarPagina(url) {
             window.location.href = url;
         }
         
