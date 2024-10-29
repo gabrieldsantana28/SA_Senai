@@ -123,7 +123,7 @@ $conn->close();
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-regular fa-calendar-days" aria-label="Ícone de Data"></i>
-                    <input type="text" id="data" name="data" placeholder="Data da Venda..." maxlength="10" required>
+                    <input type="date" id="data" name="data" placeholder="Data da Venda..." maxlength="10" required>
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-regular fa-clock" aria-label="Ícone de Horário"></i>

@@ -25,7 +25,7 @@ $sql_vendas = "
         v.produto_venda, 
         v.quantidade_venda, 
         v.tipo_pagamento_venda, 
-        v.data_venda, 
+        DATE_FORMAT(v.data_venda, '%d/%m/%Y') AS data_venda,
         v.hora_venda, 
         p.preco, 
         (v.quantidade_venda * p.preco) AS total_preco 
@@ -53,7 +53,6 @@ $result_vendas = $stmt->get_result();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
     <title>Gerenciamento de Vendas</title>
-    
 </head>
 <body>
 <header>
@@ -83,10 +82,10 @@ $result_vendas = $stmt->get_result();
             <input type="text" id="PesquisarVenda" name="PesquisarVenda" placeholder="Pesquisar Venda..." value="<?php echo htmlspecialchars($pesquisa); ?>" onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
         </form>
         <button class="icon-btn" id="redirectBtn">
-                <a href="cadastrovendas.php">
-                    <i class="fa-solid fa-plus"></i>
-                </a>
-            </button>
+            <a href="cadastrovendas.php">
+                <i class="fa-solid fa-plus"></i>
+            </a>
+        </button>
     </div>
 </section>
 
@@ -96,18 +95,16 @@ $result_vendas = $stmt->get_result();
     <div class="elementos">QUANTIDADE</div>
     <div class="elementos">TIPO - PAGAMENTO</div>
     <div class="elementos">DATA/HORA</div>
-    <div class="elementos">PREÇO TOTAL</div> <!-- Alterado para Preço Total -->
+    <div class="elementos">PREÇO TOTAL</div>
 </section>
 
 <?php
-// DELETA VENDA
 if (isset($_POST['delete_id'])) {
     $id = $_POST['delete_id'];
     $sql_delete = "DELETE FROM venda WHERE id_venda = ?";
     $stmt_delete = $conn->prepare($sql_delete);
     $stmt_delete->bind_param("i", $id);
     $stmt_delete->execute();
-    // VOLTAR
     header("Location: vendas.php");
     exit;
 }
@@ -117,14 +114,12 @@ if ($result_vendas->num_rows > 0) {
         echo '<section id="lista-elementos">';
         echo '<div class="elementos-lista">' . $linha["id_venda"] . '</div>';
         echo '<div class="elementos-lista">' . $linha["produto_venda"] . '</div>';
-        echo '<div class="elementos-lista">' . $linha["quantidade_venda"] . '</div>'; // Exibir quantidade
+        echo '<div class="elementos-lista">' . $linha["quantidade_venda"] . '</div>';
         echo '<div class="elementos-lista">' . $linha["tipo_pagamento_venda"] . '</div>';
         echo '<div class="elementos-lista">' . $linha["data_venda"] ." - ". $linha["hora_venda"]. '</div>';
-        // Exibir o total calculado
-        echo '<div class="elementos-lista">' . number_format($linha["total_preco"], 2, ',', '.') . '</div>'; // Exibir total formatado
+        echo '<div class="elementos-lista">' . number_format($linha["total_preco"], 2, ',', '.') . '</div>';
         echo '<div class="icons">';
 
-        // EXCLUIR
         echo '<form method="POST" style="display:inline-block;" onsubmit="return confirmarExclusao();">';
         echo '<input type="hidden" name="delete_id" value="' . $linha["id_venda"] . '">';
         echo '<button type="submit" style="background:none; border:none;">';
@@ -132,7 +127,6 @@ if ($result_vendas->num_rows > 0) {
         echo '</button>';
         echo '</form>';
 
-        // EDITAR
         echo '<a href="editarvendas.php?id=' . $linha["id_venda"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
         echo '</div>';
         echo '</section>';
@@ -145,23 +139,23 @@ if ($result_vendas->num_rows > 0) {
 
 <script>
     function confirmarExclusao() {
-       return confirm("Você realmente deseja apagar este item?");
+        return confirm("Você realmente deseja apagar este item?");
     }
 
     function trocarPagina(url) {
         window.location.href = url;
     }
-    
+
     function voltarMenu() {
-          <?php if ($nivel == 1): ?>
-              window.location.href = 'menuAdm.php';
-          <?php elseif ($nivel == 2): ?>
-              window.location.href = 'menuFuncionario.php';
-          <?php else: ?>
-              alert('Nível de conta não identificado. Faça login novamente.');
-              window.location.href = 'login.php'; 
-          <?php endif; ?>
-        } 
+        <?php if ($nivel == 1): ?>
+            window.location.href = 'menuAdm.php';
+        <?php elseif ($nivel == 2): ?>
+            window.location.href = 'menuFuncionario.php';
+        <?php else: ?>
+            alert('Nível de conta não identificado. Faça login novamente.');
+            window.location.href = 'login.php'; 
+        <?php endif; ?>
+    } 
 </script>
 </body>
 </html>

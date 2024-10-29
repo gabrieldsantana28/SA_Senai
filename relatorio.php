@@ -1,39 +1,37 @@
 <?php
-    session_start();
+session_start();
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "nossasa";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nossasa";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Conexão falhou: " . $conn->connect_error);
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+$sql = "SELECT nome_produto, quantidade FROM produto";
+$result = $conn->query($sql);
+
+$produtos = [];
+$quantidades = [];
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $produtos[] = $row['nome_produto'];
+        $quantidades[] = $row['quantidade'];
     }
+} else {
+    echo "0 resultados";
+}
 
-    $sql = "SELECT nome_produto, quantidade FROM produto";
-    $result = $conn->query($sql);
+// RECUPERA NÍVEL DA CONTA 
+$nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
 
-    $produtos = [];
-    $quantidades = [];
-
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $produtos[] = $row['nome_produto'];
-            $quantidades[] = $row['quantidade'];
-        }
-        // var_dump($produtos, $quantidades);
-    } else {
-        echo "0 resultados";
-    }
-
-    // RECUPERA NÍVEL DA CONTA 
-    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
-
-    $conn->close();
+$conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -50,7 +48,7 @@
 <body>
     <header>
         <div class="hdr">
-        <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
+            <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
             <a href="estoque.php">Estoque</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="fornecedores.php">Fornecedores</a>
@@ -68,13 +66,16 @@
             <canvas id="relatorioEstoque" width="400" height="200"></canvas>
         </section>
         <section class="first-four-buttons">
-            <button class="button-menu"><a href="#">Baixar relatório semanal</a>
+            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=semanal'">
+                Baixar relatório semanal
                 <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
             </button>
-            <button class="button-menu"><a href="#">Baixar relatório mensal</a>
+            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=mensal'">
+                Baixar relatório mensal
                 <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
             </button>
-            <button class="button-menu"><a href="#">Baixar relatório de estoque</a>
+            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=estoque'">
+                Baixar relatório de estoque
                 <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
             </button>
         </section>
@@ -129,4 +130,3 @@
     </script>
 </body>
 </html>
-

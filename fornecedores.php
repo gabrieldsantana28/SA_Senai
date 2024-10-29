@@ -130,6 +130,10 @@ $result = $stmt->get_result();
         </div>
     </header>
 
+    <div class="botao--voltar">
+        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('menuAdm.php')"></i>
+    </div>   
+
     <section id="Titulo-Principal"><h1>Gerenciamento de Fornecedores</h1></section>
 
     <main id="container-main">
