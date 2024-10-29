@@ -161,7 +161,7 @@ $result = $stmt->get_result();
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div class="fornecedor--item">
                         <span onclick="toggleDetalhes(<?php echo $row['id_usuario']; ?>)" style="cursor: pointer;">
-                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['usuario']); ?> <?php echo htmlspecialchars($row['nome']); ?> (<?php echo $row['nivel'] == 1 ? 'Administrador' : 'Funcionário'; ?>)
+                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['nome']); ?> (<?php echo $row['nivel'] == 1 ? 'Administrador' : 'Funcionário'; ?>)
                         </span>
                         <i class="fa-solid fa-trash" style="color: red;" onclick="confirmarExclusao(<?php echo $row['id_usuario']; ?>)"></i>
                     </div>
