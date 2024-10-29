@@ -56,9 +56,9 @@
     <section style="margin-bottom: 20px;">
         <div class="elementos--itens">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="PesquisarVenda" name="PesquisarVenda" placeholder="Pesquisar Venda...">
+            <input type="text" id="PesquisarCompra" name="PesquisarCompra" placeholder="Pesquisar Compra...">
             <button class="icon-btn" id="redirectBtn">
-                <a href="cadastrovendas.php">
+                <a href="cadastrocompras.php">
                     <i class="fa-solid fa-plus"></i>
                 </a>
             </button>
