@@ -127,7 +127,7 @@ $conn->close();
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-regular fa-clock" aria-label="Ícone de Horário"></i>
-                    <input type="text" id="Horario" name="horario" placeholder="Horário da Venda..." required>
+                    <input type="time" id="Horario" name="horario" placeholder="Horário da Venda..." required>
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-solid fa-box-open" aria-label="Ícone de Produto"></i>
