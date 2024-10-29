@@ -36,12 +36,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($quantidade > $quantidade_estoque) {
         $message = "Erro: A quantidade solicitada excede o estoque disponível.";
     } else {
-        // Insere a venda no banco de dados usando produto_id
-        $sql_venda = "INSERT INTO venda (tipo_pagamento_venda, quantidade_venda, data_venda, hora_venda, produto_venda, produto_id) VALUES (?, ?, ?, ?, ?)";
+        // Consulta para obter o nome do produto
+        $sql_nome_produto = "SELECT nome_produto FROM produto WHERE id_produto = ?";
+        $stmt_produto = $conn->prepare($sql_nome_produto);
+        $stmt_produto->bind_param("i", $produto_id);
+        $stmt_produto->execute();
+        $stmt_produto->bind_result($nome_produto);
+        $stmt_produto->fetch();
+        $stmt_produto->close();
+
+        // Insere a venda no banco de dados
+        $sql_venda = "INSERT INTO venda (tipo_pagamento_venda, quantidade_venda, data_venda, hora_venda, produto_venda) VALUES (?, ?, ?, ?, ?)";
         $stmt_venda = $conn->prepare($sql_venda);
-        $stmt_venda->bind_param("ssssi", $tipoPagamento, $quantidade, $data, $horario, $produto_venda, $produto_id); // Alterado para passar produto_id
+        $stmt_venda->bind_param("sssss", $tipoPagamento, $quantidade, $data, $horario, $nome_produto);
 
         if ($stmt_venda->execute()) {
+            // Atualiza a quantidade no estoque
             $nova_quantidade = $quantidade_estoque - $quantidade;
             $sql_atualiza_estoque = "UPDATE produto SET quantidade = ? WHERE id_produto = ?";
             $stmt_atualiza = $conn->prepare($sql_atualiza_estoque);
@@ -81,7 +91,7 @@ $conn->close();
 <body>
     <header>
         <div class="hdr">
-            <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
+        <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
             <a href="estoque.php">Estoque</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="fornecedores.php">Fornecedores</a>
@@ -196,6 +206,23 @@ $conn->close();
                           var tst2 = val.value.substring(i + 2, pass.length);
                       else
                           var tst2 = val.value.substring(i + 1, pass.length);
+
+                      val.value = tst1 + '/' + tst2;
+                  }
+              } else if (i == 6) {
+                  if (lchar.search(expr) != 0) {
+                      var tst1 = val.value.substring(0, (i));
+                      val.value = tst1;
+                      continue;
+                  }
+
+                  if ((nchar != '/') && (nchar != '')) {
+                      var tst1 = val.value.substring(0, (i) + 1);
+                      if (nchar.search(expr) != 0)
+                          var tst2 = val.value.substring(i + 2, pass.length);
+                      else
+                          var tst2 = val.value.substring(i + 1, pass.length);
+
                       val.value = tst1 + '/' + tst2;
                   }
               }
