@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
     <title>Desenvolvimento de Sistemas</title>
+</head>
 <body>
     <header>
         <div class="hdr">
@@ -24,11 +25,11 @@
     <main id="container-main">
         <section class="first-four-buttons">
             <button class="button-menu"><a href="cadastroprodutos.php">Cadastro de Produtos</a></button>
-            <button class="button-menu"><a href="vendas.php">Controle de Vendas</button>
-            <button class="button-menu"><a href="relatorio.php">Relatórios e Análises</button>
-            <button class="button-menu"><a href="funcionarios.php">Gerenciamento de Funcionarios</button>
-            <button class="button-menu"><a href="estoque.php">Gerenciamento de Estoque</button>
-            <button class="button-menu"><a href="fornecedores.php">Gerenciamento de Fornecedores</button>
+            <button class="button-menu"><a href="vendas.php">Controle de Vendas</a></button>
+            <button class="button-menu"><a href="relatorio.php">Relatórios e Análises</a></button>
+            <button class="button-menu"><a href="funcionarios.php">Gerenciamento de Funcionarios</a></button>
+            <button class="button-menu"><a href="estoque.php">Gerenciamento de Estoque</a></button>
+            <button class="button-menu"><a href="fornecedores.php">Gerenciamento de Fornecedores</a></button>
         </section>
     </main>
 </body>

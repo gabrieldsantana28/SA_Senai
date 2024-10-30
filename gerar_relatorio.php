@@ -15,29 +15,34 @@ if ($conn->connect_error) {
 // Verifica o tipo de relatório que deve ser gerado
 $tipo_relatorio = isset($_GET['tipo']) ? $_GET['tipo'] : 'estoque';
 
-header('Content-Type: text/csv');
+header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename="relatorio_' . $tipo_relatorio . '.csv"');
+
+// Adiciona o BOM UTF-8 para compatibilidade com o Excel
+echo "\xEF\xBB\xBF";
 
 // Define o delimitador do CSV
 $output = fopen('php://output', 'w');
 
 // Define as colunas do CSV
 if ($tipo_relatorio === 'semanal') {
-    fputcsv($output, ['Produto', 'Quantidade Vendida', 'Data Venda'], ';');
+    fputcsv($output, ['Produto', 'Quantidade Vendida'], ';');
     // Consulta de produtos vendidos na semana atual
-    $sql = "SELECT p.nome_produto, v.quantidade_venda, DATE_FORMAT(v.data_venda, '%Y-%m-%d') AS data_venda
+    $sql = "SELECT p.nome_produto, SUM(v.quantidade_venda) AS quantidade_vendida
             FROM venda v
-            JOIN produto p ON v.fk_produto_id = p.id_produto
+            JOIN produto p ON v.fk_id_produto = p.id_produto
             WHERE v.data_venda >= CURDATE() - INTERVAL WEEKDAY(CURDATE()) DAY
-            AND v.data_venda < CURDATE() + INTERVAL 1 DAY";
+            AND v.data_venda < CURDATE() + INTERVAL 1 DAY
+            GROUP BY p.nome_produto";
 } elseif ($tipo_relatorio === 'mensal') {
-    fputcsv($output, ['Produto', 'Quantidade Vendida', 'Data Venda'], ';');
+    fputcsv($output, ['Produto', 'Quantidade Vendida'], ';');
     // Consulta de produtos vendidos no mês atual
-    $sql = "SELECT p.nome_produto, v.quantidade_venda, DATE_FORMAT(v.data_venda, '%Y-%m-%d') AS data_venda
+    $sql = "SELECT p.nome_produto, SUM(v.quantidade_venda) AS quantidade_vendida
             FROM venda v
-            JOIN produto p ON v.fk_produto_id = p.id_produto
+            JOIN produto p ON v.fk_id_produto = p.id_produto
             WHERE MONTH(v.data_venda) = MONTH(CURRENT_DATE()) 
-            AND YEAR(v.data_venda) = YEAR(CURRENT_DATE())";
+            AND YEAR(v.data_venda) = YEAR(CURRENT_DATE())
+            GROUP BY p.nome_produto";
 } else {
     fputcsv($output, ['Produto', 'Quantidade'], ';');
     // Consulta de produtos no estoque

@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box; /* Para melhor controle de tamanho */
     font-family: 'Poppins', sans-serif;
 }
 
@@ -21,7 +22,7 @@
 }
 
 .hdr a:hover {
-    background-color: rgb(49, 49, 49); 
+    background-color: rgb(49, 49, 49);
 }
 
 .logo-header {
@@ -32,41 +33,31 @@
 
 body {
     background-color: #f4f4f4;
-    font-size: 14px; 
+    font-size: 14px;
+    overflow-x: hidden; /* Impede a rolagem horizontal */
 }
 
 .botao--logout button {
     font-size: 1.8em;
     margin-left: 10px;
-    cursor:pointer;
+    cursor: pointer;
     width: 2%;
     border: none;
 }
 
-#header-container {
-    margin-top: -2px;
-}
-
 #container-main {
     background-color: white;
-    height: 400px; 
-    width: 900px; 
+    width: 90%; /* Largura em porcentagem para responsividade */
+    max-width: 900px; /* Limita a largura máxima */
     margin: auto;
-    border-radius: 50px;
+    border-radius: 30px; /* Corrigido para um valor mais natural */
     box-shadow: 1px 1px 22px 0px rgba(0, 0, 0, 0.315);
-    margin-top: 20px; 
-    padding-top: 20px; 
+    margin-top: 20px;
+    padding-top: 20px;
     display: flex;
     flex-direction: column; 
     align-items: center;
-}
-
-
-#Titulo-Principal {
-    text-align: center;
-    padding-top: 20px;
-    font-family: 'Poppins';
-    font-size: 1.2em;
+    min-height: 400px;
 }
 
 .button-menu {
@@ -77,26 +68,20 @@ body {
     border: none;
     border-radius: 30px;
     background-color: rgb(230, 230, 230);
-    margin-top: 30px; 
-    margin-left: 20px; 
+    margin: 15px; /* Margem em todos os lados */
+    transition: background-color 0.3s, border 0.3s; /* Para suavizar a transição */
 }
 
 .button-menu > a {
     text-decoration: none;
     color: black;
-}
-
-.last-button > a {
-    text-decoration: none;
-    color: black;
+    display: flex; /* Para centrar o texto */
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Para preencher o botão */
 }
 
 .button-menu:hover {
-    border: 1px solid black;
-    background-color: rgb(216, 216, 216);
-}
-
-.last-button:hover {
     border: 1px solid black;
     background-color: rgb(216, 216, 216);
 }
@@ -106,4 +91,17 @@ body {
     display: flex; 
     flex-wrap: wrap; 
     justify-content: center;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    .button-menu {
+        width: 90%; /* Botões ocupam 90% da largura em telas menores */
+        height: 120px; /* Ajuste de altura para telas menores */
+        font-size: 20px; /* Ajuste de tamanho da fonte */
+    }
+
+    .logo-header {
+        height: 60px; /* Logo menor em telas menores */
+    }
 }
