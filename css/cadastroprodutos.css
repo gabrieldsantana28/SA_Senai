@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box; /* Adicionando box-sizing */
 }
 
 body {
@@ -15,16 +16,20 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+    flex-wrap: wrap;
 }
 
 .hdr a {
     color: white;
     text-decoration: none;
     margin: 0 5px;
+    -webkit-text-stroke-width: 0.3px;
+    -webkit-text-stroke-color: #000000;
 }
 
 .logo-header {
     height: 80px;
+    max-width: 100%;
 }
 
 .botao--voltar {
@@ -134,15 +139,22 @@ button:hover {
 
 @media (max-width: 485px) {
     .elementos--itens {
-        min-width: 160px;
-        flex: 1 1 100%;
+        min-width: 100%; /* Faz com que os elementos ocupem toda a largura */
+        flex: 1 1 100%; /* Garante que os itens ocupem o espaço necessário */
+        height: auto; /* Permite que a altura se ajuste automaticamente */
+        padding: 10px; /* Aumenta o padding para facilitar o toque */
+    }
+
+    .elementos--itens input {
+        font-size: 16px; /* Aumenta um pouco o tamanho da fonte para facilitar a leitura */
     }
 
     .button button {
-        padding: 3px 50px;
+        padding: 10px; /* Aumenta o padding para um botão mais acessível */
+        font-size: 1em; /* Ajusta o tamanho da fonte do botão */
     }
 
     img {
-        width: 100%;
+        width: 90%; /* Reduz a largura da imagem para melhor se encaixar em telas pequenas */
     }
 }
