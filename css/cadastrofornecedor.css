@@ -10,17 +10,17 @@ body {
 
 .hdr {
     background-color: black;
-    height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+    flex-wrap: wrap; /* Permitir quebra de linha */
 }
 
 .hdr a {
     color: white;
     text-decoration: none;
-    margin: 0 5px;
+    margin: 5px; /* Espaço entre os links */
 }
 
 .logo-header {
@@ -134,6 +134,17 @@ button:hover {
     #container-elementos {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hdr {
+        flex-direction: column; /* Alinhar os itens verticalmente em telas menores */
+        align-items: flex-start; /* Alinhamento à esquerda */
+    }
+
+    .hdr a {
+        margin: 5px 0; /* Margem vertical */
     }
 }
 
