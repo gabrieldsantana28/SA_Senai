@@ -22,19 +22,19 @@ $pesquisa = $_GET['PesquisarVenda'] ?? ''; // Obtém o termo de pesquisa do inpu
 $sql_vendas = "
     SELECT 
         v.id_venda, 
-        v.produto_venda, 
         v.quantidade_venda, 
         v.tipo_pagamento_venda, 
         DATE_FORMAT(v.data_venda, '%d/%m/%Y') AS data_venda,
         v.hora_venda, 
+        p.nome_produto,
         p.preco, 
         (v.quantidade_venda * p.preco) AS total_preco 
     FROM 
         venda v 
     INNER JOIN 
-        produto p ON v.produto_venda = p.nome_produto 
+        produto p ON v.fk_id_produto = p.id_produto
     WHERE 
-        v.produto_venda LIKE ? OR v.tipo_pagamento_venda LIKE ?
+        p.nome_produto LIKE ? OR v.tipo_pagamento_venda LIKE ?
 ";
 $stmt = $conn->prepare($sql_vendas);
 $likePesquisa = "%" . $pesquisa . "%";
@@ -113,10 +113,10 @@ if ($result_vendas->num_rows > 0) {
     while ($linha = $result_vendas->fetch_assoc()) {
         echo '<section id="lista-elementos">';
         echo '<div class="elementos-lista">' . $linha["id_venda"] . '</div>';
-        echo '<div class="elementos-lista">' . $linha["produto_venda"] . '</div>';
+        echo '<div class="elementos-lista">' . $linha["nome_produto"] . '</div>'; // Usando nome_produto
         echo '<div class="elementos-lista">' . $linha["quantidade_venda"] . '</div>';
         echo '<div class="elementos-lista">' . $linha["tipo_pagamento_venda"] . '</div>';
-        echo '<div class="elementos-lista">' . $linha["data_venda"] ." - ". $linha["hora_venda"]. '</div>';
+        echo '<div class="elementos-lista">' . $linha["data_venda"] . " - " . $linha["hora_venda"] . '</div>';
         echo '<div class="elementos-lista">' . number_format($linha["total_preco"], 2, ',', '.') . '</div>';
         echo '<div class="icons">';
 
