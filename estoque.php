@@ -19,10 +19,10 @@ $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGAD
 $pesquisa = $_GET['PesquisarProduto'] ?? ''; // Obtém o termo de pesquisa
 
 // Preparar a consulta de busca
-$sql = "SELECT id_produto, nome_produto, quantidade, preco, descricao_produto FROM produto WHERE nome_produto LIKE ?";
+$sql = "SELECT id_produto, nome_produto, quantidade, preco, descricao_produto FROM produto WHERE nome_produto LIKE ? OR id_produto LIKE ?";
 $stmt = $conn->prepare($sql);
 $likePesquisa = "%" . $conn->real_escape_string($pesquisa) . "%";
-$stmt->bind_param("s", $likePesquisa);
+$stmt->bind_param("ss", $likePesquisa, $likePesquisa);
 $stmt->execute();
 $result = $stmt->get_result();
 
