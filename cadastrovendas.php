@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div id="container-main">
     <form method="POST" action="">
-        <div class="form-group">
+        <div class="form-group elementos--itens">
             <label for="produto">Produto:</label>
             <select id="produto" name="produto" required>
                 <option value="">Selecione um produto</option>
@@ -106,23 +106,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <?php endwhile; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group elementos--itens">
             <label for="quantidade">Quantidade:</label>
             <input type="number" id="quantidade" name="quantidade" min="1" required>
         </div>
-        <div class="form-group">
+        <div class="form-group elementos--itens">
             <label for="tipo">Tipo de Pagamento:</label>
             <input type="text" id="tipo" name="tipo" required>
         </div>
-        <div class="form-group">
+        <div class="form-group elementos--itens">
             <label for="data">Data:</label>
             <input type="date" id="data" name="data" required>
         </div>
-        <div class="form-group">
+        <div class="form-group elementos--itens">
             <label for="horario">Horário:</label>
             <input type="time" id="horario" name="horario" required>
         </div>
-        <button type="submit">Cadastrar Venda</button>
+        <div class="button">
+            <button type="submit">Cadastrar Venda</button>
+        </div>
     </form>
 </div>
 
