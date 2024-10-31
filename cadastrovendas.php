@@ -62,87 +62,151 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="css/cadastrovendas.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <title>Cadastrar Venda</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
+    <title>Cadastro de Vendas</title>
 </head>
 <body>
-<header>
-    <div class="hdr">
+    <header>
+        <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
-        <a href="estoque.php">Estoque</a>
-        <a href="funcionarios.php">Funcionários</a>
-        <a href="fornecedores.php">Fornecedores</a>
-        <a href="cadastroprodutos.php">CadasProdutos</a>
-        <a href="compras.php">Compras</a>
-        <a href="relatorio.php">Relatórios</a>
-    </div>
-</header>
+            <a href="estoque.php">Estoque</a>
+            <a href="funcionarios.php">Funcionários</a>
+            <a href="fornecedores.php">Fornecedores</a>
+            <a href="cadastroprodutos.php">CadasProdutos</a>
+            <a href="vendas.php">Vendas</a>
+            <a href="compras.php">Compras</a>
+            <a href="relatorio.php">Relatórios</a>
+        </div>
+    </header>
+    <div class="botao--voltar">
+        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('vendas.php')" aria-label="Voltar"></i>
+    </div>   
+    <main id="container-main">
+        <section id="Titulo-Principal"><h1>Cadastro de Vendas</h1></section>
 
-<div class="botao--voltar">
-    <i class="fa-solid fa-arrow-left" onclick="trocarPagina('vendas.php')"></i>
-</div>
+        <?php if (!empty($message)): ?>
+            <div class="message"><?php echo $message; ?></div>
+        <?php endif; ?>
 
-<section id="Titulo-Principal">
-    <h1>Cadastrar Venda</h1>
-</section>
-
-<?php if ($message): ?>
-    <div class="message">
-        <?php echo htmlspecialchars($message); ?>
-    </div>
-<?php endif; ?>
-
-<div id="container-main">
-    <form method="POST" action="">
-        <div class="form-group elementos--itens">
-            <label for="produto">Produto:</label>
-            <select id="produto" name="produto" required>
-                <option value="">Selecione um produto</option>
+        <form action="cadastrovendas.php" method="POST">
+            <section id="container-elementos">
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-money-check-dollar" aria-label="Ícone de ID"></i>
+                    <input type="text" id="Tipo" name="tipo" placeholder="Tipo de Pagamento..." required>
+                </div>
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-boxes-stacked" aria-label="Ícone de Material"></i>
+                    <input type="number" id="Quantidade" name="quantidade" placeholder="Quantidade..." required>
+                </div>
+                <div class="elementos--itens">
+                    <i class="fa-regular fa-calendar-days" aria-label="Ícone de Data"></i>
+                    <input type="date" id="data" name="data" placeholder="Data da Venda..." maxlength="10" required>
+                </div>
+                <div class="elementos--itens">
+                    <i class="fa-regular fa-clock" aria-label="Ícone de Horário"></i>
+                    <input type="time" id="Horario" name="horario" placeholder="Horário da Venda..." required>
+                </div>
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-box-open" aria-label="Ícone de Produto"></i>
+                    <select id="Produto" name="produto" required>
+                    <option value="">Selecione um produto</option>
                 <?php while ($linha = $result_produtos->fetch_assoc()): ?>
                     <option value="<?php echo $linha['id_produto']; ?>">
                         <?php echo htmlspecialchars($linha['nome_produto']) . " - Estoque: " . $linha['quantidade_produto']; ?>
                     </option>
                 <?php endwhile; ?>
-            </select>
-        </div>
-        <div class="form-group elementos--itens">
-            <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" name="quantidade" min="1" required>
-        </div>
-        <div class="form-group elementos--itens">
-            <label for="tipo">Tipo de Pagamento:</label>
-            <input type="text" id="tipo" name="tipo" required>
-        </div>
-        <div class="form-group elementos--itens">
-            <label for="data">Data:</label>
-            <input type="date" id="data" name="data" required>
-        </div>
-        <div class="form-group elementos--itens">
-            <label for="horario">Horário:</label>
-            <input type="time" id="horario" name="horario" required>
-        </div>
-        <div class="button">
-            <button type="submit">Cadastrar Venda</button>
-        </div>
-    </form>
-</div>
+                    </select>
+                </div>
+                <div class="button">
+                    <button type="submit">Cadastrar</button>
+                </div>
+            </section>
+        </form>
+    </main>
+    <script>
+        function trocarPagina(url) {
+            console.log("Tentando navegar para:", url);
+            window.location.href = url;
+        }
 
-<script>
-    function trocarPagina(url) {
-        window.location.href = url;
-    }
+      function voltarMenu() {
+          <?php if ($nivel == 1): ?>
+              window.location.href = 'menuAdm.php';
+          <?php elseif ($nivel == 2): ?>
+              window.location.href = 'menuFuncionario.php';
+          <?php else: ?>
+              alert('Nível de conta não identificado. Faça login novamente.');
+              window.location.href = 'login.php'; 
+          <?php endif; ?>
+      }
 
-    function voltarMenu() {
-        <?php if ($nivel == 1): ?>
-            window.location.href = 'menuAdm.php';
-        <?php elseif ($nivel == 2): ?>
-            window.location.href = 'menuFuncionario.php';
-        <?php else: ?>
-            alert('Nível de conta não identificado. Faça login novamente.');
-            window.location.href = 'login.php'; 
-        <?php endif; ?>
-    }
-</script>
+      // FUNÇÃO MÁSCARA DATA 
+      function mascaraData(val) {
+          var pass = val.value;
+          var expr = /[0123456789]/;
+
+          for (var i = 0; i < pass.length; i++) {
+              var lchar = val.value.charAt(i);
+              var nchar = val.value.charAt(i + 1);
+
+              if (i == 0) {
+                  if ((lchar.search(expr) != 0) || (lchar > 3)) {
+                      val.value = "";
+                  }
+              } else if (i == 1) {
+                  if (lchar.search(expr) != 0) {
+                      var tst1 = val.value.substring(0, (i));
+                      val.value = tst1;
+                      continue;
+                  }
+
+                  if ((nchar != '/') && (nchar != '')) {
+                      var tst1 = val.value.substring(0, (i) + 1);
+                      if (nchar.search(expr) != 0)
+                          var tst2 = val.value.substring(i + 2, pass.length);
+                      else
+                          var tst2 = val.value.substring(i + 1, pass.length);
+
+                      val.value = tst1 + '/' + tst2;
+                  }
+              } else if (i == 3) {
+                  if (lchar.search(expr) != 0) {
+                      var tst1 = val.value.substring(0, (i));
+                      val.value = tst1;
+                      continue;
+                  }
+
+                  if ((nchar != '/') && (nchar != '')) {
+                      var tst1 = val.value.substring(0, (i) + 1);
+                      if (nchar.search(expr) != 0)
+                          var tst2 = val.value.substring(i + 2, pass.length);
+                      else
+                          var tst2 = val.value.substring(i + 1, pass.length);
+
+                      val.value = tst1 + '/' + tst2;
+                  }
+              } else if (i == 6) {
+                  if (lchar.search(expr) != 0) {
+                      var tst1 = val.value.substring(0, (i));
+                      val.value = tst1;
+                      continue;
+                  }
+
+                  if ((nchar != '/') && (nchar != '')) {
+                      var tst1 = val.value.substring(0, (i) + 1);
+                      if (nchar.search(expr) != 0)
+                          var tst2 = val.value.substring(i + 2, pass.length);
+                      else
+                          var tst2 = val.value.substring(i + 1, pass.length);
+
+                      val.value = tst1 + '/' + tst2;
+                  }
+              }
+          }
+      }
+    </script>
 </body>
 </html>

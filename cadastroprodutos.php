@@ -156,6 +156,7 @@ $conn->close();
     </main>
     <script>
         function trocarPagina(url) {
+            console.log("Tentando navegar para:", url);
             window.location.href = url;
         }
         
