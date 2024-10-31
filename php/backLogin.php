@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Evita que a página seja armazenada em cache
 header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
 header("Pragma: no-cache"); // HTTP 1.0
@@ -21,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
     $usuario = $_POST['usuario'];
     $senha = $_POST['senha'];
 
+    // Consulta para verificar as credenciais do usuário
     $sql = "SELECT * FROM usuario WHERE user_usuario = ? AND senha_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $usuario, $senha); // 'ss' indica que ambos os parâmetros são strings
@@ -32,9 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
         $nome = $row['nome_usuario'];
         $nivel = $row['nivel_usuario'];
 
+        $_SESSION['usuario'] = $usuario;
         $_SESSION['nome'] = $nome;
         $_SESSION['nivel'] = $nivel;
 
+        // Redireciona para o menu correspondente ao nível do usuário
         if ($nivel == 1) {
             header("Location: /GitHub/SA_Senai/menuAdm.php");
         } elseif ($nivel == 2) {
@@ -49,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
 
 } else {
     // Redireciona para a página de login se o método POST não for usado
-    header("Location: /login.php");
+    header("Location: /GitHub/SA_Senai/login.php");
     exit();
 }
 ?>
