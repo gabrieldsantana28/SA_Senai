@@ -33,7 +33,7 @@ if (isset($_POST['update'])) {
     $preco = $_POST['preco'];
     $descricao = $_POST['descricao'];
 
-    $sql_update = "UPDATE produto SET nome_produto='$nome', quantidade_produto='$quantidade', preco_produto='$preco', descricao_produto='$descricao' WHERE id_produto=$id";
+    $sql_update = "UPDATE produto SET nome_produto='$nome', quantidade='$quantidade', preco='$preco', descricao_produto='$descricao' WHERE id_produto=$id";
     $conexao->query($sql_update);
 
     header("Location: estoque.php"); 
@@ -83,11 +83,11 @@ $conexao->close();
             </div>
             <div class="form-group">
                 <label for="quantidade_produto">Quantidade</label>
-                <input type="number" id="quantidade_produto" name="quantidade" value="<?php echo $produto['quantidade_produto']; ?>" required>
+                <input type="number" id="quantidade_produto" name="quantidade" value="<?php echo $produto['quantidade']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="preco_produto">Preço</label>
-                <input type="text" id="preco_produto" name="preco" value="<?php echo $produto['preco_produto']; ?>" required>
+                <input type="text" id="preco_produto" name="preco" value="<?php echo $produto['preco']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="descricao_produto">Descrição</label>

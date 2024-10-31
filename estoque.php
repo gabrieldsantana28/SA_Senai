@@ -19,7 +19,7 @@ $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGAD
 $pesquisa = $_GET['PesquisarProduto'] ?? ''; // Obtém o termo de pesquisa
 
 // Preparar a consulta de busca
-$sql = "SELECT id_produto, nome_produto, quantidade_produto, preco_produto, descricao_produto FROM produto WHERE nome_produto LIKE ? OR id_produto LIKE ?";
+$sql = "SELECT id_produto, nome_produto, quantidade, preco, descricao_produto FROM produto WHERE nome_produto LIKE ? OR id_produto LIKE ?";
 $stmt = $conn->prepare($sql);
 $likePesquisa = "%" . $conn->real_escape_string($pesquisa) . "%";
 $stmt->bind_param("ss", $likePesquisa, $likePesquisa);
@@ -95,8 +95,8 @@ if (isset($_POST['delete_id'])) {
             echo '<section id="lista-elementos">';
             echo '<div class="elementos-lista">' . $linha["id_produto"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["nome_produto"] . '</div>';
-            echo '<div class="elementos-lista">' . $linha["quantidade_produto"] . '</div>';
-            echo '<div class="elementos-lista">' . "R$ " . number_format($linha["preco_produto"], 2, ',', '.') . '</div>';
+            echo '<div class="elementos-lista">' . $linha["quantidade"] . '</div>';
+            echo '<div class="elementos-lista">' . "R$ " . number_format($linha["preco"], 2, ',', '.') . '</div>';
             echo '<div class="elementos-lista">' . $linha["descricao_produto"] . '</div>';
             echo '<div class="icons">';
 

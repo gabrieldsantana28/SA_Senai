@@ -70,14 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <header>
     <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
-        <nav>
-            <a href="estoque.php">Estoque</a>
-            <a href="funcionarios.php">Funcionários</a>
-            <a href="fornecedores.php">Fornecedores</a>
-            <a href="cadastroprodutos.php">CadasProdutos</a>
-            <a href="compras.php">Compras</a>
-            <a href="relatorio.php">Relatórios</a>
-        </nav>
+        <a href="estoque.php">Estoque</a>
+        <a href="funcionarios.php">Funcionários</a>
+        <a href="fornecedores.php">Fornecedores</a>
+        <a href="cadastroprodutos.php">CadasProdutos</a>
+        <a href="compras.php">Compras</a>
+        <a href="relatorio.php">Relatórios</a>
     </div>
 </header>
 

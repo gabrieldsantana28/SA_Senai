@@ -29,12 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_fornecedor'])) {
     $id_fornecedor = $_POST['id_fornecedor'];
     $nome_fornecedor = $_POST['nome_fornecedor'];
     $endereco_fornecedor = $_POST['endereco_fornecedor'];
-    $materialFornecido = $_POST['materialFornecido'];
+    $material_fornecedor = $_POST['material_fornecedor'];
     $telefone_fornecedor = $_POST['telefone_fornecedor'];
 
-    $sql_update = "UPDATE fornecedor SET nome_fornecedor = ?, endereco_fornecedor = ?, materialFornecido = ?, telefone_fornecedor = ? WHERE id_fornecedor = ?";
+    $sql_update = "UPDATE fornecedor SET nome_fornecedor = ?, endereco_fornecedor = ?, material_fornecedor = ?, telefone_fornecedor = ? WHERE id_fornecedor = ?";
     $stmt = $conn->prepare($sql_update);
-    $stmt->bind_param("ssssi", $nome_fornecedor, $endereco_fornecedor, $materialFornecido, $telefone_fornecedor, $id_fornecedor);
+    $stmt->bind_param("ssssi", $nome_fornecedor, $endereco_fornecedor, $material_fornecedor, $telefone_fornecedor, $id_fornecedor);
     $stmt->execute();
     $stmt->close();
     header("Location: fornecedores.php");
@@ -46,7 +46,7 @@ $nivel = $_SESSION['nivel'] ?? 0;
 
 // Pesquisa por nome do fornecedor ou material fornecido
 $pesquisa = $_GET['PesquisarFornecedor'] ?? ''; // Obtém o termo de pesquisa do input
-$sql = "SELECT id_fornecedor, nome_fornecedor, endereco_fornecedor, materialFornecido, telefone_fornecedor FROM fornecedor WHERE nome_fornecedor LIKE ? OR materialFornecido LIKE ?";
+$sql = "SELECT id_fornecedor, nome_fornecedor, endereco_fornecedor, material_fornecedor, telefone_fornecedor FROM fornecedor WHERE nome_fornecedor LIKE ? OR fornecedor LIKE ?";
 $stmt = $conn->prepare($sql);
 $likePesquisa = "%" . $pesquisa . "%";
 $stmt->bind_param("ss", $likePesquisa, $likePesquisa);
@@ -156,7 +156,7 @@ $result = $stmt->get_result();
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div class="fornecedor--item">
                         <span onclick="toggleEditForm(<?php echo $row['id_fornecedor']; ?>)" style="cursor: pointer;">
-                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['nome_fornecedor']); ?> (<?php echo htmlspecialchars($row['materialFornecido']); ?>)
+                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['nome_fornecedor']); ?> (<?php echo htmlspecialchars($row['material_fornecedor']); ?>)
                         </span>
                         <i class="fa-solid fa-trash" style="color: red;" onclick="confirmarExclusao(<?php echo $row['id_fornecedor']; ?>)"></i>
                     </div>
@@ -169,8 +169,8 @@ $result = $stmt->get_result();
                             <label for="endereco_fornecedor"><strong>Endereço:</strong></label>
                             <input type="text" name="endereco_fornecedor" class="inputs" value="<?php echo htmlspecialchars($row['endereco_fornecedor']); ?>"><br>
 
-                            <label for="materialFornecido"><strong>Material Fornecido:</strong></label>
-                            <input type="text" name="materialFornecido" class="inputs" value="<?php echo htmlspecialchars($row['materialFornecido']); ?>"><br>
+                            <label for="material_fornecedor"><strong>Material Fornecido:</strong></label>
+                            <input type="text" name="material_fornecedor" class="inputs" value="<?php echo htmlspecialchars($row['material_fornecedor']); ?>"><br>
 
                             <label for="telefone_fornecedor"><strong>Telefone:</strong></label>
                             <input type="text" name="telefone_fornecedor" class="inputs" value="<?php echo htmlspecialchars($row['telefone_fornecedor']); ?>"><br>

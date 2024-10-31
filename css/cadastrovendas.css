@@ -2,7 +2,6 @@
     padding: 0;
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
 }
 
 body {
@@ -16,20 +15,16 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
-    flex-wrap: wrap;
 }
 
 .hdr a {
     color: white;
     text-decoration: none;
     margin: 0 5px;
-    -webkit-text-stroke-width: 0.3px;
-    -webkit-text-stroke-color: #4d4a4a;
 }
 
 .logo-header {
     height: 80px;
-    max-width: 100%;
 }
 
 .botao--voltar {
@@ -42,7 +37,7 @@ body {
     background-color: white;
     width: 90%;
     max-width: 800px;
-    min-width: 320px;
+    min-width: 320px; 
     margin: 50px auto;
     border-radius: 10px;
     box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.3);
@@ -59,51 +54,114 @@ body {
     font-size: 1.2em;
 }
 
-input:focus-visible {
+#container-elementos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.elementos--itens {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 calc(50% - 1rem);
+    max-width: 350px;
+    background-color: #f4f4f4;
+    border: 1.5px solid black;
+    border-radius: 20px;
+    height: 40px;
+    padding: 5px 10px;
+}
+
+.elementos--itens input {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    height: 38px;
+}
+
+.elementos--itens select {
+    background-color: transparent; /* Fundo transparente */
+    border: none; /* Remove a borda */
+    width: 100%; /* Ocupa toda a largura do container */
+    height: 38px; /* Altura para ficar alinhado com os outros inputs */
+    font-size: 14px; /* Tamanho da fonte */
+    appearance: none; /* Remove a estilização padrão do select */
+    padding: 0 10px; /* Adiciona espaçamento interno */
+    border-radius: 20px; /* Arredonda os cantos para ficar igual aos outros inputs */
+    cursor: pointer; /* Muda o cursor para pointer */
+    transition: background-color 0.3s; /* Transição suave para a mudança de fundo */
+}
+
+.elementos--itens select:hover {
+    background-color: rgba(200, 200, 200, 0.5); /* Muda o fundo ao passar o mouse */
+}
+
+
+.elementos--itens i {
+    font-size: 1.2em;
+}
+
+input:focus-visible,
+select:focus-visible {
     outline: none;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.button {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
     width: 100%;
 }
 
-.form-group label {
-    margin-bottom: 5px;
-    display: block;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-}
-
-.form-group select {
-    appearance: none; /* Remove o estilo padrão do select */
-}
-
-button {
+.button button {
     background-color: white;
-    border: 1px solid black;
-    padding: 10px 20px;
-    font-size: 1em;
+    border-width: 1px;
+    padding: 3px 70px;
+    font-size: 1.1em;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: opacity 0.6s;
+    opacity: 0.8;
 }
 
 button:hover {
     opacity: 1;
+    transition-duration: 0.6s;
+}
+
+@media (min-width: 1400px) {
+    #container-main {
+        max-width: 1000px; 
+    }
+}
+
+@media (max-width: 1352px) {
+    .button {
+        display: block;
+        margin-inline: auto;
+    }
+    
+    #container-elementos {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 @media (max-width: 485px) {
-    button {
+    .elementos--itens {
+        min-width: 160px;
+        flex: 1 1 100%;
+    }
+
+    .button button {
+        padding: 3px 50px;
+    }
+
+    img {
         width: 100%;
     }
 }
