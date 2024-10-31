@@ -31,7 +31,7 @@ if (isset($_POST['update'])) {
     $telefone = $_POST['telefone'];
     $endereco = $_POST['endereco'];
 
-    $sql_update = "UPDATE fornecedor SET nome_fornecedor='$nome', materialFornecido='$material', telefone_fornecedor='$telefone', endereco_fornecedor='$endereco' WHERE id_fornecedor=$id";
+    $sql_update = "UPDATE fornecedor SET nome_fornecedor='$nome', material_fornecedor='$material', telefone_fornecedor='$telefone', endereco_fornecedor='$endereco' WHERE id_fornecedor=$id";
     $conexao->query($sql_update);
 
     header("Location: fornecedores.php"); // Redireciona para a página de listagem
@@ -166,7 +166,7 @@ $conexao->close();
             </div>
             <div class="form-group">
                 <label>Material Fornecido:</label>
-                <input type="text" name="material" value="<?php echo $fornecedor['materialFornecido']; ?>" required>
+                <input type="text" name="material" value="<?php echo $fornecedor['material_fornecedor']; ?>" required>
             </div>
             <div class="form-group">
                 <label>Telefone:</label>

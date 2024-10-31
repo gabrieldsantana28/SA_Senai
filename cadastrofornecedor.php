@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $telefone = $_POST['telefone'];
     $endereco = $_POST['endereco'];
 
-    $sql = "INSERT INTO fornecedor (nome_fornecedor, materialFornecido, telefone_fornecedor, endereco_fornecedor) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO fornecedor (nome_fornecedor, material_fornecedor, telefone_fornecedor, endereco_fornecedor) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param("ssss", $nome, $material, $telefone, $endereco);
