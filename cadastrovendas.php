@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 $message = "";
 
-$sql_produtos = "SELECT id_produto, nome_produto, quantidade FROM produto";
+$sql_produtos = "SELECT id_produto, nome_produto, quantidade_produto FROM produto";
 $result_produtos = $conn->query($sql_produtos);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $produto_id = $_POST['produto'];
 
     // Verifica a quantidade disponível do produto
-    $sql_estoque = "SELECT quantidade FROM produto WHERE id_produto = ?";
+    $sql_estoque = "SELECT quantidade_produto FROM produto WHERE id_produto = ?";
     $stmt_estoque = $conn->prepare($sql_estoque);
     $stmt_estoque->bind_param("i", $produto_id);
     $stmt_estoque->execute();
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt_venda->execute()) {
             $nova_quantidade = $quantidade_estoque - $quantidade;
-            $sql_atualiza_estoque = "UPDATE produto SET quantidade = ? WHERE id_produto = ?";
+            $sql_atualiza_estoque = "UPDATE produto SET quantidade_produto = ? WHERE id_produto = ?";
             $stmt_atualiza = $conn->prepare($sql_atualiza_estoque);
             $stmt_atualiza->bind_param("ii", $nova_quantidade, $produto_id);
             $stmt_atualiza->execute();
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <option value="">Selecione um produto</option>
                 <?php while ($linha = $result_produtos->fetch_assoc()): ?>
                     <option value="<?php echo $linha['id_produto']; ?>">
-                        <?php echo htmlspecialchars($linha['nome_produto']) . " - Estoque: " . $linha['quantidade']; ?>
+                        <?php echo htmlspecialchars($linha['nome_produto']) . " - Estoque: " . $linha['quantidade_produto']; ?>
                     </option>
                 <?php endwhile; ?>
             </select>

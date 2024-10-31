@@ -27,8 +27,8 @@ $sql_vendas = "
         DATE_FORMAT(v.data_venda, '%d/%m/%Y') AS data_venda,
         v.hora_venda, 
         p.nome_produto,
-        p.preco, 
-        (v.quantidade_venda * p.preco) AS total_preco 
+        p.preco_produto, 
+        (v.quantidade_venda * p.preco_produto) AS total_preco 
     FROM 
         venda v 
     INNER JOIN 

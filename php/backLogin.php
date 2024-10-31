@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
     $usuario = $_POST['usuario'];
     $senha = $_POST['senha'];
 
-    $sql = "SELECT * FROM usuario WHERE usuario = ? AND senha = ?";
+    $sql = "SELECT * FROM usuario WHERE user_usuario = ? AND senha_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $usuario, $senha); // 'ss' indica que ambos os parâmetros são strings
     $stmt->execute();
@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $nome = $row['nome'];
-        $nivel = $row['nivel'];
+        $nome = $row['nome_usuario'];
+        $nivel = $row['nivel_usuario'];
 
         $_SESSION['nome'] = $nome;
         $_SESSION['nivel'] = $nivel;

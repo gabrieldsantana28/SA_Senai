@@ -1,68 +1,68 @@
 <?php
-session_start();
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "nossasa";
+    session_start();
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "nossasa";
 
-// CONEXÃO
-$conn = new mysqli($servername, $username, $password, $dbname);
+    // CONEXÃO
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-
-$message = "";
-
-// Lógica para editar um funcionário
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
-    $id_usuario = $_POST['id_usuario'];
-    $nome = $_POST['nome'];
-    $usuario = $_POST['usuario'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-
-    $sql = "UPDATE usuario SET nome=?, usuario=?, email=?, senha=? WHERE id_usuario=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $id_usuario);
-
-    if ($stmt->execute()) {
-        $message = "Funcionário atualizado com sucesso!";
-    } else {
-        $message = "Erro ao atualizar funcionário: " . $stmt->error;
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
     }
 
-    $stmt->close();
-}
+    $message = "";
 
-// Lógica para excluir um funcionário
-if (isset($_GET['excluir'])) {
-    $id_usuario = $_GET['excluir'];
-    $sql = "DELETE FROM usuario WHERE id_usuario=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id_usuario);
+    // Lógica para editar um funcionário
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
+        $id_usuario = $_POST['id_usuario'];
+        $nome = $_POST['nome'];
+        $usuario = $_POST['usuario'];
+        $email = $_POST['email'];
+        $senha = $_POST['senha'];
 
-    if ($stmt->execute()) {
-        $message = "Funcionário excluído com sucesso!";
-    } else {
-        $message = "Erro ao excluir funcionário: " . $stmt->error;
+        $sql = "UPDATE usuario SET nome_usuario=?, user_usuario=?, email_usuario=?, senha_usuario=? WHERE id_usuario=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $id_usuario);
+
+        if ($stmt->execute()) {
+            $message = "Funcionário atualizado com sucesso!";
+        } else {
+            $message = "Erro ao atualizar funcionário: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 
-    $stmt->close();
-}
+    // Lógica para excluir um funcionário
+    if (isset($_GET['excluir'])) {
+        $id_usuario = $_GET['excluir'];
+        $sql = "DELETE FROM usuario WHERE id_usuario=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id_usuario);
 
-// Recupera nível da conta
-$nivel = $_SESSION['nivel'] ?? 0; // Defina nível da conta como 0 caso não esteja logado
+        if ($stmt->execute()) {
+            $message = "Funcionário excluído com sucesso!";
+        } else {
+            $message = "Erro ao excluir funcionário: " . $stmt->error;
+        }
 
-$pesquisa = $_POST['PesquisarFuncionario'] ?? '';
+        $stmt->close();
+    }
 
-// Pesquisa por usuário ou nome
-$sql = "SELECT id_usuario, nome, usuario, email, senha, nivel FROM usuario WHERE usuario LIKE ? OR nome LIKE ?";
-$stmt = $conn->prepare($sql);
-$likePesquisa = "%" . $pesquisa . "%";
-$stmt->bind_param("ss", $likePesquisa, $likePesquisa);
-$stmt->execute();
-$result = $stmt->get_result();
+    // Recupera nível da conta
+    $nivel = $_SESSION['nivel'] ?? 0; // Defina nível da conta como 0 caso não esteja logado
+
+    $pesquisa = $_POST['PesquisarFuncionario'] ?? '';
+
+    // Pesquisa por usuário ou nome
+    $sql = "SELECT id_usuario, nome_usuario, user_usuario, email_usuario, senha_usuario, nivel_usuario FROM usuario WHERE user_usuario LIKE ? OR nome_usuario LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $likePesquisa = "%" . $pesquisa . "%";
+    $stmt->bind_param("ss", $likePesquisa, $likePesquisa);
+    $stmt->execute();
+    $result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -161,17 +161,17 @@ $result = $stmt->get_result();
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div class="fornecedor--item">
                         <span onclick="toggleDetalhes(<?php echo $row['id_usuario']; ?>)" style="cursor: pointer;">
-                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['nome']); ?> (<?php echo $row['nivel'] == 1 ? 'Administrador' : 'Funcionário'; ?>)
+                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['nome_usuario']); ?> (<?php echo $row['nivel_usuario'] == 1 ? 'Administrador' : 'Funcionário'; ?>)
                         </span>
                         <i class="fa-solid fa-trash" style="color: red;" onclick="confirmarExclusao(<?php echo $row['id_usuario']; ?>)"></i>
                     </div>
                     <div class="detalhes" id="detalhes-<?php echo $row['id_usuario']; ?>">
                         <form method="POST">
                             <input type="hidden" name="id_usuario" value="<?php echo $row['id_usuario']; ?>">
-                            <p><strong>Nome:</strong> <input class="inputs" type="text" name="nome" value="<?php echo htmlspecialchars($row['nome']); ?>"></p>
-                            <p><strong>Usuário:</strong> <input class="inputs" type="text" name="usuario" value="<?php echo htmlspecialchars($row['usuario']); ?>"></p>
-                            <p><strong>Email:</strong> <input class="inputs" type="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>"></p>
-                            <p><strong>Senha:</strong> <input class="inputs" type="password" name="senha" value="<?php echo htmlspecialchars($row['senha']); ?>"></p>
+                            <p><strong>Nome:</strong> <input class="inputs" type="text" name="nome" value="<?php echo htmlspecialchars($row['nome_usuario']); ?>"></p>
+                            <p><strong>Usuário:</strong> <input class="inputs" type="text" name="usuario" value="<?php echo htmlspecialchars($row['user_usuario']); ?>"></p>
+                            <p><strong>Email:</strong> <input class="inputs" type="email" name="email" value="<?php echo htmlspecialchars($row['email_usuario']); ?>"></p>
+                            <p><strong>Senha:</strong> <input class="inputs" type="password" name="senha" value="<?php echo htmlspecialchars($row['senha_usuario']); ?>"></p>
                             <button type="submit">Salvar</button>
                         </form>
                     </div>
