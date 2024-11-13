@@ -11,6 +11,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
+
 $message = "";
 $nome = "";
 $descricao = "";
@@ -69,7 +70,7 @@ $conn->close();
     <title>Cadastro de Produtos</title>
     <script>
         function mascara(o, f) {
-            v_obj = o // ARMANENA INPUT
+            v_obj = o // ARMAZENAR INPUT
             v_fun = f // ARMAZENA MÁSCARA
             setTimeout("execmascara()", 1) // DELAY MÁSCARA
         }
@@ -96,6 +97,20 @@ $conn->close();
                 precoInput.value = maxPreco.toFixed(2).replace(".", ",");
             }
         }
+
+        function voltarMenu() {
+            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+            if (nivel !== null) {
+                if (nivel == 1) {
+                    window.location.href = 'menuAdm.php';
+                } else if (nivel == 2) {
+                    window.location.href = 'menuFuncionario.php';
+                }
+            } else {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.php';
+            }
+        }
     </script>
 </head>
 <body>
@@ -111,16 +126,16 @@ $conn->close();
         </div>
     </header>
     <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('menuAdm.php')"></i>
+        <i class="fa-solid fa-arrow-left" onclick="voltarMenu()"></i>
     </div>     
-    
+
     <main id="container-main">
         <section id="Titulo-Principal"><h1>Cadastro de Produtos</h1></section>
 
         <?php if (!empty($message)): ?>
             <div class="message"><?php echo $message; ?></div>
         <?php endif; ?>
-        
+
         <!-- Formulário de Cadastro de Produtos -->
         <form action="cadastroprodutos.php" method="POST">
             <section id="container-elementos">
@@ -154,22 +169,5 @@ $conn->close();
             </section>
         </form>
     </main>
-    <script>
-        function trocarPagina(url) {
-            console.log("Tentando navegar para:", url);
-            window.location.href = url;
-        }
-        
-        function voltarMenu() {
-          <?php if ($nivel == 1): ?>
-              window.location.href = 'menuAdm.php';
-          <?php elseif ($nivel == 2): ?>
-              window.location.href = 'menuFuncionario.php';
-          <?php else: ?>
-              alert('Nível de conta não identificado. Faça login novamente.');
-              window.location.href = 'login.php'; 
-          <?php endif; ?>
-        } 
-    </script>
 </body>
 </html>
