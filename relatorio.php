@@ -52,7 +52,6 @@ $conn->close();
             <a href="estoque.php">Estoque</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="fornecedores.php">Fornecedores</a>
-            <a href="cadastroprodutos.php">CadasProdutos</a>
             <a href="vendas.php">Vendas</a>
             <a href="compras.php">Compras</a>
         </div>
@@ -118,15 +117,18 @@ $conn->close();
         });
 
         function voltarMenu() {
-          <?php if ($nivel == 1): ?>
-              window.location.href = 'menuAdm.php';
-          <?php elseif ($nivel == 2): ?>
-              window.location.href = 'menuFuncionario.php';
-          <?php else: ?>
-              alert('Nível de conta não identificado. Faça login novamente.');
-              window.location.href = 'login.php'; 
-          <?php endif; ?>
-        } 
+            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+            if (nivel !== null) {
+                if (nivel == 1) {
+                    window.location.href = 'menuAdm.php';
+                } else if (nivel == 2) {
+                    window.location.href = 'menuFuncionario.php';
+                }
+            } else {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.php';
+            }
+        }
     </script>
 </body>
 </html>

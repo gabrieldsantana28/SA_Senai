@@ -23,7 +23,7 @@
     
     <main id="container-main">
         <section class="first-four-buttons">
-            <button class="button-menu"><a href="cadastroprodutos.php">Cadastro de Produtos</a></button>
+            <button class="button-menu"><a href="compras.php">Controle de Compras</a></button>
             <button class="button-menu"><a href="vendas.php">Controle de Vendas</button>
             <button class="button-menu"><a href="estoque.php">Gerenciamento de Estoque</button>
             <button class="button-menu"><a href="fornecedores.php">Gerenciamento de Fornecedores</button>

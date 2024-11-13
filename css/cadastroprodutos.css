@@ -41,12 +41,12 @@ body {
 #container-main {
     background-color: white;
     width: 90%;
-    max-width: 800px;
+    max-width: 900px; /* Aumentando a largura máxima do container */
     min-width: 320px; 
     margin: 50px auto;
     border-radius: 10px;
     box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.3);
-    padding: 1rem;
+    padding: 2rem; /* Aumentando o padding do container */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -70,22 +70,22 @@ body {
 .elementos--itens {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex: 1 1 calc(50% - 1rem);
-    max-width: 350px;
+    gap: 12px; /* Aumentando o espaçamento entre ícone e campo */
+    flex: 1 1 calc(50% - 1.5rem); /* Ajustando para um espaçamento maior */
+    max-width: 380px; /* Aumentando a largura máxima dos inputs */
     background-color: #f4f4f4;
     border: 1.5px solid black;
     border-radius: 20px;
-    height: 40px;
-    padding: 5px 10px;
+    height: 50px; /* Aumentando a altura do container do input */
+    padding: 10px; /* Aumentando o padding interno */
 }
 
 .elementos--itens input {
     background-color: transparent;
     border: none;
-    font-size: 14px;
+    font-size: 16px; /* Aumentando o tamanho da fonte */
     width: 100%;
-    height: 38px;
+    height: 40px; /* Aumentando a altura do input */
 }
 
 .elementos--itens i {
@@ -106,8 +106,8 @@ input:focus-visible {
 .button button {
     background-color: white;
     border-width: 1px;
-    padding: 3px 70px;
-    font-size: 1.1em;
+    padding: 12px 80px; /* Aumentando o padding para um botão maior */
+    font-size: 1.2em; /* Aumentando o tamanho da fonte do botão */
     font-weight: bold;
     border-radius: 15px;
     cursor: pointer;

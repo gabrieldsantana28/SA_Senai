@@ -10,7 +10,7 @@ body {
 
 .hdr {
     background-color: black;
-    height: 100px;
+    height: 80px; /* Reduzido para se alinhar com o tamanho desejado */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -24,11 +24,11 @@ body {
 }
 
 .logo-header {
-    height: 80px;
+    height: 60px; /* Reduzido para se alinhar com o tamanho desejado */
 }
 
 .botao--voltar {
-    font-size: 2.1em;
+    font-size: 1.8em; /* Ajustado para manter o tamanho proporcional */
     margin-left: 16px;
     cursor: pointer;
 }
@@ -40,14 +40,13 @@ body {
 
 #container-main {
     background-color: white;
-    max-width: 60vw; /* Altere para o tamanho desejado */
-    width: 800px; /* Altere para o tamanho desejado */
-    max-width: 90%; /* Use um valor percentual para maior flexibilidade */
-    width: 100%; /* Mantenha como 100% para que o contêiner se ajuste à tela */
-    margin: 50px auto; 
+    max-width: 50vw; /* Ajustado para diminuir a largura */
+    width: 650px; /* Ajustado para um valor menor */
+    max-width: 80%; /* Maior flexibilidade */
+    margin: 40px auto; 
     border-radius: 15px; 
-    box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.3); 
-    padding: 1rem; 
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.3); /* Sombra um pouco menor */
+    padding: 0.8rem; /* Diminuído o padding */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,62 +54,118 @@ body {
 
 #Titulo-Principal {
     text-align: center;
-    padding-top: 30px;
-    font-size: 1.3em; 
-    font-size: 1.5em; /* Aumente um pouco o tamanho da fonte */
+    padding-top: 20px; /* Reduzido o padding para se alinhar */
+    font-size: 1.2em; /* Ajustado para um tamanho menor */
 }
 
 #container-elementos {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
-    margin-top: 1.1rem; 
+    flex-wrap: wrap; /* Agora permite a quebra em várias colunas */
+    gap: 1rem; /* Reduzido o gap entre os elementos */
+    justify-content: flex-start; /* Ajustado para alinhar à esquerda */
+    margin-top: 1rem; /* Diminuído o espaço acima */
 }
 
 .elementos--itens {
     display: flex;
     align-items: center;
-    gap: 8px; 
-    flex: 1 1 calc(50% - 1.5rem); /* Alterado para 50% */
-    flex: 1 1 calc(100% - 1.5rem); /* Permite que ocupe até 100% da largura disponível */
-    max-width: 400px; 
+    gap: 6px; /* Diminuído o espaço entre o conteúdo */
+    flex: 1 1 calc(33.33% - 1rem); /* Ajustado para ocupar até 33% da largura */
+    max-width: 300px; /* Ajustado para reduzir o tamanho */
     background-color: #f4f4f4;
-    border: 1.8px solid black; 
-    border-radius: 35px; 
-    height: 45px;
-    padding: 6px 10px; 
+    border: 1.6px solid black; /* Ajustado para um valor menor */
+    border-radius: 30px; /* Menor para manter o formato proporcional */
+    height: 40px; /* Menor para ajustar a altura */
+    padding: 5px 8px; /* Ajustado para uma margem interna menor */
 }
 
 .elementos--itens input {
     background-color: transparent;
     border: none;
-    font-size: 18px; 
+    font-size: 16px; /* Ajustado para um tamanho menor */
     width: 100%;
-    height: 43px; 
+    height: 35px; /* Menor para ajustar ao tamanho */
 }
 
 .elementos--itens i {
-    font-size: 1.5em; 
+    font-size: 1.3em; /* Menor para se ajustar ao tamanho geral */
 }
 
 .elementos--itens select {
     background-color: transparent;
     border: none;
-    width: 100%; 
-    height: 38px; 
-    font-size: 14px; 
+    width: 100%;
+    height: 30px; /* Menor para se ajustar */
+    font-size: 12px; /* Menor fonte */
     appearance: none;
-    padding: 0 10px;
-    border-radius: 20px; 
-    cursor: pointer; 
-    transition: background-color 0.3s; 
+    padding: 0 8px; /* Menor padding */
+    border-radius: 15px; /* Menor para se ajustar ao tamanho */
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .elementos--itens select:hover {
     background-color: rgba(200, 200, 200, 0.5);
+}
+
+.elementos--itens {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1 1 calc(33.33% - 1rem); /* Mantenha 3 itens por linha */
+    max-width: 300px;
+    background-color: #f4f4f4;
+    border: 1.6px solid black;
+    border-radius: 30px;
+    height: 40px;
+    padding: 5px 8px;
+}
+
+.elementos--itens input {
+    background-color: transparent;
     border: none;
+    font-size: 16px;
+    width: 100%;
+    height: 35px;
+}
+
+.elementos--itens select {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 30px;
+    font-size: 12px;
+    appearance: none;
+    padding: 0 8px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Estilo específico para o seletor de Nível */
+.elementos--itens#Nivel {
+    flex: 1 1 100%; /* Faz o seletor de Nível ocupar toda a largura disponível */
+    justify-content: center; /* Centraliza o conteúdo dentro dessa caixa */
+    display: flex;
+    align-items: center;
+}
+
+.elementos--itens#Nivel select {
+    width: auto; /* Ajusta a largura do seletor para o conteúdo */
+    margin: 0 auto; /* Centraliza o select */
+}
+
+/* Media queries para responsividade */
+@media (max-width: 1352px) {
+    #container-elementos {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .elementos--itens#Nivel {
+        width: 100%; /* Seletor de Nível ocupa 100% da largura em telas menores */
+        justify-content: center;
+    }
 }
 
 input:focus-visible {
@@ -118,7 +173,7 @@ input:focus-visible {
 }
 
 .button {
-    margin-top: 35px; 
+    margin-top: 25px; /* Menor espaço acima */
     display: flex;
     justify-content: center;
     width: 100%;
@@ -127,10 +182,10 @@ input:focus-visible {
 .button button {
     background-color: white;
     border-width: 1px;
-    padding: 4px 90px; 
-    font-size: 1.3em; 
+    padding: 3px 70px; /* Menor padding */
+    font-size: 1.1em; /* Menor fonte */
     font-weight: bold;
-    border-radius: 18px; 
+    border-radius: 15px; /* Menor borda */
     cursor: pointer;
     opacity: 0.8;
 }
@@ -153,7 +208,7 @@ button:hover {
         display: block;
         margin-inline: auto;
     }
-    
+
     #container-elementos {
         flex-direction: column;
         text-align: center;
@@ -162,12 +217,12 @@ button:hover {
 
 @media (max-width: 485px) {
     .elementos--itens {
-        min-width: 170px;
-        flex: 1 1 100%;
+        min-width: 150px;
+        flex: 1 1 100%; /* Agora ocupa 100% da largura disponível */
     }
 
     .button button {
-        padding: 4px 65px; 
+        padding: 3px 55px; /* Menor padding */
     }
 
     img {

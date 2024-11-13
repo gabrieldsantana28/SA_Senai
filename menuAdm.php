@@ -39,12 +39,12 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
     <main id="container-main">
         <section class="first-four-buttons">
-            <button class="button-menu"><a href="cadastroprodutos.php">Cadastro de Produtos</a></button>
-            <button class="button-menu"><a href="vendas.php">Controle de Vendas</a></button>
-            <button class="button-menu"><a href="relatorio.php">Relatórios e Análises</a></button>
-            <button class="button-menu"><a href="funcionarios.php">Gerenciamento de Funcionarios</a></button>
+        <button class="button-menu"><a href="funcionarios.php">Gerenciamento de Funcionarios</a></button>
             <button class="button-menu"><a href="estoque.php">Gerenciamento de Estoque</a></button>
             <button class="button-menu"><a href="fornecedores.php">Gerenciamento de Fornecedores</a></button>
+            <button class="button-menu"><a href="compras.php">Controle de Compras</a></button>
+            <button class="button-menu"><a href="vendas.php">Controle de Vendas</a></button>
+            <button class="button-menu"><a href="relatorio.php">Relatórios e Análises</a></button>
         </section>
     </main>
 </body>

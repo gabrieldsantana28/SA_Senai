@@ -46,10 +46,10 @@ $nivel = $_SESSION['nivel'] ?? 0;
 
 // Pesquisa por nome do fornecedor ou material fornecido
 $pesquisa = $_GET['PesquisarFornecedor'] ?? ''; // Obtém o termo de pesquisa do input
-$sql = "SELECT id_fornecedor, nome_fornecedor, endereco_fornecedor, material_fornecedor, telefone_fornecedor FROM fornecedor WHERE nome_fornecedor LIKE ? OR fornecedor LIKE ?";
+$sql = "SELECT id_fornecedor, nome_fornecedor, endereco_fornecedor, material_fornecedor, telefone_fornecedor FROM fornecedor WHERE nome_fornecedor LIKE ? OR id_fornecedor LIKE ? OR material_fornecedor LIKE ?";
 $stmt = $conn->prepare($sql);
 $likePesquisa = "%" . $pesquisa . "%";
-$stmt->bind_param("ss", $likePesquisa, $likePesquisa);
+$stmt->bind_param("sss", $likePesquisa, $likePesquisa, $likePesquisa);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -124,7 +124,6 @@ $result = $stmt->get_result();
             <a href="estoque.php">Estoque</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="compras.php">Compras</a>
-            <a href="cadastroprodutos.php">CadasProdutos</a>
             <a href="vendas.php">Vendas</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
@@ -156,7 +155,7 @@ $result = $stmt->get_result();
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div class="fornecedor--item">
                         <span onclick="toggleEditForm(<?php echo $row['id_fornecedor']; ?>)" style="cursor: pointer;">
-                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['nome_fornecedor']); ?> (<?php echo htmlspecialchars($row['material_fornecedor']); ?>)
+                            <strong>&gt;</strong> <?php echo $row['id_fornecedor']." - "; echo htmlspecialchars($row['nome_fornecedor']); ?> (<?php echo htmlspecialchars($row['material_fornecedor']); ?>)
                         </span>
                         <i class="fa-solid fa-trash" style="color: red;" onclick="confirmarExclusao(<?php echo $row['id_fornecedor']; ?>)"></i>
                     </div>
@@ -199,15 +198,18 @@ $result = $stmt->get_result();
         }
         
         function voltarMenu() {
-          <?php if ($nivel == 1): ?>
-              window.location.href = 'menuAdm.php';
-          <?php elseif ($nivel == 2): ?>
-              window.location.href = 'menuFuncionario.php';
-          <?php else: ?>
-              alert('Nível de conta não identificado. Faça login novamente.');
-              window.location.href = 'login.php'; 
-          <?php endif; ?>
-        } 
+            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+            if (nivel !== null) {
+                if (nivel == 1) {
+                    window.location.href = 'menuAdm.php';
+                } else if (nivel == 2) {
+                    window.location.href = 'menuFuncionario.php';
+                }
+            } else {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.php';
+            }
+        }
     </script>
 </body>
 </html>

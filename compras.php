@@ -14,7 +14,7 @@
         die("Conexão falhou: " . $conn->connect_error);
     }
 
-    $sql_compras = "SELECT id_compra, fornecedor, produto_compra, quantidade_compra, tipo_pagamento_compra, data_compra, hora_compra FROM compra";
+    $sql_compras = "SELECT c.id_compra, f.nome_fornecedor, c.produto_compra, c.quantidade_compra, c.tipo_pagamento_compra, c.data_compra, c.hora_compra FROM compra c INNER JOIN fornecedor f ON c.fk_id_fornecedor = f.id_fornecedor";
     $result_compras = $conn->query($sql_compras);
 
     // RECUPERA NÍVEL DA CONTA 
@@ -39,7 +39,6 @@
             <a href="estoque.php">Estoque</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="fornecedores.php">Fornecedores</a>
-            <a href="cadastroprodutos.php">CadasProdutos</a>
             <a href="vendas.php">Vendas</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
@@ -57,11 +56,9 @@
         <div class="elementos--itens">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" id="PesquisarCompra" name="PesquisarCompra" placeholder="Pesquisar Compra...">
-            <button class="icon-btn" id="redirectBtn">
-                <a href="cadastrocompras.php">
-                    <i class="fa-solid fa-plus"></i>
-                </a>
-            </button>
+            <a href="/GitHub/SA_Senai/cadastrocompras.php" class="icon-btn">
+                <i class="fa-solid fa-plus"></i>
+            </a>
         </div>
     </section>
 
@@ -91,7 +88,7 @@
         while ($linha = $result_compras->fetch_assoc()) {
             echo '<section id="lista-elementos">';
             echo '<div class="elementos-lista">' . $linha["id_compra"] . '</div>';
-            echo '<div class="elementos-lista">' . $linha["fornecedor"] . '</div>';
+            echo '<div class="elementos-lista">' . $linha["nome_fornecedor"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["produto_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["tipo_pagamento_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["data_compra"] . '</div>';
@@ -112,7 +109,7 @@
             echo '</section>';
         }
     } else {
-        echo "Sem resultados";
+        echo "<center>Sem resultados</center>";
     }
 
 ?> 
@@ -126,14 +123,17 @@ function confirmarExclusao() {
             window.location.href = url;
         }
         function voltarMenu() {
-            <?php if ($nivel == 1): ?>
-                window.location.href = 'menuAdm.php';
-            <?php elseif ($nivel == 2): ?>
-                window.location.href = 'menuFuncionario.php';
-            <?php else: ?>
-                alert('Nível de conta não identificado. Faça login novamente.');
-                window.location.href = 'login.php'; 
-            <?php endif; ?>
+            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+            if (nivel !== null) {
+                if (nivel == 1) {
+                    window.location.href = 'menuAdm.php';
+                } else if (nivel == 2) {
+                    window.location.href = 'menuFuncionario.php';
+                }
+            } else {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.php';
+            }
         }
     </script>
 </body>

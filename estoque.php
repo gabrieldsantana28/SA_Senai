@@ -55,14 +55,13 @@ if (isset($_POST['delete_id'])) {
             <a href="compras.php">Compras</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="fornecedores.php">Fornecedores</a>
-            <a href="cadastroprodutos.php">CadasProdutos</a>
             <a href="vendas.php">Vendas</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
     
     <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('menuAdm.php')"></i>
+        <i class="fa-solid fa-arrow-left" onclick="voltarMenu()"></i>
     </div>   
     
     <section id="Titulo-Principal"><h1>Gerenciamento de Estoque</h1></section>
@@ -132,15 +131,18 @@ if (isset($_POST['delete_id'])) {
         }
         
         function voltarMenu() {
-          <?php if ($nivel == 1): ?>
-              window.location.href = 'menuAdm.php';
-          <?php elseif ($nivel == 2): ?>
-              window.location.href = 'menuFuncionario.php';
-          <?php else: ?>
-              alert('Nível de conta não identificado. Faça login novamente.');
-              window.location.href = 'login.php'; 
-          <?php endif; ?>
-        } 
+            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+            if (nivel !== null) {
+                if (nivel == 1) {
+                    window.location.href = 'menuAdm.php';
+                } else if (nivel == 2) {
+                    window.location.href = 'menuFuncionario.php';
+                }
+            } else {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.php';
+            }
+        }
     </script>
 </body>
 </html>

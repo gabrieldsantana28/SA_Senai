@@ -57,10 +57,10 @@
     $pesquisa = $_POST['PesquisarFuncionario'] ?? '';
 
     // Pesquisa por usuário ou nome
-    $sql = "SELECT id_usuario, nome_usuario, user_usuario, email_usuario, senha_usuario, nivel_usuario FROM usuario WHERE user_usuario LIKE ? OR nome_usuario LIKE ?";
+    $sql = "SELECT id_usuario, nome_usuario, user_usuario, email_usuario, senha_usuario, nivel_usuario FROM usuario WHERE user_usuario LIKE ? OR nome_usuario LIKE ? OR id_usuario LIKE ?";
     $stmt = $conn->prepare($sql);
     $likePesquisa = "%" . $pesquisa . "%";
-    $stmt->bind_param("ss", $likePesquisa, $likePesquisa);
+    $stmt->bind_param("sss", $likePesquisa, $likePesquisa, $likePesquisa);
     $stmt->execute();
     $result = $stmt->get_result();
 ?>
@@ -130,7 +130,6 @@
             <a href="estoque.php">Estoque</a>
             <a href="compras.php">Compras</a>
             <a href="fornecedores.php">Fornecedores</a>
-            <a href="cadastroprodutos.php">CadasProdutos</a>
             <a href="vendas.php">Vendas</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
@@ -161,7 +160,7 @@
                 <?php while($row = $result->fetch_assoc()): ?>
                     <div class="fornecedor--item">
                         <span onclick="toggleDetalhes(<?php echo $row['id_usuario']; ?>)" style="cursor: pointer;">
-                            <strong>&gt;</strong> <?php echo htmlspecialchars($row['nome_usuario']); ?> (<?php echo $row['nivel_usuario'] == 1 ? 'Administrador' : 'Funcionário'; ?>)
+                            <strong>&gt;</strong> <?php echo $row['id_usuario']." - "; echo htmlspecialchars($row['nome_usuario']); ?> (<?php echo $row['nivel_usuario'] == 1 ? 'Administrador' : 'Funcionário'; ?>)
                         </span>
                         <i class="fa-solid fa-trash" style="color: red;" onclick="confirmarExclusao(<?php echo $row['id_usuario']; ?>)"></i>
                     </div>
@@ -188,15 +187,18 @@
         }
 
         function voltarMenu() {
-          <?php if ($nivel == 1): ?>
-              window.location.href = 'menuAdm.php';
-          <?php elseif ($nivel == 2): ?>
-              window.location.href = 'menuFuncionario.php';
-          <?php else: ?>
-              alert('Nível de conta não identificado. Faça login novamente.');
-              window.location.href = 'login.php'; 
-          <?php endif; ?>
-        } 
+            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+            if (nivel !== null) {
+                if (nivel == 1) {
+                    window.location.href = 'menuAdm.php';
+                } else if (nivel == 2) {
+                    window.location.href = 'menuFuncionario.php';
+                }
+            } else {
+                alert('Sessão expirada. Faça login novamente.');
+                window.location.href = 'login.php';
+            }
+        }
 
         function toggleDetalhes(id) {
             const detalhesDiv = document.getElementById('detalhes-' + id);
