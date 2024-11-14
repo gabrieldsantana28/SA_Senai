@@ -72,11 +72,9 @@ if (isset($_POST['delete_id'])) {
             <form method="GET" action="">
                 <input type="text" id="PesquisarProduto" name="PesquisarProduto" placeholder="Pesquisar Produto..." value="<?php echo htmlspecialchars($pesquisa); ?>">
             </form>
-            <button class="icon-btn" id="redirectBtn">
-                <a href="cadastroprodutos.php">
-                    <i class="fa-solid fa-plus"></i>
-                </a>
-            </button>
+            <a href="/GitHub/SA_Senai/cadastroprodutos.php" class="icon-btn">
+                <i class="fa-solid fa-plus"></i>
+            </a>
         </div>
     </section>
 
