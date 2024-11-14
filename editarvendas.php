@@ -36,23 +36,47 @@ if (isset($_GET['id'])) {
 // Atualiza os dados da venda
 if (isset($_POST['update'])) {
     $id = $_POST['id'];
-    $produto = $_POST['produto'];
-    $quantidade = $_POST['quantidade'];
+    $quantidade_venda = $_POST['quantidade'];
     $tipo_pagamento = $_POST['tipo_pagamento'];
     $data_venda = $_POST['data_venda'];
     $hora_venda = $_POST['hora_venda'];
 
-    $sql_update = "UPDATE venda SET produto_venda=?, quantidade=?, tipo_pagamento=?, data_venda=?, hora_venda=? WHERE id_venda=?";
+    // Recupera o ID do produto da venda
+    $id_produto = $venda['fk_id_produto'];
+    // Obtém a quantidade original da venda
+    $quantidade_original = $venda['quantidade_venda'];
+
+    // Calcula a diferença entre a nova e a antiga quantidade
+    $diferenca_quantidade = $quantidade_venda - $quantidade_original;
+
+    // Atualiza a venda com os novos dados
+    $sql_update = "UPDATE venda SET quantidade_venda=?, tipo_pagamento_venda=?, data_venda=?, hora_venda=? WHERE id_venda=?";
     $stmt = $conn->prepare($sql_update);
-    $stmt->bind_param("siissi", $produto, $quantidade, $tipo_pagamento, $data_venda, $hora_venda, $id);
+    $stmt->bind_param("isssi", $quantidade_venda, $tipo_pagamento, $data_venda, $hora_venda, $id);
     $stmt->execute();
 
+    // Atualiza a quantidade no estoque considerando a diferença
+    if ($diferenca_quantidade != 0) {
+        $sql_estoque = "UPDATE produto SET quantidade_produto = quantidade_produto - ? WHERE id_produto = ?";
+        $stmt_estoque = $conn->prepare($sql_estoque);
+        $stmt_estoque->bind_param("ii", abs($diferenca_quantidade), $id_produto);
+
+        // Se a diferença for negativa (menos produto vendido), aumenta o estoque, caso contrário, diminui
+        if ($diferenca_quantidade > 0) {
+            $stmt_estoque->execute(); // Diminui o estoque
+        } elseif ($diferenca_quantidade < 0) {
+            $stmt_estoque->execute(); // Aumenta o estoque (não foi necessário diminuir antes)
+        }
+    }
+
+    // Redireciona de volta para a página de vendas
     header("Location: vendas.php");
     exit;
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">

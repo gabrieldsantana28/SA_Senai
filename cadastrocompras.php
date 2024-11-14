@@ -13,20 +13,27 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
+$preco = "";
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fornecedor = $_POST['fornecedor'];
     $produto_compra = $_POST['produto_compra'];
     $quantidade_compra = $_POST['quantidade_compra'];
+    $preco_compra = $_POST['preco_compra'];
     $tipo_pagamento_compra = $_POST['tipo_pagamento_compra'];
     $data_compra = $_POST['data_compra'];
     $hora_compra = $_POST['hora_compra'];
 
-    $sql = "INSERT INTO compra (fk_id_fornecedor, produto_compra, quantidade_compra, tipo_pagamento_compra, data_compra, hora_compra) 
-            VALUES (?, ?, ?, ?, ?, ?)";
+    // Processamento do preço
+    $preco = str_replace('.', '', $_POST['preco_compra']); // Remove o ponto
+    $preco = str_replace(',', '.', $preco); // Troca a vírgula pelo ponto para conversão
+    $quantidade = $_POST['quantidade_compra'];
+
+    $sql = "INSERT INTO compra (fk_id_fornecedor, produto_compra, quantidade_compra, preco_compra, tipo_pagamento_compra, data_compra, hora_compra) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isisss", $fornecedor, $produto_compra, $quantidade_compra, $tipo_pagamento_compra, $data_compra, $hora_compra);
+    $stmt->bind_param("isissss", $fornecedor, $produto_compra, $quantidade_compra, $preco_compra, $tipo_pagamento_compra, $data_compra, $hora_compra);
 
     if ($stmt->execute()) {
         $message = "Compra cadastrada com sucesso!";
@@ -104,11 +111,18 @@ $conn->close();
                 </div>
 
                 <div class="elementos--itens">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>R$
+                    <input type="text" id="PrecoCompra" onkeypress="mascara(this, mreais)" oninput="validarPreco();" name="preco_compra" placeholder="Preço..." step="0.01" value="<?php echo htmlspecialchars($preco); ?>" required>
+                </div>
+
+                <div class="elementos--itens">
                     <i class="fa-solid fa-credit-card"></i>
                     <select id="TipoPagamentoCompra" name="tipo_pagamento_compra" required>
                         <option value="" disabled selected>Selecione o Tipo de Pagamento...</option>
-                        <option value="À vista">À vista</option>
+                        <option value="À vista">Dinheiro/A vista</option>
+                        <option value="PIX">PIX</option>
                         <option value="Parcelado">Parcelado</option>
+                        <option value="Débito">Débito</option>
                     </select>
                 </div>
 
@@ -130,6 +144,34 @@ $conn->close();
     </main>
 
     <script>
+        function mascara(o, f) {
+            v_obj = o // ARMAZENAR INPUT
+            v_fun = f // ARMAZENA MÁSCARA
+            setTimeout("execmascara()", 1) // DELAY MÁSCARA
+        }
+
+        function execmascara() {
+            v_obj.value = v_fun(v_obj.value) // ATUALIZA VALOR INPUT COM MÁSCARA
+        }
+
+        function mreais(v) {
+            v = v.replace(/\D/g, "") // REMOVE OQ NÃO É DÍGITO
+            v = v.replace(/(\d{2})$/, ",$1") // PÕE VIRGULA
+            v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2") // PÕE PRIMEIRO PONTO 
+            return v
+        }
+
+        function validarPreco() {
+            const precoInput = document.getElementById("PrecoProduto");
+            const maxPreco = 1000;
+
+            let preco = precoInput.value.replace(",", "."); // Converte vírgula para ponto no valor
+
+            if (parseFloat(preco) > maxPreco) {
+                alert("O preço não pode ser superior a R$1000.");
+                precoInput.value = maxPreco.toFixed(2).replace(".", ",");
+            }
+        }
         function trocarPagina(url) {
             window.location.href = url;
         }

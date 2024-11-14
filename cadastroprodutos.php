@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($preco > 1000) {
         $message = "Erro: O preço não pode exceder R$1000.";
     } else {
-        $sql = "INSERT INTO produto (nome_produto, descricao_produto, tamanho, cor, preco, quantidade) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO produto (nome_produto, descricao_produto, tamanho_produto, cor_produto, preco_produto, quantidade_produto) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         $stmt->bind_param("sssddi", $nome, $descricao, $tamanho, $cor, $preco, $quantidade);

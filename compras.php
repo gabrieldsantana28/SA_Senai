@@ -14,7 +14,7 @@
         die("Conexão falhou: " . $conn->connect_error);
     }
 
-    $sql_compras = "SELECT c.id_compra, f.nome_fornecedor, c.produto_compra, c.quantidade_compra, c.tipo_pagamento_compra, c.data_compra, c.hora_compra FROM compra c INNER JOIN fornecedor f ON c.fk_id_fornecedor = f.id_fornecedor";
+    $sql_compras = "SELECT c.id_compra, f.nome_fornecedor, c.produto_compra, c.quantidade_compra, c.preco_compra, c.tipo_pagamento_compra, c.data_compra, c.hora_compra FROM compra c INNER JOIN fornecedor f ON c.fk_id_fornecedor = f.id_fornecedor";
     $result_compras = $conn->query($sql_compras);
 
     // RECUPERA NÍVEL DA CONTA 
@@ -90,6 +90,7 @@
             echo '<div class="elementos-lista">' . $linha["id_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["nome_fornecedor"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["produto_compra"] . '</div>';
+            echo '<div class="elementos-lista">' . $linha["preco_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["tipo_pagamento_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["data_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["hora_compra"] . '</div>';

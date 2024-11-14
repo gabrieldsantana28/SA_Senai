@@ -28,10 +28,19 @@ $result = $stmt->get_result();
 
 if (isset($_POST['delete_id'])) {
     $id = $_POST['delete_id'];
-    $sql_delete = "DELETE FROM produto WHERE id_produto = ?";
-    $stmt_delete = $conn->prepare($sql_delete);
-    $stmt_delete->bind_param("i", $id);
-    $stmt_delete->execute();
+
+    // Excluir as vendas relacionadas ao produto
+    $sql_delete_venda = "DELETE FROM venda WHERE fk_id_produto = ?";
+    $stmt_delete_venda = $conn->prepare($sql_delete_venda);
+    $stmt_delete_venda->bind_param("i", $id);
+    $stmt_delete_venda->execute();
+
+    // Agora excluir o produto
+    $sql_delete_produto = "DELETE FROM produto WHERE id_produto = ?";
+    $stmt_delete_produto = $conn->prepare($sql_delete_produto);
+    $stmt_delete_produto->bind_param("i", $id);
+    $stmt_delete_produto->execute();
+
     header("Location: estoque.php"); // Redireciona após exclusão
     exit;
 }
@@ -72,11 +81,9 @@ if (isset($_POST['delete_id'])) {
             <form method="GET" action="">
                 <input type="text" id="PesquisarProduto" name="PesquisarProduto" placeholder="Pesquisar Produto..." value="<?php echo htmlspecialchars($pesquisa); ?>">
             </form>
-            <button class="icon-btn" id="redirectBtn">
-                <a href="cadastroprodutos.php">
-                    <i class="fa-solid fa-plus"></i>
-                </a>
-            </button>
+            <a href="/GitHub/SA_Senai/cadastroprodutos.php" class="icon-btn">
+                <i class="fa-solid fa-plus"></i>
+            </a>
         </div>
     </section>
 
