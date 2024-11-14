@@ -88,8 +88,8 @@
         while ($linha = $result_compras->fetch_assoc()) {
             echo '<section id="lista-elementos">';
             echo '<div class="elementos-lista">' . $linha["id_compra"] . '</div>';
-            echo '<div class="elementos-lista">' . $linha["nome_fornecedor"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["produto_compra"] . '</div>';
+            echo '<div class="elementos-lista">' . $linha["nome_fornecedor"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["preco_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["tipo_pagamento_compra"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["data_compra"] . '</div>';
