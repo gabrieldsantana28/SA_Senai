@@ -90,10 +90,6 @@ $conn->close();
         <form method="POST">
             <input type="hidden" name="id" value="<?php echo $venda['id_venda']; ?>">
             <div class="form-group">
-                <label for="produto">Produto</label>
-                <input type="text" id="produto" name="produto" value="<?php echo $venda['produto_venda']; ?>" required>
-            </div>
-            <div class="form-group">
                 <label for="quantidade">Quantidade</label>
                 <input type="number" id="quantidade" name="quantidade" value="<?php echo $venda['quantidade_venda']; ?>" required>
             </div>
