@@ -80,11 +80,9 @@ $result_vendas = $stmt->get_result();
         <form method="GET" action="">
             <input type="text" id="PesquisarVenda" name="PesquisarVenda" placeholder="Pesquisar Venda..." value="<?php echo htmlspecialchars($pesquisa); ?>" onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
         </form>
-        <button class="icon-btn" id="redirectBtn">
-            <a href="cadastrovendas.php">
+        <a href="/GitHub/SA_Senai/cadastrovendas.php" class="icon-btn">
                 <i class="fa-solid fa-plus"></i>
             </a>
-        </button>
     </div>
 </section>
 

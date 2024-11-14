@@ -41,7 +41,7 @@ body {
 #container-main {
     background-color: white;
     max-width: 50vw; /* Ajustado para diminuir a largura */
-    width: 650px; /* Ajustado para um valor menor */
+    width: 850px; /* Ajustado para um valor menor */
     max-width: 80%; /* Maior flexibilidade */
     margin: 40px auto; 
     border-radius: 15px; 
@@ -77,6 +77,7 @@ body {
     border-radius: 30px; /* Menor para manter o formato proporcional */
     height: 40px; /* Menor para ajustar a altura */
     padding: 5px 8px; /* Ajustado para uma margem interna menor */
+    margin-left: 50px;
 }
 
 .elementos--itens input {
@@ -197,9 +198,7 @@ button:hover {
 
 @media (min-width: 1400px) {
     #container-main {
-        width: 100%;
-        max-width: 100%;
-        box-shadow: none;
+        max-width: 1000px; 
     }
 }
 
@@ -208,7 +207,7 @@ button:hover {
         display: block;
         margin-inline: auto;
     }
-
+    
     #container-elementos {
         flex-direction: column;
         text-align: center;
@@ -217,15 +216,22 @@ button:hover {
 
 @media (max-width: 485px) {
     .elementos--itens {
-        min-width: 150px;
-        flex: 1 1 100%; /* Agora ocupa 100% da largura disponível */
+        min-width: 100%; /* Faz com que os elementos ocupem toda a largura */
+        flex: 1 1 100%; /* Garante que os itens ocupem o espaço necessário */
+        height: auto; /* Permite que a altura se ajuste automaticamente */
+        padding: 10px; /* Aumenta o padding para facilitar o toque */
+    }
+
+    .elementos--itens input {
+        font-size: 16px; /* Aumenta um pouco o tamanho da fonte para facilitar a leitura */
     }
 
     .button button {
-        padding: 3px 55px; /* Menor padding */
+        padding: 10px; /* Aumenta o padding para um botão mais acessível */
+        font-size: 1em; /* Ajusta o tamanho da fonte do botão */
     }
 
     img {
-        width: 100%;
+        width: 90%; /* Reduz a largura da imagem para melhor se encaixar em telas pequenas */
     }
 }

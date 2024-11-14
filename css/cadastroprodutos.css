@@ -40,9 +40,9 @@ body {
 
 #container-main {
     background-color: white;
-    width: 90%;
-    max-width: 900px; /* Aumentando a largura máxima do container */
-    min-width: 320px; 
+    max-width: 50vw; /* Ajustado para diminuir a largura */
+    width: 850px; /* Ajustado para um valor menor */
+    max-width: 80%; /* Maior flexibilidade */
     margin: 50px auto;
     border-radius: 10px;
     box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.3);
