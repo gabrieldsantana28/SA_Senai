@@ -1,56 +1,55 @@
 <?php
-    session_start();
+session_start();
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "nossasa";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nossasa";
 
-    // Conexão com o banco de dados
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// Conexão com o banco de dados
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Conexão falhou: " . $conn->connect_error);
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+$message = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $fornecedor = $_POST['fornecedor'];
+    $produto_compra = $_POST['produto_compra'];
+    $quantidade_compra = $_POST['quantidade_compra'];
+    $tipo_pagamento_compra = $_POST['tipo_pagamento_compra'];
+    $data_compra = $_POST['data_compra'];
+    $hora_compra = $_POST['hora_compra'];
+
+    $sql = "INSERT INTO compra (fk_id_fornecedor, produto_compra, quantidade_compra, tipo_pagamento_compra, data_compra, hora_compra) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isisss", $fornecedor, $produto_compra, $quantidade_compra, $tipo_pagamento_compra, $data_compra, $hora_compra);
+
+    if ($stmt->execute()) {
+        $message = "Compra cadastrada com sucesso!";
+    } else {
+        $message = "Erro ao cadastrar compra: " . $stmt->error;
     }
 
-    $message = "";
+    $stmt->close();
+}
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $nome = $_POST['nome'];
-        $usuario = $_POST['usuario'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
-        $nivel = $_POST['nivel']; 
-
-        $sql = "INSERT INTO compra (fornecedor, usuario, email, senha, nivel) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param("ssssi", $nome, $usuario, $email, $senha, $nivel); 
-
-        if ($stmt->execute()) {
-            $message = "Funcionário cadastrado com sucesso!";
-        } else {
-            $message = "Erro ao cadastrar funcionário: " . $stmt->error;
-        }
-
-        $stmt->close();
-    }
-
-    // RECUPERA NÍVEL DA CONTA 
-    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
-
-    $conn->close();
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <link rel="stylesheet" href="css/cadastrofuncionarios.css">
+    <link rel="stylesheet" href="css/cadastrocompras.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
-    <title>Cadastro de Funcionários</title>
+    <title>Cadastro de Compras</title>
 </head>
 <body>
     <header>
@@ -65,11 +64,11 @@
         </div>
     </header>
     <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('funcionarios.php')"></i>
+        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('compras.php')"></i>
     </div>    
     
     <main id="container-main">
-        <section id="Titulo-Principal"><h1>Cadastro de Funcionários</h1></section>
+        <section id="Titulo-Principal"><h1>Cadastro de Compras</h1></section>
         
         <?php if ($message): ?>
             <p><?php echo $message; ?></p>
@@ -78,35 +77,58 @@
         <form method="POST">
             <section id="container-elementos">
                 <div class="elementos--itens">
-                    <i class="fas fa-user-tag"></i>
-                    <input type="text" id="NomeFuncionario" name="nome" placeholder="Nome do Funcionário..." required>
-                </div>
-                <div class="elementos--itens">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" id="Usuario" name="usuario" placeholder="Nome de usuário..." required>
-                </div>
-                <div class="elementos--itens">
-                    <i class='fa-solid fa-envelope'></i>
-                    <input type="text" id="Email" name="email" placeholder="Email..." required>
-                </div>
-                <div class="elementos--itens">
-                    <i class='fa-solid fa-lock'></i>
-                    <input type="password" id="Senha" name="senha" placeholder="Senha (Mín. 6 Caracteres)..." minlength="6" required>
-                </div>
-                <div class="elementos--itens">
-                    <i class="fa-solid fa-user-tie" aria-label="Ícone de Nível"></i>
-                    <select id="Nivel" name="nivel" required>
-                        <option value="">Selecione o Nível...</option>
-                        <option value="1">1 - Admin</option>
-                        <option value="2">2 - Funcionário</option>
+                    <i class="fa-solid fa-truck"></i>
+                    <select id="Fornecedor" name="fornecedor" required>
+                        <option value="" disabled selected>Selecione o Fornecedor...</option>
+                        <?php
+                            // Carregar fornecedores
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+                            $sql_fornecedores = "SELECT id_fornecedor, nome_fornecedor FROM fornecedor";
+                            $result_fornecedores = $conn->query($sql_fornecedores);
+                            while ($linha = $result_fornecedores->fetch_assoc()) {
+                                echo "<option value='" . $linha["id_fornecedor"] . "'>" . $linha["nome_fornecedor"] . "</option>";
+                            }
+                            $conn->close();
+                        ?>
                     </select>
                 </div>
+
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-cube"></i>
+                    <input type="text" id="ProdutoCompra" name="produto_compra" placeholder="Produto comprado..." required>
+                </div>
+
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-box"></i>
+                    <input type="number" id="QuantidadeCompra" name="quantidade_compra" placeholder="Quantidade..." required>
+                </div>
+
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <select id="TipoPagamentoCompra" name="tipo_pagamento_compra" required>
+                        <option value="" disabled selected>Selecione o Tipo de Pagamento...</option>
+                        <option value="À vista">À vista</option>
+                        <option value="Parcelado">Parcelado</option>
+                    </select>
+                </div>
+
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <input type="date" id="DataCompra" name="data_compra" required>
+                </div>
+
+                <div class="elementos--itens">
+                    <i class="fa-solid fa-clock"></i>
+                    <input type="time" id="HoraCompra" name="hora_compra" required>
+                </div>
+
                 <div class="button">
                     <button type="submit">Cadastrar</button>
                 </div>
             </section>
         </form>
     </main>
+
     <script>
         function trocarPagina(url) {
             window.location.href = url;
