@@ -196,6 +196,10 @@ $result = $stmt->get_result();
                 window.location.href = "fornecedores.php?delete_id=" + id;
             }
         }
+
+        function trocarPagina(url) {
+            window.location.href = url;
+        }
         
         function voltarMenu() {
             const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;

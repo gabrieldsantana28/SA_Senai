@@ -1,44 +1,60 @@
 <?php
-    $conexao = new mysqli("localhost", "root", "", "nossasa");
+session_start();
 
-    if ($conexao->connect_errno) {
-        echo "Ocorreu um erro de conexão com o banco de dados";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "nossasa";
+
+// Criar conexão
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar conexão
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+
+// Verifica se o ID foi passado
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    // Busca os dados da compra para editar
+    $sql = "SELECT * FROM compra WHERE id_compra = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $compra = $result->fetch_assoc();
+    } else {
+        echo "Compra não encontrada.";
         exit;
     }
+}
 
-    $conexao->set_charset("utf8");
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+// Atualiza os dados da compra
+if (isset($_POST['update'])) {
+    $id = $_POST['id'];
+    $produto_compra = $_POST['produto'];
+    $quantidade_compra = $_POST['quantidade'];
+    $preco_compra = $_POST['preco'];
+    $tipo_pagamento = $_POST['tipo_pagamento'];
+    $data_compra = $_POST['data_compra'];
+    $hora_compra = $_POST['hora_compra'];
 
-        $sql = "SELECT * FROM produto WHERE id_produto = $id";
-        $result = $conexao->query($sql);
+    // Atualiza a compra no banco de dados
+    $sql_update = "UPDATE compra SET produto_compra=?, quantidade_compra=?, preco_compra=?, tipo_pagamento_compra=?, data_compra=?, hora_compra=? WHERE id_compra=?";
+    $stmt = $conn->prepare($sql_update);
+    $stmt->bind_param("sidsisi", $produto_compra, $quantidade_compra, $preco_compra, $tipo_pagamento, $data_compra, $hora_compra, $id);
+    $stmt->execute();
 
-        if ($result->num_rows > 0) {
-            $produto = $result->fetch_assoc();
-        } else {
-            echo "Produto não encontrado.";
-            exit;
-        }
-    }
+    // Redireciona de volta para a página de compras
+    header("Location: compras.php");
+    exit;
+}
 
-    // Atualiza os dados do produto
-    if (isset($_POST['update'])) {
-        $id = $_POST['id'];
-        $nome = $_POST['nome'];
-        $quantidade = $_POST['quantidade'];
-        $preco = $_POST['preco'];
-        $descricao = $_POST['descricao'];
-        $tamanho = $_POST['tamanho'];
-        $cor = $_POST['cor'];
-
-        $sql_update = "UPDATE produto SET nome_produto='$nome', quantidade_produto='$quantidade', preco_produto='$preco', descricao_produto='$descricao', tamanho_produto='$tamanho', cor_produto='$cor' WHERE id_produto=$id";
-        $conexao->query($sql_update);
-
-        header("Location: estoque.php"); 
-        exit;
-    }
-
-    $conexao->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -46,57 +62,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <link rel="stylesheet" href="css/estoque.css">
+    <link rel="stylesheet" href="css/compras.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
-    <title>Editar Produto</title>
+    <title>Editar Compra</title>
 </head>
 <body>
     <header>
         <div class="hdr">
-        <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
+            <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
             <a href="estoque.php">Estoque</a>
             <a href="funcionarios.php">Funcionários</a>
             <a href="fornecedores.php">Fornecedores</a>
             <a href="vendas.php">Vendas</a>
-            <a href="compras.php">Compras</a>
             <a href="relatorio.php">Relatórios</a>
         </div>
     </header>
 
     <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('estoque.php')"></i>
-    </div>   
+        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('compras.php')"></i>
+    </div>
 
-    <section id="Titulo-Principal"><h1>Editar Produto</h1></section>
+    <section id="Titulo-Principal">
+        <h1>Editar Compra</h1>
+    </section>
 
     <section class="formulario-editar">
         <form method="POST">
-            <input type="hidden" name="id" value="<?php echo $produto['id_produto']; ?>">
+            <input type="hidden" name="id" value="<?php echo $compra['id_compra']; ?>">
             <div class="form-group">
-                <label for="nome_produto">Nome do Produto</label>
-                <input type="text" id="nome_produto" name="nome" value="<?php echo $produto['nome_produto']; ?>" required>
+                <label for="produto">Produto</label>
+                <input type="text" id="produto" name="produto" value="<?php echo $compra['produto_compra']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="quantidade_produto">Quantidade</label>
-                <input type="number" id="quantidade_produto" name="quantidade" value="<?php echo $produto['quantidade_produto']; ?>" required>
+                <label for="quantidade">Quantidade</label>
+                <input type="number" id="quantidade" name="quantidade" value="<?php echo $compra['quantidade_compra']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="tamanho_produto">Tamanho</label>
-                <input type="text" id="tamanho_produto" name="tamanho" value="<?php echo $produto['tamanho_produto']; ?>" required>
+                <label for="preco">Preço</label>
+                <input type="number" step="0.01" id="preco" name="preco" value="<?php echo $compra['preco_compra']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="cor_produto">Cor</label>
-                <input type="text" id="cor_produto" name="cor" value="<?php echo $produto['cor_produto']; ?>" required>
+                <label for="tipo_pagamento">Tipo de Pagamento</label>
+                <input type="text" id="tipo_pagamento" name="tipo_pagamento" value="<?php echo $compra['tipo_pagamento_compra']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="preco_produto">Preço</label>
-                <input type="text" id="preco_produto" name="preco" value="<?php echo $produto['preco_produto']; ?>" required>
+                <label for="data_compra">Data</label>
+                <input type="date" id="data_compra" name="data_compra" value="<?php echo $compra['data_compra']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="descricao_produto">Descrição</label>
-                <textarea id="descricao_produto" name="descricao" rows="4" required><?php echo $produto['descricao_produto']; ?></textarea>
+                <label for="hora_compra">Hora</label>
+                <input type="time" id="hora_compra" name="hora_compra" value="<?php echo $compra['hora_compra']; ?>" required>
             </div>
             <button type="submit" name="update" class="botao-salvar">Salvar Alterações</button>
         </form>
@@ -104,7 +120,6 @@
 
     <script>
         function trocarPagina(url) {
-            console.log("Tentando navegar para:", url);
             window.location.href = url;
         }
 
@@ -187,9 +202,8 @@ body {
     font-weight: bold;
 }
 
-.form-group input,
-.form-group textarea {
-    width: 100%;
+.form-group input {
+    width: 95%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
