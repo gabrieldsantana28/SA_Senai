@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
-$sql = "SELECT nome_produto, quantidade FROM produto";
+$sql = "SELECT nome_produto, quantidade_produto FROM produto";
 $result = $conn->query($sql);
 
 $produtos = [];
@@ -21,7 +21,7 @@ $quantidades = [];
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $produtos[] = $row['nome_produto'];
-        $quantidades[] = $row['quantidade'];
+        $quantidades[] = $row['quantidade_produto'];
     }
 } else {
     echo "0 resultados";
