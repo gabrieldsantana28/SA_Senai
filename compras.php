@@ -27,7 +27,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=7">
-    <link rel="stylesheet" href="css/compras.css">
+    <link rel="stylesheet" href="css/vendas.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
     <title>Controle de Compras</title>
@@ -105,7 +105,7 @@
             echo '</form>';
             
             // EDITAR
-            echo '<a href="editar.php?id=' . $linha["id_compra"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
+            echo '<a href="editarcompras.php?id=' . $linha["id_compra"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
             echo '</div>';
             echo '</section>';
         }
