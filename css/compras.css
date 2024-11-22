@@ -23,8 +23,19 @@ body {
     margin: 0 5px;
 }
 
+.hdr a:hover {
+    background-color: #333;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 5px;
+}
+
 .logo-header {
     height: 80px;
+}
+
+.logo-header:hover{
+    cursor: pointer;
 }
 
 .botao--voltar {
@@ -61,7 +72,7 @@ body {
     font-size: 16px;
     height: 100%;
     width: 292px;
-    padding-left: 10px;
+    padding-left: 18px;
 }
 
 .elementos--itens input:focus {
@@ -100,26 +111,26 @@ body {
     width: 80%;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Mantém 7 colunas */
-    gap: 8px; /* Controla o espaçamento entre os itens */
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 8px; 
     justify-content: space-evenly;
     text-align: center;
 }
 
 .elementos {
-    height: 50px; /* Aumentar a altura */
+    height: 50px; 
     background-color: black;
     color: white;
     text-align: center;
     padding-top: 10px;
     font-size: 1em;
     border-radius: 8px;
-    transition: background-color 0.3s; /* Transição suave */
-    width: 100%; /* Faz a largura se ajustar à coluna da grid */
+    transition: background-color 0.3s;
+    width: 100%; 
 }
 
 .elementos:hover {
-    background-color: #333; /* Efeito de hover */
+    background-color: #333; 
 }
 
 /* Lista de elementos */
