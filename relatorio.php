@@ -50,9 +50,9 @@ $conn->close();
     <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
         <a href="estoque.php">Estoque</a>
+        <a href="fornecedores.php">Fornecedores</a>
         <?php if ($_SESSION['nivel'] == 1): // Apenas admin pode ver estas opções ?>
             <a href="funcionarios.php">Funcionários</a>
-            <a href="relatorio.php">Relatórios</a>
         <?php endif; ?>
         <a href="compras.php">Compras</a>
         <a href="vendas.php">Vendas</a>

@@ -52,7 +52,7 @@ body {
     height: 45px;
     max-width: 400px;
     margin: 0 auto 30px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .elementos--itens input {
@@ -60,13 +60,13 @@ body {
     border: none;
     font-size: 16px;
     height: 100%;
-    width: 300px;
-    padding-left: 10px; 
+    width: 292px;
+    padding-left: 10px;
 }
 
 .elementos--itens input:focus {
     outline: none;
-    border-bottom: 2px solid #007bff; 
+    border-bottom: 2px solid #007bff;
 }
 
 .elementos--itens i {
@@ -83,7 +83,7 @@ body {
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 .icon-btn i {
@@ -97,61 +97,86 @@ body {
 }
 
 #container-elementos {
-    height: 60px;
     width: 80%;
     margin: auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Mantém 7 colunas */
+    gap: 8px; /* Controla o espaçamento entre os itens */
     justify-content: space-evenly;
+    text-align: center;
 }
 
 .elementos {
-    height: 40px;
-    width: 150px;
+    height: 50px; /* Aumentar a altura */
     background-color: black;
     color: white;
     text-align: center;
     padding-top: 10px;
     font-size: 1em;
+    border-radius: 8px;
+    transition: background-color 0.3s; /* Transição suave */
+    width: 100%; /* Faz a largura se ajustar à coluna da grid */
 }
 
+.elementos:hover {
+    background-color: #333; /* Efeito de hover */
+}
+
+/* Lista de elementos */
 #lista-elementos {
-    height: 60px;
     width: 80%;
     margin: auto;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 8px; 
     margin-top: 8px;
-    position: relative; /* Permite o posicionamento dos ícones */
+    position: relative;
 }
 
 .elementos-lista {
-    height: 40px;
-    width: 150px;
+    height: 50px; 
     background-color: white;
     text-align: center;
     padding-top: 10px;
     font-size: 1em;
     border: 1px solid black;
+    border-radius: 8px;
     position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s; 
+    width: 100%; 
 }
+
+.elementos-lista:hover {
+    background-color: #f0f0f0; /* Efeito de hover */
+}
+
 
 .icons {
     display: flex;
     gap: 10px;
     position: absolute;
-    right: -60px; /* Movendo os ícones para fora da caixa */
+    right: -70px; 
     top: 50%;
     transform: translateY(-50%);
 }
 
-.icons i {
-    font-size: 1.5em;
+.icons button, .icons a {
+    background: none;
+    border: none;
+    padding: 3px 2px; /* Diminuindo o tamanho do botão */
     cursor: pointer;
 }
 
-.icons i.fa-trash {
-    color: red;
+.icons button i, .icons a i {
+    font-size: 1.5em; /* Tamanho do ícone reduzido */
+    color: #000;
 }
+
+.icons button:hover i, .icons a:hover i {
+    color: grey; 
+}
+
 
 @media (max-width: 768px) {
     #container-elementos,

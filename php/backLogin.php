@@ -6,7 +6,6 @@ header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
 header("Pragma: no-cache"); // HTTP 1.0
 header("Expires: 0"); // Proxies
 
-// CONEXÃO COM O BANCO DE DADOS
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,7 +16,6 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
-// Verifica se os campos de usuário e senha foram enviados
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($_POST['senha'])) {
     $usuario = $_POST['usuario'];
     $senha = $_POST['senha'];
@@ -25,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
     // Consulta para verificar as credenciais do usuário
     $sql = "SELECT * FROM usuario WHERE user_usuario = ? AND senha_usuario = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $usuario, $senha); // 'ss' indica que ambos os parâmetros são strings
+    $stmt->bind_param("ss", $usuario, $senha);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -38,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
         $_SESSION['nome'] = $nome;
         $_SESSION['nivel'] = $nivel;
 
-        // Redireciona para o menu correspondente ao nível do usuário
         if ($nivel == 1) {
             header("Location: /GitHub/SA_Senai/menuAdm.php");
         } elseif ($nivel == 2) {
@@ -47,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
         exit();
     } else {
         $_SESSION['login_error'] = "Usuário ou senha incorretos";
-        header("Location: /GitHub/SA_Senai/login.php");
+        header("Location: /GitHub/SA_Senai/index.php");
         exit();
     }
 
 } else {
     // Redireciona para a página de login se o método POST não for usado
-    header("Location: /GitHub/SA_Senai/login.php");
+    header("Location: /GitHub/SA_Senai/index.php");
     exit();
 }
 ?>
