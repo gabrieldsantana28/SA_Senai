@@ -58,16 +58,18 @@ if (isset($_POST['delete_id'])) {
     <title>Gerenciamento de Estoque</title>
 </head>
 <body>
-    <header>
-        <div class="hdr">
+<header>
+    <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
-            <a href="compras.php">Compras</a>
+        <a href="estoque.php">Estoque</a>
+        <?php if ($_SESSION['nivel'] == 1): // Apenas admin pode ver estas opções ?>
             <a href="funcionarios.php">Funcionários</a>
-            <a href="fornecedores.php">Fornecedores</a>
-            <a href="vendas.php">Vendas</a>
             <a href="relatorio.php">Relatórios</a>
-        </div>
-    </header>
+        <?php endif; ?>
+        <a href="compras.php">Compras</a>
+        <a href="vendas.php">Vendas</a>
+    </div>
+</header>
     
     <div class="botao--voltar">
         <i class="fa-solid fa-arrow-left" onclick="voltarMenu()"></i>
