@@ -66,20 +66,57 @@ $conn->close();
         <section class="first-five-buttons">
             <canvas id="relatorioEstoque" width="400" height="200"></canvas>
         </section>
-        <section class="first-four-buttons">
-            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=estoque'">
-                Baixar relatório de estoque
-                <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
-            </button>
-            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=vendas'">
-                Baixar relatório de vendas
-                <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
-            </button>
-            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=compras'">
-                Baixar relatório de Compras
-                <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
-            </button>
-        </section>
+    <section class="first-four-buttons">
+    <form method="get" action="gerar_relatorio.php">
+    <label for="tipo">Tipo de relatório:</label>
+    <select name="tipo" id="tipo">
+        <option value="estoque">Estoque</option>
+        <option value="vendas">Vendas</option>
+        <option value="compras">Compras</option>
+    </select><br><br>
+
+    <label for="periodo">Período:</label>
+    <select name="periodo" id="periodo">
+        <option value="total">Total</option>
+        <option value="semanal">Semanal</option>
+        <option value="mensal">Mensal</option>
+    </select><br><br>
+
+    <div id="mes-select" style="display:none;">
+        <label for="mes">Escolha o mês:</label>
+        <select name="mes" id="mes">
+            <option value="01">Janeiro</option>
+            <option value="02">Fevereiro</option>
+            <option value="03">Março</option>
+            <option value="04">Abril</option>
+            <option value="05">Maio</option>
+            <option value="06">Junho</option>
+            <option value="07">Julho</option>
+            <option value="08">Agosto</option>
+            <option value="09">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Dezembro</option>
+        </select><br>
+    </div>
+ <br>
+    <button type="submit">Gerar Relatório</button>
+</form>
+
+<script>
+    document.getElementById("periodo").addEventListener("change", function() {
+        var periodo = this.value;
+        var mesSelect = document.getElementById("mes-select");
+
+        // Mostrar o campo de mês somente se o período for mensal
+        if (periodo === "mensal") {
+            mesSelect.style.display = "block";
+        } else {
+            mesSelect.style.display = "none";
+        }
+    });
+</script>
+</section>
     </main>
 
     <script>
