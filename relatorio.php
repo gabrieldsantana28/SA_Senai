@@ -67,16 +67,16 @@ $conn->close();
             <canvas id="relatorioEstoque" width="400" height="200"></canvas>
         </section>
         <section class="first-four-buttons">
-            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=semanal'">
-                Baixar relatório semanal
-                <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
-            </button>
-            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=mensal'">
-                Baixar relatório mensal
-                <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
-            </button>
             <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=estoque'">
                 Baixar relatório de estoque
+                <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
+            </button>
+            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=vendas'">
+                Baixar relatório de vendas
+                <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
+            </button>
+            <button class="button-menu" onclick="window.location.href='gerar_relatorio.php?tipo=compras'">
+                Baixar relatório de Compras
                 <div><i class="fa-solid fa-cloud-arrow-down"></i></div>
             </button>
         </section>
