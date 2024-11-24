@@ -48,16 +48,56 @@ body {
     cursor: pointer;
 }
 
-/* Título principal */
-h1 {
+/* Contato */
+.contact-container {
     text-align: center;
-    padding-top: 20px;
-    font-size: 1.8em;
-    color: black;
-    margin-bottom: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Formulário de suporte */
+.contact-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.contact-buttons a {
+    display: flex; /* Flexbox para alinhar ícone e texto */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 5px;
+    gap: 8px; /* Espaço entre o ícone e o texto */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-whatsapp {
+    background-color: #25d366;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1da851;
+    transform: scale(1.05);
+}
+
+.btn-email {
+    background-color: #007bff;
+    display: flex;
+}
+
+.btn-email:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Suporte */
 .support-container {
     width: 80%;
     max-width: 600px;
@@ -93,7 +133,6 @@ h1 {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Botão de envio */
 .support-container button {
     background-color: black;
     color: white;
@@ -108,32 +147,4 @@ h1 {
 .support-container button:hover {
     background-color: #333;
     transform: scale(1.05);
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .support-container {
-        width: 90%;
-        padding: 15px;
-    }
-
-    .support-container textarea {
-        height: 120px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.5em;
-    }
-
-    .support-container {
-        width: 95%;
-        padding: 10px;
-    }
-
-    .support-container button {
-        font-size: 0.9em;
-        padding: 8px 16px;
-    }
 }

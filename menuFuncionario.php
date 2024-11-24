@@ -1,3 +1,26 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario']) || !isset($_SESSION['nivel'])) {
+    // Redireciona para a página de login se não estiver logado
+    header("Location: login.php");
+    exit();
+}
+
+$nivel_usuario = $_SESSION['nivel']; 
+$usuario = $_SESSION['usuario']; 
+
+if ($nivel_usuario != 2) { 
+    header("Location: acesso_restrito.php");
+    exit();
+}
+
+// Desativa o cache da página para evitar que ela seja acessada pelo botão de "voltar" do navegador
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -29,5 +52,32 @@
             <button class="button-menu"><a href="fornecedores.php">Gerenciamento de Fornecedores</button>
         </section>
     </main>
+    <form action="suporte.php">
+        <div class="suporte">
+            <button id="btn-suporte">Suporte</button>
+        </div>
+    </form>
+    <style>
+        .suporte {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        }
+
+        #btn-suporte {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        #btn-suporte:hover {
+            background-color: #444;
+        }
+    </style>
 </body>
 </html>

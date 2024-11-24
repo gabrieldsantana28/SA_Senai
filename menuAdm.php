@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+$nivel_usuario = $_SESSION['nivel']; 
+$usuario = $_SESSION['usuario']; 
+
 // Verifique se o usuário está logado
 if (!isset($_SESSION['usuario'])) {
     // Redireciona para a página de login se a sessão não existir
@@ -47,5 +50,32 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
             <button class="button-menu"><a href="relatorio.php">Relatórios e Análises</a></button>
         </section>
     </main>
+    <form action="suporte.php">
+        <div class="suporte">
+            <button id="btn-suporte">Suporte</button>
+        </div>
+    </form>
+    <style>
+        .suporte {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        }
+
+        #btn-suporte {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+        }
+
+        #btn-suporte:hover {
+            background-color: #444;
+        }
+    </style>
 </body>
 </html>

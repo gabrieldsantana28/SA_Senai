@@ -1,0 +1,102 @@
+/* Reset e configuração geral */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Poppins, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cabeçalho */
+.hdr {
+    background-color: black;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.hdr a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.hdr a:hover {
+    background-color: #333;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.logo-header {
+    height: 80px;
+}
+
+.logo-header:hover {
+    cursor: pointer;
+}
+
+.botao--voltar {
+    font-size: 2.1em;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+
+/* Título principal */
+h1 {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+/* FAQ */
+.faq-item {
+    background-color: white;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+}
+
+.faq-item h2 {
+    font-size: 1.3em;
+    color: #333;
+}
+
+.faq-item p {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .faq-item {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.3em;
+    }
+
+    .faq-item {
+        width: 100%;
+    }
+}
