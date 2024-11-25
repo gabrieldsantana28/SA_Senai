@@ -2,7 +2,6 @@
 session_start();
 
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['nivel'])) {
-    // Redireciona para a página de login se não estiver logado
     header("Location: login.php");
     exit();
 }
@@ -15,7 +14,6 @@ if ($nivel_usuario != 2) {
     exit();
 }
 
-// Desativa o cache da página para evitar que ela seja acessada pelo botão de "voltar" do navegador
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");

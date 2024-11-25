@@ -1,15 +1,14 @@
 <?php
 session_start();
 
-// Evita que a página seja armazenada em cache
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-header("Pragma: no-cache"); // HTTP 1.0
-header("Expires: 0"); // Proxies
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0"); 
 
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nossasa";
+$dbname = "gerenciador_estoque";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {

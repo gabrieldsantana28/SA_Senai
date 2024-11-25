@@ -4,7 +4,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nossasa";
+$dbname = "gerenciador_estoque";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -62,12 +62,16 @@ $conn->close();
         <i class="fa-solid fa-arrow-left" onclick="trocarPagina('menuAdm.php')"></i>
     </div>
 
+    <section id="Titulo-Principal">
+        <h1>Relatório e Análises</h1>
+    </section>
+
     <main id="container-main">
         <section class="first-five-buttons">
             <canvas id="relatorioEstoque" width="400" height="200"></canvas>
         </section>
     <section class="first-four-buttons">
-    <form method="get" action="gerar_relatorio.php">
+    <form method="get" action="php/gerar_relatorio.php">
     <label for="tipo">Tipo de relatório:</label>
     <select name="tipo" id="tipo">
         <option value="estoque">Estoque</option>

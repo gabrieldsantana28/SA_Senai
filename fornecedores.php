@@ -1,18 +1,16 @@
 <?php
 session_start();
 
-// Configurações do banco de dados
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nossasa";
+$dbname = "gerenciador_estoque";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
-// EXCLUIR FORNECEDOR
 if (isset($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
     $sql_delete = "DELETE FROM fornecedor WHERE id_fornecedor = ?";
@@ -24,7 +22,6 @@ if (isset($_GET['delete_id'])) {
     exit;
 }
 
-// ATUALIZAR FORNECEDOR
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_fornecedor'])) {
     $id_fornecedor = $_POST['id_fornecedor'];
     $nome_fornecedor = $_POST['nome_fornecedor'];
@@ -221,5 +218,5 @@ $result = $stmt->get_result();
 </html>
 
 <?php
-$conn->close();
+    $conn->close();
 ?>

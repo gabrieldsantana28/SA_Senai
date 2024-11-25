@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-// Verificar se o usuário está logado
 if (!isset($_SESSION['nivel'])) {
     header("Location: login.php");
     exit;
 }
 
-$nivelUsuario = $_SESSION['nivel']; // 1 = Admin, 2 = Funcionário
+$nivelUsuario = $_SESSION['nivel']; 
 ?>
 
 <!DOCTYPE html>

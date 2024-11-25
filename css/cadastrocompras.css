@@ -81,16 +81,16 @@ body {
 }
 
 .elementos--itens select {
-    background-color: transparent; /* Fundo transparente */
-    border: none; /* Remove a borda */
-    width: 100%; /* Ocupa toda a largura do container */
-    height: 38px; /* Altura para ficar alinhado com os outros inputs */
-    font-size: 14px; /* Tamanho da fonte */
-    appearance: none; /* Remove a estilização padrão do select */
-    padding: 0 10px; /* Adiciona espaçamento interno */
-    border-radius: 20px; /* Arredonda os cantos para ficar igual aos outros inputs */
-    cursor: pointer; /* Muda o cursor para pointer */
-    transition: background-color 0.3s; /* Transição suave para a mudança de fundo */
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 38px;
+    font-size: 14px;
+    appearance: none;
+    padding: 0 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .elementos--itens select:hover {

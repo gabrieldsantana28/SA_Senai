@@ -4,7 +4,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nossasa";
+$dbname = "gerenciador_estoque";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -96,7 +96,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <section id="container-elementos">
                 <div class="elementos--itens">
                     <i class="fa-solid fa-money-check-dollar" aria-label="Ícone de ID"></i>
-                    <input type="text" id="Tipo" name="tipo" placeholder="Tipo de Pagamento..." required>
+                    <select id="tipo" name="tipo" required>
+                        <option value="" disabled selected>Selecione o Tipo de Pagamento...</option>
+                        <option value="À vista">Dinheiro/Á vista</option>
+                        <option value="PIX">PIX</option>
+                        <option value="Parcelado">Crédito</option>
+                        <option value="Débito">Débito</option>
+                        <option value="Boleto">Boleto</option>
+                    </select>
                 </div>
                 <div class="elementos--itens">
                     <i class="fa-solid fa-boxes-stacked" aria-label="Ícone de Material"></i>

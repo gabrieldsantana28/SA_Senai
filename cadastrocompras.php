@@ -4,7 +4,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nossasa";
+$dbname = "gerenciador_estoque";
 
 // Conexão com o banco de dados
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -121,10 +121,11 @@ $conn->close();
                     <i class="fa-solid fa-credit-card"></i>
                     <select id="TipoPagamentoCompra" name="tipo_pagamento_compra" required>
                         <option value="" disabled selected>Selecione o Tipo de Pagamento...</option>
-                        <option value="À vista">Dinheiro/A vista</option>
+                        <option value="À vista">Dinheiro/Á vista</option>
                         <option value="PIX">PIX</option>
-                        <option value="Parcelado">Parcelado</option>
+                        <option value="Parcelado">Crédito</option>
                         <option value="Débito">Débito</option>
+                        <option value="Boleto">Boleto</option>
                     </select>
                 </div>
 

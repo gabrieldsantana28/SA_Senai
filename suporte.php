@@ -1,36 +1,31 @@
 <?php
-session_start();
+    session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "nossasa";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "gerenciador_estoque";
 
-// Conexão com o banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verifica conexão
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
 
-if (!isset($_SESSION['usuario']) || !isset($_SESSION['nivel'])) {
-    header("Location: index.php");
-    exit();
-}
+    if (!isset($_SESSION['usuario']) || !isset($_SESSION['nivel'])) {
+        header("Location: index.php");
+        exit();
+    }
 
-$nivel_usuario = $_SESSION['nivel']; 
-$usuario = $_SESSION['usuario'];
+    $nivel_usuario = $_SESSION['nivel']; 
+    $usuario = $_SESSION['usuario'];
 
-// Aqui você pode adicionar uma verificação para restringir o acesso com base no nível do usuário, se necessário:
-if ($nivel_usuario != 1 && $nivel_usuario != 2) {
-    // Se o usuário não for administrador ou funcionário, redireciona para uma página de acesso restrito
-    header("Location: acesso_restrito.php");
-    exit();
-}
+    if ($nivel_usuario != 1 && $nivel_usuario != 2) {
+        header("Location: acesso_restrito.php");
+        exit();
+    }
 
-// Fecha a conexão
-$conn->close();
+    $conn->close();
 ?>
 
 <!DOCTYPE html>

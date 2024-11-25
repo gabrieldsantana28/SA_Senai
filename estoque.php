@@ -1,11 +1,10 @@
-<?php 
+<?php
 session_start();
 
-// VERIFICAÇÃO CONEXÃO COM O BANCO DE DADOS
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "nossasa";
+$dbname = "gerenciador_estoque";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -13,10 +12,19 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
-// RECUPERA NÍVEL DA CONTA 
-$nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
+$sql_alerta = "SELECT nome_produto FROM produto WHERE quantidade_produto < 5";
+$result_alerta = $conn->query($sql_alerta);
 
-$pesquisa = $_GET['PesquisarProduto'] ?? ''; // Obtém o termo de pesquisa
+$produtos_baixos = [];
+if ($result_alerta->num_rows > 0) {
+    while ($linha_alerta = $result_alerta->fetch_assoc()) {
+        $produtos_baixos[] = $linha_alerta["nome_produto"];
+    }
+}
+
+$nivel = $_SESSION['nivel'] ?? 0;
+
+$pesquisa = $_GET['PesquisarProduto'] ?? '';
 
 // Preparar a consulta de busca
 $sql = "SELECT id_produto, nome_produto, quantidade_produto, preco_produto, descricao_produto FROM produto WHERE nome_produto LIKE ? OR id_produto LIKE ?";
@@ -152,6 +160,11 @@ if (isset($_POST['delete_id'])) {
                 window.location.href = 'login.php';
             }
         }
+
+        <?php if (!empty($produtos_baixos)): ?>
+            const produtosBaixos = <?php echo json_encode($produtos_baixos); ?>;
+            alert("Os seguintes produtos estão com estoque baixo:\n" + produtosBaixos.join("\n"));
+        <?php endif; ?>
     </script>
 </body>
 </html>

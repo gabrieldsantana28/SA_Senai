@@ -1,20 +1,17 @@
 <?php
-session_start();
+    session_start();
 
-$nivel_usuario = $_SESSION['nivel']; 
-$usuario = $_SESSION['usuario']; 
+    $nivel_usuario = $_SESSION['nivel']; 
+    $usuario = $_SESSION['usuario']; 
 
-// Verifique se o usuário está logado
-if (!isset($_SESSION['usuario'])) {
-    // Redireciona para a página de login se a sessão não existir
-    header("Location: login.php");
-    exit();
-}
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: login.php");
+        exit();
+    }
 
-// Desativa o cache da página para evitar que ela seja acessada pelo botão de "voltar" do navegador
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Pragma: no-cache");
+    header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

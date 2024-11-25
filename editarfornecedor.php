@@ -1,8 +1,6 @@
 <?php
-// Conexão com o banco de dados
-$conexao = new mysqli("localhost", "root", "", "nossasa");
+$conexao = new mysqli("localhost", "root", "", "gerenciador_estoque");
 
-// Verifica se houve erro de conexão
 if ($conexao->connect_errno) {
     echo "Ocorreu um erro de conexão com o banco de dados";
     exit;
