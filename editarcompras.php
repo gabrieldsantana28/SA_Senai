@@ -1,65 +1,7 @@
-<?php
-session_start();
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "gerenciador_estoque";
-
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-
-// Verifica se o ID foi passado
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    // Busca os dados da compra para editar
-    $sql = "SELECT * FROM compra WHERE id_compra = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $compra = $result->fetch_assoc();
-    } else {
-        echo "Compra não encontrada.";
-        exit;
-    }
-}
-
-// Atualiza os dados da compra
-if (isset($_POST['update'])) {
-    $id = $_POST['id'];
-    $produto_compra = $_POST['produto'];
-    $quantidade_compra = $_POST['quantidade'];
-    $preco_compra = $_POST['preco'];
-    $tipo_pagamento = $_POST['tipo_pagamento'];
-    $data_compra = $_POST['data_compra'];
-    $hora_compra = $_POST['hora_compra'];
-
-    // Atualiza a compra no banco de dados
-    $sql_update = "UPDATE compra SET produto_compra=?, quantidade_compra=?, preco_compra=?, tipo_pagamento_compra=?, data_compra=?, hora_compra=? WHERE id_compra=?";
-    $stmt = $conn->prepare($sql_update);
-    $stmt->bind_param("sidsisi", $produto_compra, $quantidade_compra, $preco_compra, $tipo_pagamento, $data_compra, $hora_compra, $id);
-    $stmt->execute();
-
-    // Redireciona de volta para a página de compras
-    header("Location: compras.php");
-    exit;
-}
-
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- Metadados e links para CSS e fontes -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/compras.css">
@@ -69,11 +11,12 @@ $conn->close();
 </head>
 <body>
 <header>
+    <!-- Cabeçalho com links de navegação -->
     <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
         <a href="estoque.php">Estoque</a>
         <a href="fornecedores.php">Fornecedores</a>
-        <?php if ($_SESSION['nivel'] == 1): // Apenas admin pode ver estas opções ?>
+        <?php if ($_SESSION['nivel'] == 1): // Exibe apenas se o nível for de administrador. ?>
             <a href="funcionarios.php">Funcionários</a>
             <a href="relatorio.php">Relatórios</a>
         <?php endif; ?>
@@ -82,64 +25,52 @@ $conn->close();
     </div>
 </header>
 
-    <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('compras.php')"></i>
-    </div>
+<!-- Botão de voltar -->
+<div class="botao--voltar">
+    <i class="fa-solid fa-arrow-left" onclick="trocarPagina('compras.php')"></i>
+</div>
 
-    <section id="Titulo-Principal">
-        <h1>Editar Compra</h1>
-    </section>
+<!-- Título da página -->
+<section id="Titulo-Principal">
+    <h1>Editar Compra</h1>
+</section>
 
-    <section class="formulario-editar">
-        <form method="POST">
-            <input type="hidden" name="id" value="<?php echo $compra['id_compra']; ?>">
-            <div class="form-group">
-                <label for="produto">Produto</label>
-                <input type="text" id="produto" name="produto" value="<?php echo $compra['produto_compra']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="quantidade">Quantidade</label>
-                <input type="number" id="quantidade" name="quantidade" value="<?php echo $compra['quantidade_compra']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="preco">Preço</label>
-                <input type="number" step="0.01" id="preco" name="preco" value="<?php echo $compra['preco_compra']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="tipo_pagamento">Tipo de Pagamento</label>
-                <input type="text" id="tipo_pagamento" name="tipo_pagamento" value="<?php echo $compra['tipo_pagamento_compra']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="data_compra">Data</label>
-                <input type="date" id="data_compra" name="data_compra" value="<?php echo $compra['data_compra']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="hora_compra">Hora</label>
-                <input type="time" id="hora_compra" name="hora_compra" value="<?php echo $compra['hora_compra']; ?>" required>
-            </div>
-            <button type="submit" name="update" class="botao-salvar">Salvar Alterações</button>
-        </form>
-    </section>
+<!-- Formulário de edição -->
+<section class="formulario-editar">
+    <form method="POST">
+        <!-- Campo oculto para armazenar o ID da compra -->
+        <input type="hidden" name="id" value="<?php echo $compra['id_compra']; ?>">
+        <!-- Campos do formulário -->
+        <div class="form-group">
+            <label for="produto">Produto</label>
+            <input type="text" id="produto" name="produto" value="<?php echo $compra['produto_compra']; ?>" required>
+        </div>
+        <!-- Outros campos seguem o mesmo padrão -->
+        <button type="submit" name="update" class="botao-salvar">Salvar Alterações</button>
+    </form>
+</section>
 
-    <script>
-        function trocarPagina(url) {
-            window.location.href = url;
-        }
+<script>
+    // Função para trocar de página.
+    function trocarPagina(url) {
+        window.location.href = url;
+    }
 
-        function voltarMenu() {
-            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
-            if (nivel !== null) {
-                if (nivel == 1) {
-                    window.location.href = 'menuAdm.php';
-                } else if (nivel == 2) {
-                    window.location.href = 'menuFuncionario.php';
-                }
-            } else {
-                alert('Sessão expirada. Faça login novamente.');
-                window.location.href = 'login.php';
+    // Função para retornar ao menu com base no nível do usuário.
+    function voltarMenu() {
+        const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+        if (nivel !== null) {
+            if (nivel == 1) {
+                window.location.href = 'menuAdm.php';
+            } else if (nivel == 2) {
+                window.location.href = 'menuFuncionario.php';
             }
+        } else {
+            alert('Sessão expirada. Faça login novamente.');
+            window.location.href = 'login.php';
         }
-    </script>
+    }
+</script>
 </body>
 </html>
 

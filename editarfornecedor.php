@@ -1,43 +1,51 @@
 <?php
+// Conexão com o banco de dados MySQL
 $conexao = new mysqli("localhost", "root", "", "gerenciador_estoque");
 
+// Verifica se houve algum erro na conexão
 if ($conexao->connect_errno) {
     echo "Ocorreu um erro de conexão com o banco de dados";
-    exit;
+    exit; // Encerra o script caso haja erro na conexão
 }
 
+// Define o conjunto de caracteres para evitar problemas com acentuação
 $conexao->set_charset("utf8");
 
-// Verifica se o ID foi passado
+// Verifica se um ID foi passado pela URL (para editar um fornecedor específico)
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id = $_GET['id']; // Captura o ID da URL
 
-    // Busca os dados do fornecedor para editar
+    // Consulta para buscar os dados do fornecedor baseado no ID
     $sql = "SELECT * FROM fornecedor WHERE id_fornecedor = $id";
     $result = $conexao->query($sql);
 
+    // Verifica se o fornecedor existe
     if ($result->num_rows > 0) {
-        $fornecedor = $result->fetch_assoc();
+        $fornecedor = $result->fetch_assoc(); // Armazena os dados do fornecedor em um array
     }
 }
 
-// Atualiza os dados do fornecedor
+// Verifica se o formulário foi submetido para atualizar os dados
 if (isset($_POST['update'])) {
-    $id = $_POST['id'];
-    $nome = $_POST['nome'];
-    $material = $_POST['material'];
-    $telefone = $_POST['telefone'];
-    $endereco = $_POST['endereco'];
+    $id = $_POST['id']; // ID do fornecedor a ser atualizado
+    $nome = $_POST['nome']; // Novo nome do fornecedor
+    $material = $_POST['material']; // Novo material fornecido
+    $telefone = $_POST['telefone']; // Novo telefone
+    $endereco = $_POST['endereco']; // Novo endereço
 
+    // Atualiza os dados do fornecedor no banco de dados
     $sql_update = "UPDATE fornecedor SET nome_fornecedor='$nome', material_fornecedor='$material', telefone_fornecedor='$telefone', endereco_fornecedor='$endereco' WHERE id_fornecedor=$id";
-    $conexao->query($sql_update);
+    $conexao->query($sql_update); // Executa a query de atualização
 
-    header("Location: fornecedores.php"); // Redireciona para a página de listagem
-    exit;
+    // Redireciona para a página de listagem de fornecedores após a atualização
+    header("Location: fornecedores.php");
+    exit; // Encerra o script para evitar execução adicional
 }
 
+// Fecha a conexão com o banco de dados
 $conexao->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -45,6 +53,7 @@ $conexao->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Estilos externos e internos -->
     <link rel="stylesheet" href="css/cadastroprodutos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
@@ -138,6 +147,7 @@ $conexao->close();
 </head>
 <body>
 <header>
+    <!-- Cabeçalho com links de navegação -->
     <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
         <a href="estoque.php">Estoque</a>
@@ -150,53 +160,61 @@ $conexao->close();
         <a href="vendas.php">Vendas</a>
     </div>
 </header>
-    <div class="botao--voltar">
-        <i class="fa-solid fa-arrow-left" onclick="trocarPagina('fornecedores.php')" aria-label="Voltar"></i>
-    </div>   
 
-    <main id="container-main">
-        <section id="Titulo-Principal"><h1>Editar Fornecedor</h1></section>
+<!-- Botão para voltar -->
+<div class="botao--voltar">
+    <i class="fa-solid fa-arrow-left" onclick="trocarPagina('fornecedores.php')" aria-label="Voltar"></i>
+</div>   
 
-        <form method="POST" class="formulario-editar">
-            <input type="hidden" name="id" value="<?php echo $fornecedor['id_fornecedor']; ?>">
-            <div class="form-group">
-                <label>Nome do Fornecedor:</label>
-                <input type="text" name="nome" value="<?php echo $fornecedor['nome_fornecedor']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label>Material Fornecido:</label>
-                <input type="text" name="material" value="<?php echo $fornecedor['material_fornecedor']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label>Telefone:</label>
-                <input type="text" name="telefone" value="<?php echo $fornecedor['telefone_fornecedor']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label>Endereço:</label>
-                <input type="text" name="endereco" value="<?php echo $fornecedor['endereco_fornecedor']; ?>" required>
-            </div>
-            <button type="submit" name="update" class="botao-salvar">Atualizar</button>
-        </form>
-    </main>
+<main id="container-main">
+    <!-- Título principal -->
+    <section id="Titulo-Principal"><h1>Editar Fornecedor</h1></section>
 
-    <script>
-        function trocarPagina(url) {
-            window.location.href = url;
-        }
+    <!-- Formulário de edição -->
+    <form method="POST" class="formulario-editar">
+        <!-- Campo oculto para passar o ID -->
+        <input type="hidden" name="id" value="<?php echo $fornecedor['id_fornecedor']; ?>">
+        <div class="form-group">
+            <label>Nome do Fornecedor:</label>
+            <input type="text" name="nome" value="<?php echo $fornecedor['nome_fornecedor']; ?>" required>
+        </div>
+        <div class="form-group">
+            <label>Material Fornecido:</label>
+            <input type="text" name="material" value="<?php echo $fornecedor['material_fornecedor']; ?>" required>
+        </div>
+        <div class="form-group">
+            <label>Telefone:</label>
+            <input type="text" name="telefone" value="<?php echo $fornecedor['telefone_fornecedor']; ?>" required>
+        </div>
+        <div class="form-group">
+            <label>Endereço:</label>
+            <input type="text" name="endereco" value="<?php echo $fornecedor['endereco_fornecedor']; ?>" required>
+        </div>
+        <!-- Botão para atualizar -->
+        <button type="submit" name="update" class="botao-salvar">Atualizar</button>
+    </form>
+</main>
 
-        function voltarMenu() {
-            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
-            if (nivel !== null) {
-                if (nivel == 1) {
-                    window.location.href = 'menuAdm.php';
-                } else if (nivel == 2) {
-                    window.location.href = 'menuFuncionario.php';
-                }
-            } else {
-                alert('Sessão expirada. Faça login novamente.');
-                window.location.href = 'login.php';
+<script>
+    // Função para trocar de página
+    function trocarPagina(url) {
+        window.location.href = url;
+    }
+
+    // Função para retornar ao menu com base no nível do usuário
+    function voltarMenu() {
+        const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+        if (nivel !== null) {
+            if (nivel == 1) {
+                window.location.href = 'menuAdm.php';
+            } else if (nivel == 2) {
+                window.location.href = 'menuFuncionario.php';
             }
+        } else {
+            alert('Sessão expirada. Faça login novamente.');
+            window.location.href = 'login.php';
         }
-    </script>
+    }
+</script>
 </body>
 </html>
