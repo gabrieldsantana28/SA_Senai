@@ -116,6 +116,12 @@ input:focus-visible {
     width: 100%;
 }
 
+.error {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}
+
 .button button {
     background-color: white;
     border-width: 1px;

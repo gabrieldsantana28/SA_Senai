@@ -1,28 +1,33 @@
+/* Define estilo padrão para todos os elementos, removendo margem e preenchimento */
 * {
     padding: 0;
     margin: 0;
-    font-family: Poppins, sans-serif;
+    font-family: Poppins, sans-serif; /* Define a fonte padrão */
 }
 
+/* Estilo do corpo da página */
 body {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Define cor de fundo */
 }
 
+/* Estilo do cabeçalho */
 .hdr {
     background-color: black;
     height: 100px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: center; /* Centraliza verticalmente os itens */
+    justify-content: space-between; /* Espaço entre os itens */
     padding: 0 10px;
 }
 
+/* Estilo para links no cabeçalho */
 .hdr a {
     color: white;
-    text-decoration: none;
+    text-decoration: none; /* Remove sublinhado */
     margin: 0 5px;
 }
 
+/* Estilo ao passar o mouse sobre os links no cabeçalho */
 .hdr a:hover {
     background-color: #333;
     cursor: pointer;
@@ -30,58 +35,67 @@ body {
     padding: 5px;
 }
 
+/* Estilo da logo no cabeçalho */
 .logo-header {
     height: 80px;
 }
 
-.logo-header:hover{
+/* Cursor de ponteiro ao passar o mouse sobre a logo */
+.logo-header:hover {
     cursor: pointer;
 }
 
+/* Estilo para o botão de voltar */
 .botao--voltar {
     font-size: 2.1em;
     margin-left: 16px;
     cursor: pointer;
 }
 
+/* Ajuste de margem do contêiner do cabeçalho */
 #header-container {
     margin-top: -2px;
 }
 
+/* Estilo do ícone de seta */
 #seta {
     height: 50px;
     width: 50px;
 }
 
+/* Contêiner principal da página */
 #container-main {
     background-color: rgb(212, 212, 212);
     height: auto;
     width: 100%;
     max-width: 750px;
     margin: 40px auto;
-    border-radius: 40px;
+    border-radius: 40px; /* Bordas arredondadas */
     border: 1px solid black;
-    box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.144);
+    box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.144); /* Sombra ao redor */
     padding-inline: 0.9rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Organiza elementos verticalmente */
 }
 
+/* Estilo do título principal */
 #Titulo-Principal {
     text-align: center;
     padding-top: 25px;
     font-size: 1em;
 }
 
+/* Contêiner para organizar elementos */
 #container-elementos {
     display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
+    flex-direction: column; /* Organiza elementos em coluna */
+    gap: 1.2rem; /* Espaçamento entre elementos */
     justify-content: flex-start;
     margin-top: 1rem;
     margin-inline: auto;
 }
 
+/* Estilo para os itens */
 .elementos--itens {
     padding: 5px 20px;
     display: flex;
@@ -95,6 +109,7 @@ body {
     max-width: 100%;
 }
 
+/* Estilo para inputs dentro dos itens */
 .elementos--itens input {
     background-color: rgb(180, 180, 180);
     border: none;
@@ -103,11 +118,13 @@ body {
     width: 100%;
 }
 
+/* Estilo para ícones dentro dos itens */
 .elementos--itens i {
     margin-top: 1px;
     font-size: 1.3em;
 }
 
+/* Estilo para botões com ícones */
 .icon-btn {
     background-color: #b4b4b4;
     border: none;
@@ -119,16 +136,19 @@ body {
     margin-left: 6px;
 }
 
+/* Estilo para links dentro dos botões */
 .icon-btn a {
     font-size: 1.2em;
     color: rgb(56, 56, 56);
     text-decoration: none;
 }
 
+/* Estilo ao passar o mouse sobre os botões */
 .icon-btn:hover {
     background-color: #9e9e9e;
 }
 
+/* Estilo para itens de fornecedor */
 .fornecedor--item {
     display: flex;
     justify-content: space-between;
@@ -139,26 +159,31 @@ body {
     max-width: 100%;
 }
 
+/* Estilo para a parte secundária dos itens */
 .elementos--itens--dois {
     font-size: 16px;
     flex: 1;
     padding-left: 10px;
 }
 
+/* Estilo para ícones de edição */
 .fornecedor--item i.fa-pen-to-square {
     margin-left: 10px;
 }
 
+/* Estilo para ícones genéricos */
 .fornecedor--item i {
     font-size: 1.2em;
     cursor: pointer;
     margin: 3px;
 }
 
+/* Remove borda de foco visível em inputs */
 input:focus-visible {
     outline: none;
 }
 
+/* Contêiner para botões */
 .button {
     margin-top: 30px;
     height: 40px;
@@ -167,6 +192,7 @@ input:focus-visible {
     text-align: center;
 }
 
+/* Estilo para botões */
 .button button {
     background-color: white;
     border-width: 1px;
@@ -178,43 +204,68 @@ input:focus-visible {
     opacity: 0.8;
 }
 
+/* Transição de opacidade ao passar o mouse sobre os botões */
 button:hover {
     opacity: 1;
     transition-duration: 0.6s;
 }
 
-@media (max-width: 1400px) {
-    #container-main {
-        background-color: rgb(212, 212, 212);
-        box-shadow: none;
-        height: auto;
-        width: 100%;
-    }
-    #container-elementos {
-        text-align: center;
-        margin-inline: auto;
-        padding-inline: 0.9rem;
-    }
+/* Estilo adicional para itens de fornecedor */
+.fornecedor--item {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-@media (max-width: 1352px) {
-    .button {
-        display: block;
-        text-align: center;
-        margin-inline: auto;
-        padding-inline: 0.9rem;
-    }
-    #header-container {
-        display: none;
-    }
+/* Alteração de cor ao passar o mouse sobre itens de fornecedor */
+.fornecedor--item:hover {
+    background-color: #f9f9f9;
+}
+
+/* Estilo para detalhes escondidos */
+.detalhes {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Estilo para campos de input */
+.inputs {
+    width: 200px;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Estilo geral para botões */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: grey;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Cor do botão ao passar o mouse */
+button:hover {
+    background-color: black;
+}
+
+/* Estilo responsivo para telas menores */
+@media (max-width: 1400px) {
     #container-main {
-        text-align: center;
-        align-items: center;
+        box-shadow: none;
     }
     #container-elementos {
         text-align: center;
-        margin-inline: auto;
-        padding-inline: 0.9rem;
     }
 }
 
@@ -225,7 +276,6 @@ button:hover {
     .button button {
         padding: 3px 60px;
     }
-
     img {
         width: 100%;
     }

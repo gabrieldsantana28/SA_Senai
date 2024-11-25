@@ -8,13 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
     <title>Login</title>
-    <style>
-            .error {
-            color: red;
-            font-size: 14px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -38,21 +31,23 @@
             }
         ?>
 
-        <form method="POST" action="php/backLogin.php">
-            
+<form method="POST" action="php/backLogin.php"> <!-- Envia os dados via método POST para o arquivo backLogin.php -->
             <section id="container-elementos">
-    <div class="elementos--itens">
-        <i class="fas fa-id-badge"></i>
-        <input type="text" id="NomeUsuario" name="usuario" placeholder="Insira seu nome de usuário" required>
-    </div> 
-    <div class="elementos--itens"> 
-        <i class="fa-solid fa-lock"></i>
-        <input type="password" id="SenhaUsuario" name="senha" placeholder="Insira sua senha" required>
-    </div>
-    <div class="button">
-                    <button type="submit">Entrar</button>
+                <!-- Campo para o nome de usuário -->
+                <div class="elementos--itens">
+                    <i class="fas fa-id-badge"></i> 
+                    <input type="text" id="NomeUsuario" name="usuario" placeholder="Insira seu nome de usuário" required> <!-- Input obrigatório para o nome de usuário -->
+                </div> 
+                <!-- Campo para a senha -->
+                <div class="elementos--itens"> 
+                    <i class="fa-solid fa-lock"></i> 
+                    <input type="password" id="SenhaUsuario" name="senha" placeholder="Insira sua senha" required> <!-- Input obrigatório para a senha -->
                 </div>
-</section>
+                <!-- Botão para enviar o formulário -->
+                <div class="button">
+                    <button type="submit">Entrar</button> <!-- Envia os dados do formulário -->
+                </div>
+            </section>
         </form>
     </main>
 </body>
