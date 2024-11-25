@@ -137,27 +137,90 @@ $conn->close();
         console.log('Quantidades:', quantidades);
 
         // Configuração do gráfico
-        const ctx = document.getElementById('relatorioEstoque').getContext('2d');
-        const relatorioEstoque = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: produtos,
-                datasets: [{
-                    label: 'Quantidade de Produtos',
-                    data: quantidades,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
+const ctx = document.getElementById('relatorioEstoque').getContext('2d');
+const relatorioEstoque = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: produtos,
+        datasets: [{
+            label: 'Quantidade de Produtos',
+            data: quantidades,
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(153, 102, 255, 0.5)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 2,
+            hoverBackgroundColor: 'rgba(255, 255, 255, 0.8)',
+            hoverBorderColor: 'rgba(0, 0, 0, 1)'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return `Quantidade: ${context.raw}`;
+                    }
+                },
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                borderColor: '#fff',
+                borderWidth: 1
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            legend: {
+                display: true,
+                labels: {
+                    color: '#333',
+                    font: {
+                        size: 14
                     }
                 }
             }
-        });
+        },
+        scales: {
+            x: {
+                grid: {
+                    color: 'rgba(200, 200, 200, 0.2)'
+                },
+                ticks: {
+                    color: '#333',
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(200, 200, 200, 0.2)'
+                },
+                ticks: {
+                    color: '#333',
+                    font: {
+                        size: 12
+                    }
+                }
+            }
+        },
+        animation: {
+            duration: 2000,
+            easing: 'easeInOutBounce'
+        }
+    }
+});
 
         function voltarMenu() {
             const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;

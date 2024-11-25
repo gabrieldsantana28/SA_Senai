@@ -89,7 +89,7 @@
                 </div>
                 <div class="elementos--itens">
                     <i class='fa-solid fa-envelope'></i>
-                    <input type="text" id="Email" name="email" placeholder="Email..." required>
+                    <input type="email" id="Email" name="email" placeholder="Email..." required>
                 </div>
                 <div class="elementos--itens">
                     <i class='fa-solid fa-lock'></i>
