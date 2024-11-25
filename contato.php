@@ -1,5 +1,5 @@
 <?php
-session_start();
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ session_start();
         <a href="https://wa.me/+5547984659021" target="_blank" class="btn-whatsapp">
             <i class="fa-brands fa-whatsapp"></i> WhatsApp
         </a>
-        <a href="mailto:compsupplysa@gmail.com" target="_blank" class="btn-email">
+        <a href="https://mail.google.com/mail/u/1/#inbox?compose=GTvVlcSPGFkllpWBQKfzvZgqVVvZWZCjNLSXTkDHTDslzMvptQwhHFVnLJqzXGfsQRzfftghDcFDs" target="_blank" class="btn-email">
             <i class="fa-solid fa-envelope"></i> E-mail
         </a>
     </div>
