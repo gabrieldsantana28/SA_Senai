@@ -6,7 +6,6 @@
     $password = "";
     $dbname = "gerenciador_estoque";
 
-    // Conexão com o banco de dados
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
@@ -37,7 +36,7 @@
     }
 
     // RECUPERA NÍVEL DA CONTA 
-    $nivel = $_SESSION['nivel'] ?? 0; // NÍVEL DA CONTA EM 0 CASO NÃO ESTEJA LOGADO
+    $nivel = $_SESSION['nivel'] ?? 0; 
 
     $conn->close();
 ?>
