@@ -6,7 +6,7 @@ $username = "root";
 $password = "";
 $dbname = "gerenciador_estoque";
 
-// Conexão com o banco de dados
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
