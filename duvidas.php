@@ -25,8 +25,14 @@ $nivelUsuario = $_SESSION['nivel']; // 1 = Admin, 2 = Funcionário
 <header>
     <div class="hdr">
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
-        <a href="duvidas.php">Dúvidas</a>
-        <a href="contato.php">Contato</a>
+        <a href="estoque.php">Estoque</a>
+        <a href="fornecedores.php">Fornecedores</a>
+        <?php if ($_SESSION['nivel'] == 1): ?>
+            <a href="funcionarios.php">Funcionários</a>
+            <a href="relatorio.php">Relatórios</a>
+        <?php endif; ?>
+        <a href="compras.php">Compras</a>
+        <a href="vendas.php">Vendas</a>
     </div>
 </header>
 
