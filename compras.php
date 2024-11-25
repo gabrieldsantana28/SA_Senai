@@ -1,24 +1,28 @@
 <?php
+// Inicia ou recupera uma sessão para manter informações sobre o usuário.
 session_start();
 
-
-
+// Configuração dos parâmetros de conexão com o banco de dados.
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "gerenciador_estoque";
 
-// Conexão
+// Conexão com o banco de dados usando MySQLi.
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// Verifica se a conexão foi bem-sucedida.
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
+// Obtém o nível do usuário na sessão. Se não existir, define como 0 (visitante).
 $nivel = $_SESSION['nivel'] ?? 0;
-$pesquisa = $_GET['PesquisarCompra'] ?? ''; 
 
-// Alterando a consulta SQL para pesquisar por ID da compra, produto_compra ou nome do fornecedor
+// Obtém o termo de pesquisa enviado via GET (se existir).
+$pesquisa = $_GET['PesquisarCompra'] ?? '';
+
+// Consulta SQL para buscar informações de compras com base no ID, nome do fornecedor ou produto.
 $sql_compras = "
     SELECT 
         c.id_compra, 
@@ -38,10 +42,19 @@ $sql_compras = "
         c.id_compra LIKE ? OR c.produto_compra LIKE ? OR f.nome_fornecedor LIKE ?;
 ";
 
+// Prepara a consulta para evitar ataques de SQL Injection.
 $stmt = $conn->prepare($sql_compras);
+
+// Formata o termo de pesquisa para uso na consulta.
 $likePesquisa = "%" . $pesquisa . "%";
+
+// Vincula os parâmetros de pesquisa à consulta preparada.
 $stmt->bind_param("sss", $likePesquisa, $likePesquisa, $likePesquisa);
+
+// Executa a consulta.
 $stmt->execute();
+
+// Obtém o resultado da consulta.
 $result_compras = $stmt->get_result();
 ?>
 
@@ -51,6 +64,7 @@ $result_compras = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <!-- Estilos CSS -->
     <link rel="stylesheet" href="css/compras.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
@@ -58,11 +72,14 @@ $result_compras = $stmt->get_result();
 </head>
 <body>
 <header>
+    <!-- Menu de navegação -->
     <div class="hdr">
+        <!-- Logo que retorna ao menu principal -->
         <img class="logo-header" src="./images/comp.png" alt="LOGO" onclick="voltarMenu()">
         <a href="estoque.php">Estoque</a>
         <a href="fornecedores.php">Fornecedores</a>
         <?php if ($_SESSION['nivel'] == 1): ?>
+            <!-- Itens exclusivos para usuários administradores -->
             <a href="funcionarios.php">Funcionários</a>
             <a href="relatorio.php">Relatórios</a>
         <?php endif; ?>
@@ -70,28 +87,36 @@ $result_compras = $stmt->get_result();
     </div>
 </header>
 
+<!-- Botão para voltar ao menu -->
 <div class="botao--voltar">
     <i class="fa-solid fa-arrow-left" onclick="voltarMenu()"></i>
 </div>
 
+<!-- Título da página -->
 <section id="Titulo-Principal">
     <h1>Controle de Compras</h1>
 </section>
 
+<!-- Seção para pesquisa e adição de compras -->
 <section style="margin-bottom: 30px;">
     <div style="margin: auto;" class="elementos--itens">
+        <!-- Formulário de pesquisa -->
         <form method="GET" action="">
             <button type="submit" style="background: none; border: none; cursor: pointer;">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-            <input type="text" id="PesquisarCompra" name="PesquisarCompra" placeholder="Pesquisar Compra..." value="<?php echo htmlspecialchars($pesquisa); ?>" onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
+            <input type="text" id="PesquisarCompra" name="PesquisarCompra" placeholder="Pesquisar Compra..." 
+                   value="<?php echo htmlspecialchars($pesquisa); ?>" 
+                   onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
         </form>
+        <!-- Link para adicionar uma nova compra -->
         <a href="/GitHub/SA_Senai/cadastrocompras.php" class="icon-btn">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
 </section>
 
+<!-- Cabeçalhos da tabela -->
 <section id="container-elementos">
     <div class="elementos">N° COMPRA</div>
     <div class="elementos">FORNECEDOR</div>
@@ -103,6 +128,7 @@ $result_compras = $stmt->get_result();
 </section>
 
 <?php
+// Exibe os resultados da consulta na tabela.
 if ($result_compras->num_rows > 0) {
     while ($linha = $result_compras->fetch_assoc()) {
         echo '<section id="lista-elementos">';
@@ -114,26 +140,29 @@ if ($result_compras->num_rows > 0) {
         echo '<div class="elementos-lista">' . $linha["data_compra"] . " - " . $linha["hora_compra"] . '</div>';
         echo '<div class="elementos-lista">' . number_format($linha["total_preco"], 2, ',', '.') . '</div>';
         echo '<div class="icons">';
-        // EXCLUIR
+        // Botão para excluir a compra
         echo '<form method="POST" style="display:inline-block;" onsubmit="return confirmarExclusao();">';
         echo '<input type="hidden" name="delete_id" value="' . $linha["id_compra"] . '">';
         echo '<button type="submit"><i class="fa-solid fa-trash" style="color: red;"></i></button>';
         echo '</form>';
-        // EDITAR
+        // Link para editar a compra
         echo '<a href="editarcompras.php?id=' . $linha["id_compra"] . '"><i class="fa-solid fa-pen-to-square"></i></a>';
         echo '</div>';
         echo '</section>';
     }
 } else {
+    // Exibe uma mensagem caso nenhuma compra seja encontrada.
     echo '<div style="text-align:center">Nenhuma compra encontrada.</div>';
 }
 ?>
 
 <script>
+// Confirmação de exclusão de item.
 function confirmarExclusao() {
     return confirm("Você realmente deseja apagar este item?");
 }
 
+// Redireciona o usuário para o menu com base no nível de acesso.
 function voltarMenu() {
     const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
     if (nivel !== null) {
