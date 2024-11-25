@@ -94,7 +94,7 @@ body {
 }
 
 .elementos--itens select:hover {
-    background-color: rgba(200, 200, 200, 0.5); /* Muda o fundo ao passar o mouse */
+    background-color: rgba(200, 200, 200, 0.5);
 }
 
 .elementos--itens input {

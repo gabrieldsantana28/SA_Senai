@@ -90,8 +90,10 @@
 
 <section style="margin-bottom: 30px;">
     <div style="margin: auto;" class="elementos--itens">
-        <i class="fa-solid fa-magnifying-glass"></i>
         <form method="GET" action="">
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
             <input type="text" id="PesquisarVenda" name="PesquisarVenda" placeholder="Pesquisar Venda..." value="<?php echo htmlspecialchars($pesquisa); ?>" onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
         </form>
         <a href="/GitHub/SA_Senai/cadastrovendas.php" class="icon-btn">

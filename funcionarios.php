@@ -5,7 +5,6 @@
     $password = "";
     $dbname = "gerenciador_estoque";
 
-    // CONEXÃO
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
@@ -14,7 +13,6 @@
 
     $message = "";
 
-    // Lógica para editar um funcionário
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_usuario'])) {
         $id_usuario = $_POST['id_usuario'];
         $nome = $_POST['nome'];
@@ -35,7 +33,6 @@
         $stmt->close();
     }
 
-    // Lógica para excluir um funcionário
     if (isset($_GET['excluir'])) {
         $id_usuario = $_GET['excluir'];
         $sql = "DELETE FROM usuario WHERE id_usuario=?";
@@ -51,12 +48,10 @@
         $stmt->close();
     }
 
-    // Recupera nível da conta
-    $nivel = $_SESSION['nivel'] ?? 0; // Defina nível da conta como 0 caso não esteja logado
+    $nivel = $_SESSION['nivel'] ?? 0; 
 
     $pesquisa = $_POST['PesquisarFuncionario'] ?? '';
 
-    // Pesquisa por usuário ou nome
     $sql = "SELECT id_usuario, nome_usuario, user_usuario, email_usuario, senha_usuario, nivel_usuario FROM usuario WHERE user_usuario LIKE ? OR nome_usuario LIKE ? OR id_usuario LIKE ?";
     $stmt = $conn->prepare($sql);
     $likePesquisa = "%" . $pesquisa . "%";
