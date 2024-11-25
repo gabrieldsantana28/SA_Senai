@@ -135,12 +135,12 @@ $result = $stmt->get_result();
     <section id="Titulo-Principal"><h1>Gerenciamento de Fornecedores</h1></section>
 
     <main id="container-main">
-    <section>
+    <section id="teste">
     <br>
     <div style="margin: auto; display: flex; align-items: center;" class="elementos--itens">
         <form method="GET" action="fornecedores.php" id="formPesquisa" style="display: flex; align-items: center;">
             <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px;"></i>
-            <input type="text" id="PesquisarFornecedor" name="PesquisarFornecedor" placeholder="Pesquisar Fornecedor..." onkeypress="if(event.key === 'Enter') document.getElementById('formPesquisa').submit();" style="width: 650px;">
+            <input type="text" id="PesquisarFornecedor" name="PesquisarFornecedor" placeholder="Pesquisar Fornecedor..." onkeypress="if(event.key === 'Enter') document.getElementById('formPesquisa').submit();">
         </form>
         <button class="icon-btn" id="redirectBtn" style="margin-left: 10px;">
             <a class="fa-solid fa-plus" href="cadastrofornecedor.php" style="color: black; text-decoration: none;"></a>
