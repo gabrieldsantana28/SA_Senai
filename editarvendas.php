@@ -1,85 +1,85 @@
 <?php
-// Inicia a sessão para gerenciar variáveis de sessão
-session_start();
+    // Inicia a sessão para gerenciar variáveis de sessão
+    session_start();
 
-// Configuração da conexão com o banco de dados
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "gerenciador_estoque";
+    // Configuração da conexão com o banco de dados
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "gerenciador_estoque";
 
-// Cria a conexão com o banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
+    // Cria a conexão com o banco de dados
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verifica se a conexão foi bem-sucedida
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-
-// Verifica se o ID foi passado via URL
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    // Prepara a consulta para buscar os dados da venda
-    $sql = "SELECT * FROM venda WHERE id_venda = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id); // Define o tipo do parâmetro como inteiro
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Verifica se a venda foi encontrada
-    if ($result->num_rows > 0) {
-        $venda = $result->fetch_assoc(); // Recupera os dados da venda
-    } else {
-        echo "Venda não encontrada.";
-        exit; // Encerra o script caso a venda não seja encontrada
+    // Verifica se a conexão foi bem-sucedida
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
     }
-}
 
-// Verifica se o formulário foi enviado para atualizar os dados
-if (isset($_POST['update'])) {
-    // Recupera os valores enviados pelo formulário
-    $id = $_POST['id'];
-    $quantidade_venda = $_POST['quantidade'];
-    $tipo_pagamento = $_POST['tipo_pagamento'];
-    $data_venda = $_POST['data_venda'];
-    $hora_venda = $_POST['hora_venda'];
+    // Verifica se o ID foi passado via URL
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
 
-    // Recupera o ID do produto associado à venda
-    $id_produto = $venda['fk_id_produto'];
-    // Recupera a quantidade original da venda antes da edição
-    $quantidade_original = $venda['quantidade_venda'];
+        // Prepara a consulta para buscar os dados da venda
+        $sql = "SELECT * FROM venda WHERE id_venda = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id); // Define o tipo do parâmetro como inteiro
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    // Calcula a diferença entre a nova e a antiga quantidade vendida
-    $diferenca_quantidade = $quantidade_venda - $quantidade_original;
-
-    // Atualiza os dados da venda no banco
-    $sql_update = "UPDATE venda SET quantidade_venda=?, tipo_pagamento_venda=?, data_venda=?, hora_venda=? WHERE id_venda=?";
-    $stmt = $conn->prepare($sql_update);
-    $stmt->bind_param("isssi", $quantidade_venda, $tipo_pagamento, $data_venda, $hora_venda, $id);
-    $stmt->execute();
-
-    // Atualiza a quantidade do produto no estoque com base na diferença
-    if ($diferenca_quantidade != 0) {
-        $sql_estoque = "UPDATE produto SET quantidade_produto = quantidade_produto - ? WHERE id_produto = ?";
-        $stmt_estoque = $conn->prepare($sql_estoque);
-        $stmt_estoque->bind_param("ii", abs($diferenca_quantidade), $id_produto);
-
-        // Verifica se a diferença é positiva (menos produto no estoque) ou negativa (mais produto no estoque)
-        if ($diferenca_quantidade > 0) {
-            $stmt_estoque->execute(); // Diminui o estoque
-        } elseif ($diferenca_quantidade < 0) {
-            $stmt_estoque->execute(); // Aumenta o estoque
+        // Verifica se a venda foi encontrada
+        if ($result->num_rows > 0) {
+            $venda = $result->fetch_assoc(); // Recupera os dados da venda
+        } else {
+            echo "Venda não encontrada.";
+            exit; // Encerra o script caso a venda não seja encontrada
         }
     }
 
-    // Redireciona para a página de vendas após a atualização
-    header("Location: vendas.php");
-    exit;
-}
+    // Verifica se o formulário foi enviado para atualizar os dados
+    if (isset($_POST['update'])) {
+        // Recupera os valores enviados pelo formulário
+        $id = $_POST['id'];
+        $quantidade_venda = $_POST['quantidade'];
+        $tipo_pagamento = $_POST['tipo_pagamento'];
+        $data_venda = $_POST['data_venda'];
+        $hora_venda = $_POST['hora_venda'];
 
-// Fecha a conexão com o banco de dados
-$conn->close();
+        // Recupera o ID do produto associado à venda
+        $id_produto = $venda['fk_id_produto'];
+        // Recupera a quantidade original da venda antes da edição
+        $quantidade_original = $venda['quantidade_venda'];
+
+        // Calcula a diferença entre a nova e a antiga quantidade vendida
+        $diferenca_quantidade = $quantidade_venda - $quantidade_original;
+
+        // Atualiza os dados da venda no banco
+        $sql_update = "UPDATE venda SET quantidade_venda=?, tipo_pagamento_venda=?, data_venda=?, hora_venda=? WHERE id_venda=?";
+        $stmt = $conn->prepare($sql_update);
+        $stmt->bind_param("isssi", $quantidade_venda, $tipo_pagamento, $data_venda, $hora_venda, $id);
+        $stmt->execute();
+
+        // Atualiza a quantidade do produto no estoque com base na diferença
+        if ($diferenca_quantidade != 0) {
+            $sql_estoque = "UPDATE produto SET quantidade_produto = quantidade_produto - ? WHERE id_produto = ?";
+            $stmt_estoque = $conn->prepare($sql_estoque);
+            $stmt_estoque->bind_param("ii", abs($diferenca_quantidade), $id_produto);
+
+            // Verifica se a diferença é positiva (menos produto no estoque) ou negativa (mais produto no estoque)
+            if ($diferenca_quantidade > 0) {
+                $stmt_estoque->execute(); // Diminui o estoque
+            } elseif ($diferenca_quantidade < 0) {
+                $stmt_estoque->execute(); // Aumenta o estoque
+            }
+        }
+
+        // Redireciona para a página de vendas após a atualização
+        header("Location: vendas.php");
+        exit;
+    }
+
+    // Fecha a conexão com o banco de dados
+    $conn->close();
 ?>
 
 <!DOCTYPE html>

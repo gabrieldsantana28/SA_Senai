@@ -1,60 +1,62 @@
 <?php
-session_start();
+    session_start();
+    // Inicia a sessão para gerenciar variáveis de sessão
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "gerenciador_estoque";
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "gerenciador_estoque";
+    // Criar conexão
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
+    // Verificar conexão
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
 
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
+    // Verifica se o ID foi passado
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
 
-// Verifica se o ID foi passado
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+        // Busca os dados da compra para editar
+        $sql = "SELECT * FROM compra WHERE id_compra = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    // Busca os dados da compra para editar
-    $sql = "SELECT * FROM compra WHERE id_compra = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        // Verifica se a compra foi encontrada
+        if ($result->num_rows > 0) {
+            $compra = $result->fetch_assoc();
+        } else {
+            echo "Compra não encontrada.";
+            exit;
+        }
+    }
 
-    if ($result->num_rows > 0) {
-        $compra = $result->fetch_assoc();
-    } else {
-        echo "Compra não encontrada.";
+    // Atualiza os dados da compra
+    if (isset($_POST['update'])) {
+        // Recupera os valores enviados pelo formulário
+        $id = $_POST['id'];
+        $produto_compra = $_POST['produto'];
+        $quantidade_compra = $_POST['quantidade'];
+        $preco_compra = $_POST['preco'];
+        $tipo_pagamento = $_POST['tipo_pagamento'];
+        $data_compra = $_POST['data_compra'];
+        $hora_compra = $_POST['hora_compra'];
+
+        // Atualiza a compra no banco de dados
+        $sql_update = "UPDATE compra SET produto_compra=?, quantidade_compra=?, preco_compra=?, tipo_pagamento_compra=?, data_compra=?, hora_compra=? WHERE id_compra=?";
+        $stmt = $conn->prepare($sql_update);
+        $stmt->bind_param("sidsssi", $produto_compra, $quantidade_compra, $preco_compra, $tipo_pagamento, $data_compra, $hora_compra, $id);
+        $stmt->execute();
+
+        // Redireciona de volta para a página de compras
+        header("Location: compras.php");
         exit;
     }
-}
 
-// Atualiza os dados da compra
-if (isset($_POST['update'])) {
-    $id = $_POST['id'];
-    $produto_compra = $_POST['produto'];
-    $quantidade_compra = $_POST['quantidade'];
-    $preco_compra = $_POST['preco'];
-    $tipo_pagamento = $_POST['tipo_pagamento'];
-    $data_compra = $_POST['data_compra'];
-    $hora_compra = $_POST['hora_compra'];
-
-    // Atualiza a compra no banco de dados
-    $sql_update = "UPDATE compra SET produto_compra=?, quantidade_compra=?, preco_compra=?, tipo_pagamento_compra=?, data_compra=?, hora_compra=? WHERE id_compra=?";
-    $stmt = $conn->prepare($sql_update);
-    $stmt->bind_param("sidsisi", $produto_compra, $quantidade_compra, $preco_compra, $tipo_pagamento, $data_compra, $hora_compra, $id);
-    $stmt->execute();
-
-    // Redireciona de volta para a página de compras
-    header("Location: compras.php");
-    exit;
-}
-
-$conn->close();
+    $conn->close();
 ?>
 
 <!DOCTYPE html>

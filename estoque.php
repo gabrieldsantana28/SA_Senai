@@ -12,6 +12,8 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
+$conn->query()
+
 $sql_alerta = "SELECT nome_produto FROM produto WHERE quantidade_produto < 5";
 $result_alerta = $conn->query($sql_alerta);
 
