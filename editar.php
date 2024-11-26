@@ -170,3 +170,89 @@
     </script>
 </body>
 </html>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: Poppins, sans-serif;
+    }
+
+    body {
+        background-color: #f4f4f4;
+    }
+
+    .hdr {
+        background-color: black;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+    }
+
+    .hdr a {
+        color: white;
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+    .logo-header {
+        height: 80px;
+    }
+
+    .botao--voltar {
+        font-size: 2.1em;
+        margin-left: 16px;
+        cursor: pointer;
+    }
+
+    #Titulo-Principal {
+        text-align: center;
+        padding-top: 0;
+        font-size: 1.4em;
+        margin-bottom: 15px;
+    }
+
+    .formulario-editar {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .botao-salvar {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1em;
+    }
+
+    .botao-salvar:hover {
+        background-color: #333;
+    }
+</style>
