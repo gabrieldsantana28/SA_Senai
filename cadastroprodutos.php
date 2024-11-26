@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare($sql); // Prepara a instrução SQL
 
         // Liga os parâmetros à instrução preparada
-        $stmt->bind_param("sssddi", $nome, $descricao, $tamanho, $cor, $preco, $quantidade);
+        $stmt->bind_param("ssssdi", $nome, $descricao, $tamanho, $cor, $preco, $quantidade);
 
         // Executa a instrução e verifica se a inserção foi bem-sucedida
         if ($stmt->execute()) {
