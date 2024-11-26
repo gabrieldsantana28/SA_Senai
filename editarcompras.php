@@ -96,18 +96,36 @@ $conn->close();
 
 <!-- Formulário de edição -->
 <section class="formulario-editar">
-    <form method="POST">
-        <!-- Campo oculto para armazenar o ID da compra -->
-        <input type="hidden" name="id" value="<?php echo $compra['id_compra']; ?>">
-        <!-- Campos do formulário -->
-        <div class="form-group">
-            <label for="produto">Produto</label>
-            <input type="text" id="produto" name="produto" value="<?php echo $compra['produto_compra']; ?>" required>
-        </div>
-        <!-- Outros campos seguem o mesmo padrão -->
-        <button type="submit" name="update" class="botao-salvar">Salvar Alterações</button>
-    </form>
-</section>
+        <form method="POST">
+            <input type="hidden" name="id" value="<?php echo $compra['id_compra']; ?>">
+            <div class="form-group">
+                <label for="produto">Produto</label>
+                <input type="text" id="produto" name="produto" value="<?php echo $compra['produto_compra']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+                <input type="number" id="quantidade" name="quantidade" value="<?php echo $compra['quantidade_compra']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="preco">Preço</label>
+                <input type="number" step="0.01" id="preco" name="preco" value="<?php echo $compra['preco_compra']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo_pagamento">Tipo de Pagamento</label>
+                <input type="text" id="tipo_pagamento" name="tipo_pagamento" value="<?php echo $compra['tipo_pagamento_compra']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="data_compra">Data</label>
+                <input type="date" id="data_compra" name="data_compra" value="<?php echo $compra['data_compra']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="hora_compra">Hora</label>
+                <input type="time" id="hora_compra" name="hora_compra" value="<?php echo $compra['hora_compra']; ?>" required>
+            </div>
+            <button type="submit" name="update" class="botao-salvar">Salvar Alterações</button>
+        </form>
+    </section>
+
 
 <script>
     // Função para trocar de página.
