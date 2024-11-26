@@ -133,7 +133,14 @@
 
         <div class="form-group">
             <label for="tipo_pagamento">Tipo de Pagamento</label>
-            <input type="text" id="tipo_pagamento" name="tipo_pagamento" value="<?php echo $venda['tipo_pagamento_venda']; ?>" required>
+            <select id="tipo_pagamento" name="tipo_pagamento" required> <!-- Seleção de tipo de pagamento -->
+                <option value="" disabled selected>Selecione o Tipo de Pagamento...</option> <!-- Opção padrão -->
+                <option value="À vista">Dinheiro/À vista</option> <!-- Opção de pagamento à vista -->
+                <option value="PIX">PIX</option> <!-- Opção de pagamento via PIX -->
+                <option value="Parcelado">Crédito</option> <!-- Opção de pagamento parcelado -->
+                <option value="Débito">Débito</option> <!-- Opção de pagamento por débito -->
+                <option value="Boleto">Boleto</option> <!-- Opção de pagamento por boleto -->
+            </select>        
         </div>
 
         <div class="form-group">
@@ -176,87 +183,105 @@ function voltarMenu() {
 </html>
 
 <style>
-* {
-    padding: 0;
-    margin: 0;
-    font-family: Poppins, sans-serif;
-}
+     /* CSS Interno */
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: Poppins, sans-serif;
+    }
 
-body {
-    background-color: #f4f4f4;
-}
+    body {
+        background-color: #f4f4f4;
+    }
 
-.hdr {
-    background-color: black;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-}
+    .hdr {
+        background-color: black;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+    }
 
-.hdr a {
-    color: white;
-    text-decoration: none;
-    margin: 0 5px;
-}
+    .hdr a {
+        color: white;
+        text-decoration: none;
+        margin: 0 5px;
+    }
 
-.logo-header {
-    height: 80px;
-}
+    .logo-header {
+        height: 80px;
+    }
 
-.botao--voltar {
-    font-size: 2.1em;
-    margin-left: 16px;
-    cursor: pointer;
-}
+    .botao--voltar {
+        font-size: 2.1em;
+        margin-left: 16px;
+        cursor: pointer;
+    }
 
-#Titulo-Principal {
-    text-align: center;
-    padding-top: 0;
-    font-size: 1.4em;
-    margin-bottom: 15px;
-}
+    #Titulo-Principal {
+        text-align: center;
+        padding-top: 0;
+        font-size: 1.4em;
+        margin-bottom: 15px;
+    }
 
-.formulario-editar {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    .formulario-editar {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-.form-group {
-    margin-bottom: 15px;
-}
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
 
-.form-group input {
-    width: 95%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    .form-group input {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-.botao-salvar {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-}
+    .form-group input,
+    .form-group select {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+        background-color: #fff; 
+        color: #333; 
+    }
 
-.botao-salvar:hover {
-    background-color: #333;
-}
+    .form-group select:focus { 
+        outline: none;
+        border-color: #000; 
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+    }
+
+    .botao-salvar {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1em;
+    }
+
+    .botao-salvar:hover {
+        background-color: #333;
+    }
 </style>
