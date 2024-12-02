@@ -15,6 +15,8 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error); // Exibe erro e encerra o script
 }
 
+$conn->set_charset("utf8");
+
 $preco = ""; // Inicializa a variável de preço
 $message = ""; // Inicializa a variável de mensagem
 
@@ -121,7 +123,7 @@ $conn->close(); // Fecha a conexão com o banco de dados
 
             <div class="elementos--itens"> <!-- Seção para inserir o preço da compra -->
                 <i class="fa-solid fa-hand-holding-dollar"></i>R$ <!-- Ícone de preço -->
-                <input type="text" id="PrecoCompra" onkeypress="mascara(this, mreais)" oninput="validarPreco();" name="preco_compra" placeholder="Preço..." step="0.01" value="<?php echo htmlspecialchars($preco); ?>" required> <!-- Campo para o preço -->
+                <input type="text" id="PrecoCompra" onkeypress="mascara(this, mreais)" oninput="validarPreco();" name="preco_compra" placeholder="Preço por Unidade..." step="0.01" value="<?php echo htmlspecialchars($preco); ?>" required> <!-- Campo para o preço -->
             </div>
 
             <div class="elementos--itens"> <!-- Seção para selecionar o tipo de pagamento -->
@@ -138,7 +140,7 @@ $conn->close(); // Fecha a conexão com o banco de dados
 
             <div class="elementos--itens"> <!-- Seção para inserir a data da compra -->
                 <i class="fa-solid fa-calendar-day"></i> <!-- Ícone de data -->
-                <input type="date " id="DataCompra" name="data_compra" required> <!-- Campo para a data da compra -->
+                <input type="date" id="DataCompra" name="data_compra" required> <!-- Campo para a data da compra -->
             </div>
 
             <div class="elementos--itens"> <!-- Seção para inserir a hora da compra -->
@@ -197,7 +199,7 @@ $conn->close(); // Fecha a conexão com o banco de dados
             }
         } else { // Se o nível for nulo
             alert('Sessão expirada. Faça login novamente.'); // Alerta de sessão expirada
-            window.location.href = 'login.php'; // Redireciona para a página de login
+            window.location.href = 'index.php'; // Redireciona para a página de login
         }
     }
 </script>

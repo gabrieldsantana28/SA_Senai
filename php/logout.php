@@ -3,6 +3,6 @@ session_start();
 session_unset(); 
 session_destroy(); 
 
-header("Location: /GitHub/SA_Senai/index.php"); 
+header("Location: /002 - Turma_2o_Semestre_2024/SA_Senai/index.php"); 
 exit(); 
 ?>

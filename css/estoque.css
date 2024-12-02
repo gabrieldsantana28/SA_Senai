@@ -147,7 +147,7 @@ body {
 }
 
 .elementos-lista {
-    height: 50px;
+    min-height: 50px;
     width: 190px;
     background-color: white;
     text-align: center;
@@ -158,6 +158,8 @@ body {
     position: relative;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .elementos-lista:hover {

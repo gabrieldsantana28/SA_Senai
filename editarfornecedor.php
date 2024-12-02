@@ -212,7 +212,7 @@ $conexao->close();
             }
         } else {
             alert('Sessão expirada. Faça login novamente.');
-            window.location.href = 'login.php';
+            window.location.href = 'index.php';
         }
     }
 </script>

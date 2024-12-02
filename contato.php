@@ -1,6 +1,7 @@
 <?php
     // Inicia a sessão para manter os dados do usuário durante a navegação
     session_start();
+    
 ?>
 
 <!DOCTYPE html>

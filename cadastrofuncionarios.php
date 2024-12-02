@@ -15,6 +15,8 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error); // Exibe erro e encerra o script
 }
 
+$conn->set_charset("utf8");
+
 $message = ""; // Inicializa a variável de mensagem
 
 // Verifica se o método de requisição é POST
@@ -131,7 +133,7 @@ $conn->close(); // Fecha a conexão com o banco de dados
                 }
             } else { // Se o nível for nulo
                 alert('Sessão expirada. Faça login novamente.'); // Alerta de sessão expirada
-                window.location.href = 'login.php'; // Redireciona para a página de login
+                window.location.href = 'index.php'; // Redireciona para a página de login
             }
         }
     </script>

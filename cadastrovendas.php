@@ -16,6 +16,8 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error); // Exibe erro caso a conexão falhe
 }
 
+$conn->set_charset("utf8");
+
 // Variável para exibir mensagens ao usuário
 $message = "";
 
@@ -173,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         } else {
             alert('Sessão expirada. Faça login novamente.');
-            window.location.href = 'login.php';
+            window.location.href = 'index.php';
         }
     }
 </script>

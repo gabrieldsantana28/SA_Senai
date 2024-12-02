@@ -1,59 +1,59 @@
 <?php
-session_start();
+    session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "gerenciador_estoque";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "gerenciador_estoque";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Conexão falhou: " . $conn->connect_error);
-}
-
-$conn->query()
-
-$sql_alerta = "SELECT nome_produto FROM produto WHERE quantidade_produto < 5";
-$result_alerta = $conn->query($sql_alerta);
-
-$produtos_baixos = [];
-if ($result_alerta->num_rows > 0) {
-    while ($linha_alerta = $result_alerta->fetch_assoc()) {
-        $produtos_baixos[] = $linha_alerta["nome_produto"];
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
     }
-}
 
-$nivel = $_SESSION['nivel'] ?? 0;
+    $conn->set_charset("utf8");
 
-$pesquisa = $_GET['PesquisarProduto'] ?? '';
+    $sql_alerta = "SELECT nome_produto FROM produto WHERE quantidade_produto < 5";
+    $result_alerta = $conn->query($sql_alerta);
 
-// Preparar a consulta de busca
-$sql = "SELECT id_produto, nome_produto, quantidade_produto, preco_produto, descricao_produto FROM produto WHERE nome_produto LIKE ? OR id_produto LIKE ?";
-$stmt = $conn->prepare($sql);
-$likePesquisa = "%" . $conn->real_escape_string($pesquisa) . "%";
-$stmt->bind_param("ss", $likePesquisa, $likePesquisa);
-$stmt->execute();
-$result = $stmt->get_result();
+    $produtos_baixos = [];
+    if ($result_alerta->num_rows > 0) {
+        while ($linha_alerta = $result_alerta->fetch_assoc()) {
+            $produtos_baixos[] = $linha_alerta["nome_produto"];
+        }
+    }
 
-if (isset($_POST['delete_id'])) {
-    $id = $_POST['delete_id'];
+    $nivel = $_SESSION['nivel'] ?? 0;
 
-    // Excluir as vendas relacionadas ao produto
-    $sql_delete_venda = "DELETE FROM venda WHERE fk_id_produto = ?";
-    $stmt_delete_venda = $conn->prepare($sql_delete_venda);
-    $stmt_delete_venda->bind_param("i", $id);
-    $stmt_delete_venda->execute();
+    $pesquisa = $_GET['PesquisarProduto'] ?? '';
 
-    // Agora excluir o produto
-    $sql_delete_produto = "DELETE FROM produto WHERE id_produto = ?";
-    $stmt_delete_produto = $conn->prepare($sql_delete_produto);
-    $stmt_delete_produto->bind_param("i", $id);
-    $stmt_delete_produto->execute();
+    // Preparar a consulta de busca
+    $sql = "SELECT id_produto, nome_produto, quantidade_produto, preco_produto, descricao_produto, cor_produto FROM produto WHERE nome_produto LIKE ? OR id_produto LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $likePesquisa = "%" . $conn->real_escape_string($pesquisa) . "%";
+    $stmt->bind_param("ss", $likePesquisa, $likePesquisa);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    header("Location: estoque.php"); // Redireciona após exclusão
-    exit;
-}
+    if (isset($_POST['delete_id'])) {
+        $id = $_POST['delete_id'];
+
+        // Excluir as vendas relacionadas ao produto
+        $sql_delete_venda = "DELETE FROM venda WHERE fk_id_produto = ?";
+        $stmt_delete_venda = $conn->prepare($sql_delete_venda);
+        $stmt_delete_venda->bind_param("i", $id);
+        $stmt_delete_venda->execute();
+
+        // Agora excluir o produto
+        $sql_delete_produto = "DELETE FROM produto WHERE id_produto = ?";
+        $stmt_delete_produto = $conn->prepare($sql_delete_produto);
+        $stmt_delete_produto->bind_param("i", $id);
+        $stmt_delete_produto->execute();
+
+        header("Location: estoque.php"); // Redireciona após exclusão
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +93,7 @@ if (isset($_POST['delete_id'])) {
             <form method="GET" action="">
                 <input type="text" id="PesquisarProduto" name="PesquisarProduto" placeholder="Pesquisar Produto..." value="<?php echo htmlspecialchars($pesquisa); ?>">
             </form>
-            <a href="/GitHub/SA_Senai/cadastroprodutos.php" class="icon-btn">
+            <a href="/002 - Turma_2o_Semestre_2024/SA_Senai/cadastroprodutos.php" class="icon-btn">
                 <i class="fa-solid fa-plus"></i>
             </a>
         </div>
@@ -115,7 +115,7 @@ if (isset($_POST['delete_id'])) {
             echo '<div class="elementos-lista">' . $linha["nome_produto"] . '</div>';
             echo '<div class="elementos-lista">' . $linha["quantidade_produto"] . '</div>';
             echo '<div class="elementos-lista">' . "R$ " . number_format($linha["preco_produto"], 2, ',', '.') . '</div>';
-            echo '<div class="elementos-lista">' . $linha["descricao_produto"] . '</div>';
+            echo '<div class="elementos-lista">' . $linha["descricao_produto"] . " - " . $linha["cor_produto"] . '</div>';
             echo '<div class="icons">';
 
             // EXCLUIR
@@ -139,34 +139,34 @@ if (isset($_POST['delete_id'])) {
     ?>
 
     <script>
-    function confirmarExclusao() {
-        return confirm("Você realmente deseja apagar este item?");
-    }
-    </script>
-
-    <script>
-        function trocarPagina(url) {
-            window.location.href = url;
+        function confirmarExclusao() {
+            return confirm("Você realmente deseja apagar este item?");
         }
-        
-        function voltarMenu() {
-            const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
-            if (nivel !== null) {
-                if (nivel == 1) {
-                    window.location.href = 'menuAdm.php';
-                } else if (nivel == 2) {
-                    window.location.href = 'menuFuncionario.php';
-                }
-            } else {
-                alert('Sessão expirada. Faça login novamente.');
-                window.location.href = 'login.php';
+        </script>
+
+        <script>
+            function trocarPagina(url) {
+                window.location.href = url;
             }
-        }
+            
+            function voltarMenu() {
+                const nivel = <?php echo isset($_SESSION['nivel']) ? $_SESSION['nivel'] : 'null'; ?>;
+                if (nivel !== null) {
+                    if (nivel == 1) {
+                        window.location.href = 'menuAdm.php';
+                    } else if (nivel == 2) {
+                        window.location.href = 'menuFuncionario.php';
+                    }
+                } else {
+                    alert('Sessão expirada. Faça login novamente.');
+                    window.location.href = 'index.php';
+                }
+            }
 
-        <?php if (!empty($produtos_baixos)): ?>
-            const produtosBaixos = <?php echo json_encode($produtos_baixos); ?>;
-            alert("Os seguintes produtos estão com estoque baixo:\n" + produtosBaixos.join("\n"));
-        <?php endif; ?>
+            <?php if (!empty($produtos_baixos)): ?>
+                const produtosBaixos = <?php echo json_encode($produtos_baixos); ?>;
+                alert("Os seguintes produtos estão com estoque baixo:\n" + produtosBaixos.join("\n"));
+            <?php endif; ?>
     </script>
 </body>
 </html>

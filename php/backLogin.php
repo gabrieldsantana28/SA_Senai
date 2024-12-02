@@ -36,20 +36,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario']) && isset($
         $_SESSION['nivel'] = $nivel;
 
         if ($nivel == 1) {
-            header("Location: /GitHub/SA_Senai/menuAdm.php");
+            header("Location: /002 - Turma_2o_Semestre_2024/SA_Senai/menuAdm.php");
         } elseif ($nivel == 2) {
-            header("Location: /GitHub/SA_Senai/menuFuncionario.php");
+            header("Location: /002 - Turma_2o_Semestre_2024/SA_Senai/menuFuncionario.php");
         }
         exit();
     } else {
         $_SESSION['login_error'] = "Usuário ou senha incorretos";
-        header("Location: /GitHub/SA_Senai/index.php");
+        header("Location: /002 - Turma_2o_Semestre_2024/SA_Senai/index.php");
         exit();
     }
 
 } else {
     // Redireciona para a página de login se o método POST não for usado
-    header("Location: /GitHub/SA_Senai/index.php");
+    header("Location: /002 - Turma_2o_Semestre_2024/SA_Senai/index.php");
     exit();
 }
 ?>

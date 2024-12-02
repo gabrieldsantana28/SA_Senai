@@ -1,16 +1,19 @@
 <?php
-    session_start(); // Inicia uma nova sessão ou resume a sessão existente
+    // Inicia a sessão para acessar variáveis de sessão
+    session_start();
 
-    $nivel_usuario = $_SESSION['nivel']; // Armazena o nível de acesso do usuário na variável $nivel_usuario
-    $usuario = $_SESSION['usuario']; // Armazena o nome do usuário na variável $usuario
+    // Armazena o nível do usuário e o nome do usuário nas variáveis
+    $nivel_usuario = $_SESSION['nivel']; 
+    $usuario = $_SESSION['usuario']; 
 
-    // Verifica se o usuário está logado
+    // Verifica se a variável de sessão 'usuario' está definida (se o usuário está logado)
     if (!isset($_SESSION['usuario'])) {
-        header("Location: login.php"); // Redireciona para a página de login caso o usuário não esteja logado
-        exit(); // Interrompe a execução do script
+        // Se o usuário não estiver logado, redireciona para a página de login
+        header("Location: index.php");
+        exit();
     }
 
-    // Define cabeçalhos para evitar o armazenamento em cache da página
+    // Define cabeçalhos HTTP para prevenir cache das páginas
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Pragma: no-cache");
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
@@ -18,73 +21,80 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <!-- Configurações básicas do documento -->
-    <meta charset="UTF-8"> <!-- Define o conjunto de caracteres como UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajusta a página para dispositivos móveis -->
-    <meta http-equiv="X-UA-Compatible" content="IE=7"> <!-- Define compatibilidade com o Internet Explorer 7 -->
+    <meta charset="UTF-8">
+    <!-- Define a largura da página para o dispositivo, garantindo boa exibição em telas móveis -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compatibilidade com versões mais antigas do Internet Explorer -->
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
     
-    <!-- Importação de estilos CSS -->
-    <link rel="stylesheet" href="css/menuAdm.css"> <!-- Estilo personalizado para o menu administrativo -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"> <!-- Biblioteca Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap"> <!-- Fontes personalizadas do Google Fonts -->
-
-    <title>Desenvolvimento de Sistemas</title> <!-- Título da página -->
+    <!-- Link para o CSS da página -->
+    <link rel="stylesheet" href="css/menuAdm.css">
+    
+    <!-- Link para os ícones da Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Link para fontes externas Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;400;600;900&display=swap">
+    
+    <title>Desenvolvimento de Sistemas</title>
 </head>
 <body>
     <header>
         <div class="hdr">
-            <!-- Logo do cabeçalho -->
+            <!-- Exibe o logo da empresa no cabeçalho -->
             <img class="logo-header" src="./images/comp.png" alt="LOGO">
         </div>
     </header>
 
-    <!-- Botão para realizar logout -->
     <div class="botao--logout">
-        <form method="POST" action="php/logout.php"> <!-- Envia o pedido de logout para logout.php -->
-            <button type="submit"><i class="fa-solid fa-right-from-bracket"></i></button> <!-- Ícone do botão de logout -->
+        <!-- Formulário de logout com ícone de desconexão -->
+        <form method="POST" action="php/logout.php">
+            <button type="submit"><i class="fa-solid fa-right-from-bracket"></i></button>
         </form>
     </div>
 
     <main id="container-main">
-        <!-- Menu com os botões principais -->
         <section class="first-four-buttons">
-            <button class="button-menu"><a href="funcionarios.php">Gerenciamento de Funcionarios</a></button> <!-- Link para gerenciamento de funcionários -->
-            <button class="button-menu"><a href="estoque.php">Gerenciamento de Estoque</a></button> <!-- Link para gerenciamento de estoque -->
-            <button class="button-menu"><a href="fornecedores.php">Gerenciamento de Fornecedores</a></button> <!-- Link para gerenciamento de fornecedores -->
-            <button class="button-menu"><a href="compras.php">Controle de Compras</a></button> <!-- Link para controle de compras -->
-            <button class="button-menu"><a href="vendas.php">Controle de Vendas</a></button> <!-- Link para controle de vendas -->
-            <button class="button-menu"><a href="relatorio.php">Relatórios e Análises</a></button> <!-- Link para relatórios e análises -->
+            <!-- Botões de navegação para diferentes seções do sistema -->
+            <button class="button-menu"><a href="funcionarios.php">Gerenciamento de Funcionarios</a></button>
+            <button class="button-menu"><a href="estoque.php">Gerenciamento de Estoque</a></button>
+            <button class="button-menu"><a href="fornecedores.php">Gerenciamento de Fornecedores</a></button>
+            <button class="button-menu"><a href="compras.php">Controle de Compras</a></button>
+            <button class="button-menu"><a href="vendas.php">Controle de Vendas</a></button>
+            <button class="button-menu"><a href="relatorio.php">Relatórios e Análises</a></button>
         </section>
     </main>
 
-    <!-- Botão de suporte -->
+    <!-- Botão fixo de suporte -->
     <form action="suporte.php">
         <div class="suporte">
-            <button id="btn-suporte">Suporte</button> <!-- Botão fixo para acessar a página de suporte -->
+            <button id="btn-suporte">Suporte</button>
         </div>
     </form>
 
-    <!-- Estilo do botão de suporte -->
     <style>
+        /* Estilo para o botão de suporte fixado no canto inferior direito */
         .suporte {
-            position: fixed; /* Posiciona o botão de forma fixa na tela */
-            bottom: 20px; /* Distância da parte inferior da tela */
-            right: 20px; /* Distância da lateral direita da tela */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
         }
 
+        /* Estilo do botão de suporte */
         #btn-suporte {
-            background-color: #000; /* Cor de fundo preta */
-            color: #fff; /* Cor do texto branca */
-            border: none; /* Remove a borda padrão */
-            padding: 10px 20px; /* Adiciona preenchimento interno */
-            border-radius: 5px; /* Arredonda os cantos do botão */
-            cursor: pointer; /* Define o cursor como uma mão ao passar sobre o botão */
-            font-size: 0.9em; /* Define o tamanho da fonte */
-            transition: background-color 0.3s; /* Suaviza a transição da cor de fundo ao passar o mouse */
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
         }
 
+        /* Efeito de hover para o botão de suporte */
         #btn-suporte:hover {
-            background-color: #444; /* Altera a cor de fundo ao passar o mouse */
+            background-color: #444;
         }
     </style>
 </body>

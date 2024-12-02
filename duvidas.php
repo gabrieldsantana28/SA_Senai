@@ -4,7 +4,7 @@ session_start();
 
 // Verifica se a sessão contém a variável 'nivel'. Caso contrário, redireciona para a página de login
 if (!isset($_SESSION['nivel'])) {
-    header("Location: login.php"); // Redireciona para a página de login
+    header("Location: index.php"); // Redireciona para a página de login
     exit; // Encerra a execução do script
 }
 

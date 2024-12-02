@@ -17,6 +17,8 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
+$conn->set_charset("utf8");
+
 // Variável para armazenar mensagens de feedback ao usuário.
 $message = "";
 
@@ -156,7 +158,7 @@ $conn->close();
             }
         } else {
             alert('Sessão expirada. Faça login novamente.'); // Alerta de sessão expirada.
-            window.location.href = 'login.php';
+            window.location.href = 'index.php';
         }
     }
 </script>

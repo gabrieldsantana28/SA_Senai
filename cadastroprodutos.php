@@ -10,6 +10,8 @@ $dbname = "gerenciador_estoque"; // Nome do banco de dados
 // Cria uma nova conexão com o banco de dados
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+$conn->set_charset("utf8");
+
 // Verifica se a conexão falhou
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error); // Exibe erro e encerra o script
@@ -184,7 +186,7 @@ $conn->close(); // Fecha a conexão com o banco de dados
                 }
             } else { // Se o nível for nulo
                 alert('Sessão expirada. Faça login novamente.'); // Alerta de sessão expirada
-                window.location.href = 'login.php'; // Redireciona para a página de login
+                window.location.href = 'index.php'; // Redireciona para a página de login
             }
         }
     </script>

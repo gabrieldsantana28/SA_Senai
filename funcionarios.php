@@ -16,6 +16,8 @@
         // Encerra o script caso a conexão falhe.
     }
 
+    $conn->set_charset("utf8");
+
     $message = "";
     // Inicializa a variável para armazenar mensagens de sucesso ou erro.
 
@@ -165,7 +167,7 @@
                 }
             } else {
                 alert('Sessão expirada. Faça login novamente.');
-                window.location.href = 'login.php';
+                window.location.href = 'index.php';
             }
         }
 

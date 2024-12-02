@@ -16,11 +16,30 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
+$conn->set_charset("utf8");
+
 // Obtém o nível do usuário na sessão. Se não existir, define como 0 (visitante).
 $nivel = $_SESSION['nivel'] ?? 0;
 
 // Obtém o termo de pesquisa enviado via GET (se existir).
 $pesquisa = $_GET['PesquisarCompra'] ?? '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
+    $delete_id = $_POST['delete_id']; // Obtém o ID da venda a ser excluída.
+    $sql_delete = "DELETE FROM compra WHERE id_compra = ?"; // Query para deletar a venda.
+
+    // Prepara e executa a query de exclusão.
+    $stmt_delete = $conn->prepare($sql_delete);
+    $stmt_delete->bind_param("i", $delete_id);
+
+    if ($stmt_delete->execute()) {
+        // Redireciona o usuário após a exclusão bem-sucedida.
+        echo "<script>alert('Compra excluída com sucesso!'); window.location.href='compras.php';</script>";
+    } else {
+        echo "<script>alert('Erro ao excluir a compra. Tente novamente.');</script>";
+    }
+    $stmt_delete->close(); // Fecha o statement.
+}
 
 // Consulta SQL para buscar informações de compras com base no ID, nome do fornecedor ou produto.
 $sql_compras = "
@@ -110,7 +129,7 @@ $result_compras = $stmt->get_result();
                    onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
         </form>
         <!-- Link para adicionar uma nova compra -->
-        <a href="/GitHub/SA_Senai/cadastrocompras.php" class="icon-btn">
+        <a href="/002 - Turma_2o_Semestre_2024/SA_Senai/cadastrocompras.php" class="icon-btn">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
@@ -173,7 +192,7 @@ function voltarMenu() {
         }
     } else {
         alert('Sessão expirada. Faça login novamente.');
-        window.location.href = 'login.php';
+        window.location.href = 'index.php';
     }
 }
 </script>

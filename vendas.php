@@ -15,6 +15,8 @@
         die("Conexão falhou: " . $conn->connect_error); // Interrompe a execução caso a conexão falhe.
     }
 
+    $conn->set_charset("utf8");
+
     // Lógica para exclusão de vendas.
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
         $delete_id = $_POST['delete_id']; // Obtém o ID da venda a ser excluída.
@@ -108,7 +110,7 @@
                 value="<?php echo htmlspecialchars($pesquisa); ?>" 
                 onkeypress="if(event.key === 'Enter') { this.form.submit(); }">
         </form>
-        <a href="/GitHub/SA_Senai/cadastrovendas.php" class="icon-btn">
+        <a href="/002 - Turma_2o_Semestre_2024/SA_Senai/cadastrovendas.php" class="icon-btn">
             <i class="fa-solid fa-plus"></i> <!-- Ícone de adicionar -->
         </a>
     </div>
@@ -167,7 +169,7 @@ function voltarMenu() {
         }
     } else {
         alert('Sessão expirada. Faça login novamente.');
-        window.location.href = 'login.php';
+        window.location.href = 'index.php';
     }
 }
 </script>

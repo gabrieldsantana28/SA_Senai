@@ -14,6 +14,8 @@
         die("Conexão falhou: " . $conn->connect_error);
     }
 
+    $conn->set_charset("utf8");
+
     // Verifica se o ID foi passado
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
@@ -116,9 +118,9 @@
                 <label for="tipo_pagamento">Tipo de Pagamento</label>
                 <select id="tipo_pagamento" name="tipo_pagamento" required> <!-- Seleção de tipo de pagamento -->
                     <option value="" disabled selected>Selecione o Tipo de Pagamento...</option> <!-- Opção padrão -->
-                    <option value="À vista">Dinheiro/À vista</option> <!-- Opção de pagamento à vista -->
+                    <option value="Dinheiro/À vista">Dinheiro/À vista</option> <!-- Opção de pagamento à vista -->
                     <option value="PIX">PIX</option> <!-- Opção de pagamento via PIX -->
-                    <option value="Parcelado">Crédito</option> <!-- Opção de pagamento parcelado -->
+                    <option value="Crédito">Crédito</option> <!-- Opção de pagamento parcelado -->
                     <option value="Débito">Débito</option> <!-- Opção de pagamento por débito -->
                     <option value="Boleto">Boleto</option> <!-- Opção de pagamento por boleto -->
                 </select>
